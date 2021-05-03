@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/model/parameter/TagFilter.dart';
@@ -112,19 +113,34 @@ extension _ProductExtension on Product {
   String? getFixedNutriscoreGrade() => nutriscore?.length == 1 ? nutriscore : null;
 
   Food toFood() {
-    var fixedBrands = brands?.isEmpty == true ? null : brands?.split(',').map((b) => b.trim()).join(', ');
+    // Normalize brands
+    var brandsSet = brands?.isEmpty == true ? null : brands?.split(',').map((b) => b.trim().capitalize()).toSet();
+
+    // Remove the ones which are included into others (like 'Gerblé' and 'Gerblé bio')
+    final brandsList = brandsSet?.toList();
+    for (int i = 0; i < (brandsList?.length ?? 0); i++) {
+      final brand = brandsList!.elementAt(i);
+      if (brandsList.sublist(i + 1).any((b) => b.contains(brand))) {
+        brandsSet!.remove(brand);
+      }
+    }
+
+    // We prefer null than empty
+    if (brandsSet != null && brandsSet.isEmpty) {
+      brandsSet = null;
+    }
 
     return Food(
       barcode: barcode ?? '',
       name: productName ?? '',
-      brands: fixedBrands,
+      brands: brandsSet?.join(', '),
       imageFrontSmallUrl: imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl,
       ecoscoreGrade: getFixedEcoscoreGrade(),
       ecoscoreScore: ecoscoreScore,
       nutriscoreGrade: getFixedNutriscoreGrade(),
-      quantity: quantity,
+      quantity: quantity?.isEmpty == true ? null : quantity,
       categoryTags: categoriesTags ?? List.empty(growable: true),
     );
   }

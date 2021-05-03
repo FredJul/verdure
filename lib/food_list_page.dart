@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import 'common/extensions.dart';
-import 'common/widgets.dart';
+import 'common/food_card.dart';
 
 class FoodListPage extends StatelessWidget {
   @override

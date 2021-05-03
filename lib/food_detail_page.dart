@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
+import 'common/food_card.dart';
 import 'common/observer_state.dart';
-import 'common/widgets.dart';
 
 class FoodDetailPage extends StatefulWidget {
   const FoodDetailPage({
