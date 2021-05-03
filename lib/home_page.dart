@@ -35,21 +35,16 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: SvgPicture.asset(
-          'assets/logo_full.svg',
-          height: 64,
-        ),
-        backgroundColor: Colors.white,
-      ),
+      resizeToAvoidBottomInset: false, // To avoid the FAB to be visible when the keyboard is up
       body: PageView(
         controller: _pageController,
+        physics: const NeverScrollableScrollPhysics(), // Avoid a gesture conflict with the search bar
         children: [
           FoodListPage(),
           const Center(
             child: Text('Fav to come'),
           ),
-        ], // Comment this if you need to use Swipe.
+        ],
       ),
       extendBody: true,
       bottomNavigationBar: BottomAppBar(

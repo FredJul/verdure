@@ -1,5 +1,6 @@
 import 'package:ecoscore/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive/hive.dart';
@@ -32,6 +33,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+    ));
+
     return ChangeNotifierProvider(
       create: (_) => FoodsState(_box),
       child: MaterialApp(
@@ -42,12 +48,13 @@ class MyApp extends StatelessWidget {
           GlobalWidgetsLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale('en', ''),
           Locale('fr', ''),
         ],
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          scaffoldBackgroundColor: Colors.white,
+          brightness: Brightness.light,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'Nunito',
         ),

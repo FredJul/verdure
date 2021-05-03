@@ -106,6 +106,23 @@ class OpenFoodFactsApi {
 
     return products?.take(20).map((p) => p.toFood()).toList() ?? [];
   }
+
+  static Future<List<Food>> search(String terms) async {
+    final searchResult = await OpenFoodAPIClient.searchProducts(
+      null,
+      ProductSearchQueryConfiguration(
+        fields: _productFields,
+        parametersList: [
+          const PageSize(size: 50),
+          SearchTerms(terms: [terms]),
+        ],
+        lc: window.locale.languageCode,
+        cc: window.locale.countryCode,
+      ),
+    );
+
+    return searchResult.products?.map((p) => p.toFood()).toList() ?? [];
+  }
 }
 
 extension _ProductExtension on Product {
