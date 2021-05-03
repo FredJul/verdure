@@ -1,0 +1,86 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    compileSdkVersion 30
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "net.frju.ecoscore"
+        minSdkVersion 24
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
+
+    File localProps = project.rootProject.file('local.properties')
+	Properties properties = new Properties()
+	if (localProps.exists()) {
+		properties.load(localProps.newDataInputStream())
+	}
+
+    signingConfigs {
+        debug {
+            if (properties.getProperty("KEYSTORE_PATH") != null) {
+                storeFile file(properties.getProperty("KEYSTORE_PATH"))
+                storePassword properties.getProperty("KEYSTORE_PASSWORD")
+                keyAlias properties.getProperty("KEY_ALIAS")
+                keyPassword properties.getProperty("KEY_PASSWORD")
+            }
+        }
+        release {
+            if (properties.getProperty("KEYSTORE_PATH") != null) {
+                storeFile file(properties.getProperty("KEYSTORE_PATH"))
+                storePassword properties.getProperty("KEYSTORE_PASSWORD")
+                keyAlias properties.getProperty("KEY_ALIAS")
+                keyPassword properties.getProperty("KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+
+            minifyEnabled true
+            shrinkResources false
+            
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
