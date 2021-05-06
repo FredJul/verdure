@@ -4,6 +4,7 @@ import 'package:ecoscore/common/observer_state.dart';
 import 'package:ecoscore/food_detail_page.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
@@ -30,6 +31,12 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
 
     _scrollController.addListener(() {
       _searchController.close();
+    });
+
+    KeyboardVisibilityController().onChange.listen((bool visible) {
+      if (!visible && _searchController.query.isEmpty) {
+        _searchController.close();
+      }
     });
   }
 
@@ -80,7 +87,7 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
-              'Historique de scan',
+              'Produits scannés',
               style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
