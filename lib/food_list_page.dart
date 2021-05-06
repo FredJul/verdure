@@ -53,9 +53,44 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
             portal: _buildSearchBar(context),
             child: const Gap(72),
           ),
-          ...foodsState.scannedFoods.reversed.map((food) => FoodCard(
-                food: food,
-                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Card(
+              color: Colors.lightGreen[50],
+              elevation: 0,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.dangerous,
+                      color: Colors.grey,
+                      size: 64,
+                    ),
+                    const Gap(12),
+                    Expanded(
+                      child: Text('Pourquoi devriez-vous réduire votre empreinte écologique ?'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const Gap(32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              'Historique de scan',
+              style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ),
+          const Gap(8),
+          ...foodsState.scannedFoods.reversed.map((food) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: FoodCard(
+                  food: food,
+                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                ),
               )),
           const Gap(48),
         ],
@@ -65,10 +100,11 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
 
   Widget _buildSearchBar(BuildContext context) => FloatingSearchBar(
         margins: const EdgeInsets.symmetric(horizontal: 24),
-        backgroundColor: Colors.grey[100],
         controller: _searchController,
-        backdropColor: Colors.white,
-        scrollPadding: const EdgeInsets.only(top: 8, bottom: 192),
+        backgroundColor: const Color(0xFFF7F7F7),
+        elevation: 0,
+        backdropColor: Theme.of(context).scaffoldBackgroundColor.withAlpha(240),
+        scrollPadding: const EdgeInsets.only(top: 8, bottom: 232),
         onQueryChanged: (query) {
           EasyDebounce.cancel('search');
 

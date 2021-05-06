@@ -45,6 +45,8 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.food.name),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: _betterFoodsError
           ? ElevatedButton(

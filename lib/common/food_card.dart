@@ -21,6 +21,7 @@ class FoodCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 0,
       child: InkWell(
         onTap: onTap,
         child: Padding(
@@ -54,7 +55,11 @@ class FoodCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(food.name, overflow: TextOverflow.ellipsis),
+                    Text(
+                      food.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                    ),
                     if (food.brands != null || food.quantity != null)
                       Text(
                         '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',

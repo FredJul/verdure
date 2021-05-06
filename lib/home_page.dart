@@ -1,5 +1,6 @@
 import 'package:ecoscore/food_list_page.dart';
 import 'package:ecoscore/scan_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -11,19 +12,13 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   var _currentPage = 0;
   final PageController _pageController = PageController();
-  late Animation<double> _animation;
-  late AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
-
-    _animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1200));
-    _animation = Tween<double>(begin: 64, end: 72).animate(_animationController);
-    _animationController.repeat(reverse: true);
 
     _pageController.addListener(() {
       setState(() {
@@ -47,46 +42,68 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         ],
       ),
       extendBody: true,
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        notchMargin: 0,
-        color: Colors.grey[200],
-        child: Row(
-          children: [
-            _buildBottomBarItem(idx: 0, icon: Icons.history),
-            const Gap(76),
-            _buildBottomBarItem(idx: 1, icon: Icons.favorite),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 16),
           ],
+        ),
+        child: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 0,
+          child: Row(
+            children: [
+              _buildBottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: 'Accueil'),
+              const Gap(76),
+              _buildBottomBarItem(idx: 1, icon: CupertinoIcons.heart_fill, name: 'Favorite'),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: AnimatedBuilder(
-        animation: _animation,
-        builder: (BuildContext context, Widget? child) {
-          return SizedBox(
-            width: _animation.value,
-            height: _animation.value,
-            child: FloatingActionButton(
-              elevation: 0,
-              onPressed: () => context.pushScreen(ScanPage()),
-              backgroundColor: Colors.lightGreen,
-              shape: CircleBorder(side: BorderSide(color: Colors.lightGreen[100]!, width: 6)),
-              child: SvgPicture.asset(
-                'assets/scanner.svg',
-                height: 24,
-              ),
+      floatingActionButton: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Theme.of(context).primaryColor.withAlpha(155),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
             ),
-          );
-        },
+          ],
+          shape: BoxShape.circle,
+        ),
+        child: FloatingActionButton(
+          elevation: 0,
+          onPressed: () => context.pushScreen(ScanPage()),
+          child: SvgPicture.asset(
+            'assets/scanner.svg',
+            height: 24,
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildBottomBarItem({required int idx, required IconData icon}) => Expanded(
-        child: IconButton(
-          icon: Icon(icon, color: _currentPage == idx ? Colors.lightGreen : Colors.grey),
-          onPressed: () =>
-              _pageController.animateToPage(idx, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut),
+  Widget _buildBottomBarItem({required int idx, required IconData icon, required String name}) => Expanded(
+        child: InkWell(
+          highlightColor: Colors.transparent,
+          onTap: () => _pageController.animateToPage(idx, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(icon, color: _currentPage == idx ? Theme.of(context).primaryColor : Colors.black26),
+                Text(
+                  name,
+                  style: context.textTheme.subtitle2?.copyWith(
+                    color: _currentPage == idx ? Theme.of(context).primaryColor : Colors.black26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
 }

@@ -1,4 +1,3 @@
-import 'package:ecoscore/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,6 +6,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'common/extensions.dart';
+import 'home_page.dart';
 import 'model/food.dart';
 
 Future<void> main() async {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      statusBarColor: Colors.white70,
       statusBarIconBrightness: Brightness.dark,
     ));
 
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
         ],
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: const Color(0xFF66b254).toMaterialColor(),
           scaffoldBackgroundColor: Colors.white,
           brightness: Brightness.light,
           visualDensity: VisualDensity.adaptivePlatformDensity,
