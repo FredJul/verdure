@@ -3,6 +3,7 @@ import 'package:ecoscore/api/open_food_facts_api.dart';
 import 'package:ecoscore/common/observer_state.dart';
 import 'package:ecoscore/food_detail_page.dart';
 import 'package:ecoscore/model/food.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -61,16 +62,18 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
             child: const Gap(72),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Card(
-              color: Colors.lightGreen[50],
-              elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.lightGreen[50],
+                borderRadius: const BorderRadius.all(Radius.circular(12)),
+              ),
               child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Icon(
-                      Icons.dangerous,
+                      CupertinoIcons.brightness_solid,
                       color: Colors.grey,
                       size: 64,
                     ),
@@ -93,7 +96,7 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
           ),
           const Gap(8),
           ...foodsState.scannedFoods.reversed.map((food) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 child: FoodCard(
                   food: food,
                   onTap: () => context.pushScreen(FoodDetailPage(food: food)),
@@ -109,6 +112,7 @@ class _FoodListPageState extends ObserverState<FoodListPage> with TickerProvider
         margins: const EdgeInsets.symmetric(horizontal: 24),
         controller: _searchController,
         backgroundColor: const Color(0xFFF7F7F7),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
         elevation: 0,
         backdropColor: Theme.of(context).scaffoldBackgroundColor.withAlpha(240),
         scrollPadding: const EdgeInsets.only(top: 8, bottom: 232),

@@ -76,12 +76,15 @@ class _ScanPageState extends ObserverState<ScanPage> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       const Gap(96),
-                      ...foodsState.scannedFoods.reversed.map((food) => SizedBox(
-                            key: ValueKey(food),
-                            width: 296,
-                            child: FoodCard(
-                              food: food,
-                              onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                      ...foodsState.scannedFoods.reversed.map((food) => Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: SizedBox(
+                              key: ValueKey(food),
+                              width: 296,
+                              child: FoodCard(
+                                food: food,
+                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                              ),
                             ),
                           )),
                     ],
@@ -97,7 +100,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
 
   Widget _buildQrView(BuildContext context, FoodsState foodsState) {
     // For this example we check how width or tall the device is and change the scanArea and overlay accordingly.
-    final scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 400) ? 150.0 : 300.0;
+    final scanArea = (MediaQuery.of(context).size.width < 400 || MediaQuery.of(context).size.height < 500) ? 250.0 : 350.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
@@ -129,7 +132,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
         borderLength: 30,
         borderWidth: 10,
         cutOutSize: scanArea,
-        cutOutBottomOffset: 24,
+        cutOutBottomOffset: 48,
       ),
     );
   }

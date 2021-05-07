@@ -60,11 +60,14 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: _betterFoods
-                    .map((food) => SizedBox(
-                          width: 296,
-                          child: FoodCard(
-                            food: food,
-                            onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                    .map((food) => Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: SizedBox(
+                            width: 296,
+                            child: FoodCard(
+                              food: food,
+                              onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                            ),
                           ),
                         ))
                     .toList(),

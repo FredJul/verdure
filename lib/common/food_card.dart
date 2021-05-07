@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,9 +21,14 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
-      child: InkWell(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.black12),
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      child: Tap(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
         onTap: onTap,
         child: Padding(
           padding: const EdgeInsets.all(8),
