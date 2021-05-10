@@ -160,9 +160,12 @@ class _HomePageState extends ObserverState<HomePage> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: _searchResults
-                .map((food) => FoodCard(
-                      food: food,
-                      onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                .map((food) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: FoodCard(
+                        food: food,
+                        onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                      ),
                     ))
                 .toList(),
           );

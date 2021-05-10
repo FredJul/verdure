@@ -34,35 +34,53 @@ class FoodCard extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Row(
             children: [
-              FoodIcon(food: food, size: 72),
+              Hero(
+                tag: 'icon_${food.barcode}',
+                child: FoodIcon(food: food, size: 72),
+              ),
               const Gap(12),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      food.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                    Hero(
+                      tag: 'name_${food.barcode}',
+                      child: Text(
+                        food.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                     ),
                     if (food.brands != null || food.quantity != null)
-                      Text(
-                        '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.caption,
+                      Hero(
+                        tag: 'brands_${food.barcode}',
+                        child: Text(
+                          '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.caption,
+                        ),
                       ),
                     const Gap(4),
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          'assets/ecoscore-${food.ecoscoreGrade ?? 'unknown'}.svg',
-                          height: 24,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Hero(
+                            tag: 'ecoscore_${food.barcode}',
+                            child: SvgPicture.asset(
+                              'assets/ecoscore-${food.ecoscoreGrade ?? 'unknown'}.svg',
+                              height: 24,
+                            ),
+                          ),
                         ),
                         const Gap(12),
-                        SvgPicture.asset(
-                          'assets/nutriscore-${food.nutriscoreGrade ?? 'unknown'}.svg',
-                          height: 32,
+                        Hero(
+                          tag: 'nutriscore_${food.barcode}',
+                          child: SvgPicture.asset(
+                            'assets/nutriscore-${food.nutriscoreGrade ?? 'unknown'}.svg',
+                            height: 32,
+                          ),
                         ),
                       ],
                     ),

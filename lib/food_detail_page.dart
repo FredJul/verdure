@@ -1,6 +1,8 @@
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import 'api/open_food_facts_api.dart';
@@ -78,20 +80,56 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.food.name,
-                          style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                        Hero(
+                          tag: 'name_${widget.food.barcode}',
+                          child: Text(
+                            widget.food.name,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
-                        Text(
-                          '${widget.food.brands ?? ''}${widget.food.brands != null && widget.food.quantity != null ? ' - ' : ''}${widget.food.quantity ?? ''}',
-                          style: context.textTheme.subtitle2,
-                        ),
+                        if (widget.food.brands != null || widget.food.quantity != null)
+                          Hero(
+                            tag: 'brands_${widget.food.barcode}',
+                            child: Text(
+                              '${widget.food.brands ?? ''}${widget.food.brands != null && widget.food.quantity != null ? ' - ' : ''}${widget.food.quantity ?? ''}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: context.textTheme.subtitle2,
+                            ),
+                          ),
                       ],
                     ),
                   ),
-                  FoodIcon(food: widget.food, size: 96),
+                  const Gap(16),
+                  Hero(
+                    tag: 'icon_${widget.food.barcode}',
+                    child: FoodIcon(food: widget.food, size: 96),
+                  ),
                 ],
               ),
+              const Gap(16),
+              Row(
+                children: [
+                  Hero(
+                    tag: 'ecoscore_${widget.food.barcode}',
+                    child: SvgPicture.asset(
+                      'assets/ecoscore-${widget.food.ecoscoreGrade ?? 'unknown'}.svg',
+                      height: 24,
+                    ),
+                  ),
+                  const Gap(12),
+                  Hero(
+                    tag: 'nutriscore_${widget.food.barcode}',
+                    child: SvgPicture.asset(
+                      'assets/nutriscore-${widget.food.nutriscoreGrade ?? 'unknown'}.svg',
+                      height: 32,
+                    ),
+                  ),
+                ],
+              ),
+              const Gap(16),
               if (_betterFoodsError)
                 ElevatedButton(
                   onPressed: () {
