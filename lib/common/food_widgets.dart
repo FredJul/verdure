@@ -34,27 +34,7 @@ class FoodCard extends StatelessWidget {
           padding: const EdgeInsets.all(8),
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: food.imageFrontUrl == null
-                    ? const Icon(Icons.error, size: 72)
-                    : CachedNetworkImage(
-                        height: 72,
-                        width: 72,
-                        fit: BoxFit.cover,
-                        imageUrl: food.imageFrontUrl!,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey[200]!,
-                          highlightColor: Colors.white,
-                          child: Container(
-                            width: 72,
-                            height: 72,
-                            color: Colors.white,
-                          ),
-                        ),
-                        errorWidget: (context, url, dynamic error) => Icon(Icons.error),
-                      ),
-              ),
+              FoodIcon(food: food, size: 72),
               const Gap(12),
               Expanded(
                 child: Column(
@@ -93,6 +73,66 @@ class FoodCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FoodIcon extends StatelessWidget {
+  const FoodIcon({
+    Key? key,
+    required this.food,
+    required this.size,
+  }) : super(key: key);
+
+  final Food food;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: food.imageFrontUrl == null
+          ? SizedBox(
+              height: size,
+              width: size,
+              child: Center(
+                child: SvgPicture.asset(
+                  'assets/generic_food.svg',
+                  width: size - 16,
+                  height: size - 16,
+                ),
+              ),
+            )
+          : CachedNetworkImage(
+              height: size,
+              width: size,
+              fit: BoxFit.cover,
+              imageUrl: food.imageFrontUrl!,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[200]!,
+                highlightColor: Colors.white,
+                child: Container(
+                  width: size,
+                  height: size,
+                  color: Colors.white,
+                ),
+              ),
+              errorWidget: (context, url, dynamic error) => SizedBox(
+                height: size,
+                width: size,
+                child: SizedBox(
+                  height: size,
+                  width: size,
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/generic_food.svg',
+                      width: size - 16,
+                      height: size - 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
     );
   }
 }

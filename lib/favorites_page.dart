@@ -5,7 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import 'common/extensions.dart';
-import 'common/food_card.dart';
+import 'common/food_widgets.dart';
 import 'model/foods_state.dart';
 
 class FavoritesPage extends StatelessWidget {

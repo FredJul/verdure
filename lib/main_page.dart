@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
             children: [
               _buildBottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: context.i18n.homeTitle),
               const Gap(76),
-              _buildBottomBarItem(idx: 1, icon: CupertinoIcons.heart_fill, name: context.i18n.favoriteTitle),
+              _buildBottomBarItem(idx: 1, icon: Icons.favorite, name: context.i18n.favoriteTitle),
             ],
           ),
         ),

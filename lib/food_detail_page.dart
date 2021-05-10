@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
-import 'common/food_card.dart';
+import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
 import 'model/foods_state.dart';
 
@@ -50,12 +50,14 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.food.name),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           IconButton(
-              icon: Icon(isInFavorites ? CupertinoIcons.heart_fill : CupertinoIcons.heart),
+              icon: Icon(
+                isInFavorites ? Icons.favorite : Icons.favorite_outline,
+                color: Colors.red[400],
+              ),
               onPressed: () {
                 if (isInFavorites) {
                   foodsState.removeFavoriteFood(widget.food);
@@ -65,31 +67,61 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
               }),
         ],
       ),
-      body: _betterFoodsError
-          ? ElevatedButton(
-              onPressed: () {
-                _fetchBetterAlternatives();
-              },
-              child: Text('Retry'),
-            )
-          : SizedBox(
-              height: 96,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: _betterFoods
-                    .map((food) => Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: SizedBox(
-                            width: 296,
-                            child: FoodCard(
-                              food: food,
-                              onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                            ),
-                          ),
-                        ))
-                    .toList(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.food.name,
+                          style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${widget.food.brands ?? ''}${widget.food.brands != null && widget.food.quantity != null ? ' - ' : ''}${widget.food.quantity ?? ''}',
+                          style: context.textTheme.subtitle2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  FoodIcon(food: widget.food, size: 96),
+                ],
               ),
-            ),
+              if (_betterFoodsError)
+                ElevatedButton(
+                  onPressed: () {
+                    _fetchBetterAlternatives();
+                  },
+                  child: Text('Retry'),
+                )
+              else
+                SizedBox(
+                  height: 96,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: _betterFoods
+                        .map((food) => Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8),
+                              child: SizedBox(
+                                width: 296,
+                                child: FoodCard(
+                                  food: food,
+                                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                ),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

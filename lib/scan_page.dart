@@ -8,7 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
-import 'common/food_card.dart';
+import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
 import 'common/widgets.dart';
 import 'food_detail_page.dart';
@@ -78,9 +78,9 @@ class _ScanPageState extends ObserverState<ScanPage> {
                     children: [
                       const Gap(96),
                       ...foodsState.scannedFoods.reversed.map((food) => Padding(
+                            key: ValueKey(food),
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: SizedBox(
-                              key: ValueKey(food),
                               width: 296,
                               child: FoodCard(
                                 food: food,
