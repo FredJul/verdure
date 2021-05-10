@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -53,25 +52,4 @@ class Food extends HiveObject {
 
   @HiveField(10)
   List<String> categoryTags;
-}
-
-class FoodsState extends ChangeNotifier {
-  final Box<Food> _box;
-
-  FoodsState(this._box);
-
-  List<Food> get scannedFoods {
-    final orgas = _box.values.toList();
-    return orgas;
-  }
-
-  Future<void> add(Food food) async {
-    final previousFoodIdx = scannedFoods.indexWhere((e) => e.barcode == food.barcode);
-    if (previousFoodIdx != -1) {
-      await _box.deleteAt(previousFoodIdx);
-    }
-
-    await _box.add(food);
-    notifyListeners();
-  }
 }

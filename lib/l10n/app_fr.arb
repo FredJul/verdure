@@ -1,3 +1,8 @@
 {
-    "searchHint": "Rechercher un produit…"
+    "searchHint": "Rechercher un produit…",
+    "whyReduceImpactExplanation": "Notre alimentation à un impact considérable sur notre environnement et le réchauffement climatique. https://www.wwf.fr/agir-au-quotidien/alimentation",
+    "learnMore": "Voyez pourquoi >",
+    "homeTitle": "Accueil",
+    "favoriteTitle": "Favoris",
+    "scannedProducts": "Produits scannés"
 }

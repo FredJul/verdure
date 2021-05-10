@@ -1,10 +1,13 @@
 import 'package:ecoscore/model/food.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
 import 'common/food_card.dart';
 import 'common/observer_state.dart';
+import 'model/foods_state.dart';
 
 class FoodDetailPage extends StatefulWidget {
   const FoodDetailPage({
@@ -42,11 +45,25 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final foodsState = context.watch<FoodsState>();
+    final isInFavorites = foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.food.name),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+              icon: Icon(isInFavorites ? CupertinoIcons.heart_fill : CupertinoIcons.heart),
+              onPressed: () {
+                if (isInFavorites) {
+                  foodsState.removeFavoriteFood(widget.food);
+                } else {
+                  foodsState.addFavoriteFood(widget.food);
+                }
+              }),
+        ],
       ),
       body: _betterFoodsError
           ? ElevatedButton(

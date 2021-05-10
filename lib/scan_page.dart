@@ -12,6 +12,7 @@ import 'common/food_card.dart';
 import 'common/observer_state.dart';
 import 'common/widgets.dart';
 import 'food_detail_page.dart';
+import 'model/foods_state.dart';
 
 class ScanPage extends StatefulWidget {
   @override
@@ -117,7 +118,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
 
             observeFuture<Food?>(OpenFoodFactsApi.getFood(barcode.code), (food) {
               if (food != null && food.name.isNotEmpty) {
-                foodsState.add(food);
+                foodsState.addScannedFood(food);
                 _listController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
               }
             }, onError: (_) {
