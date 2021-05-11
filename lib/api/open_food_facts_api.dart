@@ -123,6 +123,11 @@ class OpenFoodFactsApi {
 
     return searchResult.products?.map((p) => p.toFood()).toList() ?? [];
   }
+
+  static String getEditUrl(Food food) {
+    final isFr = window.locale.languageCode.toLowerCase() == 'fr';
+    return 'https://${isFr ? 'fr' : 'world'}.openfoodfacts.org/cgi/product.pl?type=edit&code=${food.barcode}';
+  }
 }
 
 extension _ProductExtension on Product {

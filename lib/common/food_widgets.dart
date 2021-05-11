@@ -35,7 +35,7 @@ class FoodCard extends StatelessWidget {
           child: Row(
             children: [
               Hero(
-                tag: 'icon_${food.barcode}',
+                tag: food.barcode,
                 child: FoodIcon(food: food, size: 72),
               ),
               const Gap(12),
@@ -44,43 +44,31 @@ class FoodCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Hero(
-                      tag: 'name_${food.barcode}',
-                      child: Text(
-                        food.name,
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
-                      ),
+                    Text(
+                      food.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     if (food.brands != null || food.quantity != null)
-                      Hero(
-                        tag: 'brands_${food.barcode}',
-                        child: Text(
-                          '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.caption,
-                        ),
+                      Text(
+                        '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.caption,
                       ),
                     const Gap(4),
                     Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: Hero(
-                            tag: 'ecoscore_${food.barcode}',
-                            child: SvgPicture.asset(
-                              'assets/ecoscore-${food.ecoscoreGrade ?? 'unknown'}.svg',
-                              height: 24,
-                            ),
+                          child: SvgPicture.asset(
+                            'assets/ecoscore-${food.ecoscoreGrade ?? 'unknown'}.svg',
+                            height: 24,
                           ),
                         ),
                         const Gap(12),
-                        Hero(
-                          tag: 'nutriscore_${food.barcode}',
-                          child: SvgPicture.asset(
-                            'assets/nutriscore-${food.nutriscoreGrade ?? 'unknown'}.svg',
-                            height: 32,
-                          ),
+                        SvgPicture.asset(
+                          'assets/nutriscore-${food.nutriscoreGrade ?? 'unknown'}.svg',
+                          height: 32,
                         ),
                       ],
                     ),
