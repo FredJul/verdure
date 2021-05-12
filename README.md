@@ -1,16 +1,16 @@
 ![Banner](/raw_graphics/banner.png)
 
+# ATTENTION : EN COURS DE DEVELOPPEMENT
+
 ## Fonctionnement
 
-WIP
+![screenshot](/raw_graphics/screenshot.png)
+
+En cours de rédaction...
 
 ## D'où viennent les données ?
 
-WIP
-
-## D'où viennent les données ?
-
-WIP
+En cours de rédaction...
 
 ## Contribuer
 
