@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/model/food.dart';
+import 'package:openfoodfacts/model/NutrientLevels.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/model/parameter/TagFilter.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
@@ -16,16 +17,11 @@ class OpenFoodFactsApi {
     ProductField.BRANDS,
     ProductField.ECOSCORE_GRADE,
     ProductField.ECOSCORE_SCORE,
+    ProductField.ECOSCORE_DATA,
     ProductField.NUTRISCORE,
     ProductField.IMAGE_FRONT_URL,
-    ProductField.IMAGE_FRONT_SMALL_URL,
-    ProductField.IMAGE_INGREDIENTS_URL,
     ProductField.QUANTITY,
-    ProductField.NUTRIMENTS,
     ProductField.NUTRIENT_LEVELS,
-    ProductField.NUTRIMENT_ENERGY_UNIT,
-    ProductField.ADDITIVES,
-    ProductField.LABELS_TAGS,
     ProductField.CATEGORIES_TAGS,
   ];
 
@@ -161,7 +157,14 @@ extension _ProductExtension on Product {
       imageIngredientsUrl: imageIngredientsUrl,
       ecoscoreGrade: getFixedEcoscoreGrade(),
       ecoscoreScore: ecoscoreScore,
+      packagingScore: ecoscoreData?.adjustments?.packaging?.score,
+      productionImpactScore: ecoscoreData?.adjustments?.originsOfIngredients?.epiScore,
+      transportationImpactScore: ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore,
       nutriscoreGrade: getFixedNutriscoreGrade(),
+      sugarsLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SUGARS] ?? Level.UNDEFINED,
+      fatLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_FAT] ?? Level.UNDEFINED,
+      saturatedFatLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SATURATED_FAT] ?? Level.UNDEFINED,
+      saltLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SALT] ?? Level.UNDEFINED,
       quantity: quantity?.isEmpty == true ? null : quantity,
       categoryTags: categoriesTags ?? List.empty(growable: true),
     );

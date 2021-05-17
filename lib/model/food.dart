@@ -1,5 +1,7 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:ecoscore/common/extensions.dart';
 import 'package:hive/hive.dart';
+import 'package:openfoodfacts/model/NutrientLevels.dart';
 
 part 'food.g.dart';
 
@@ -15,7 +17,14 @@ class Food extends HiveObject {
     this.imageIngredientsUrl,
     this.ecoscoreGrade,
     this.ecoscoreScore,
+    this.packagingScore,
+    this.productionImpactScore,
+    this.transportationImpactScore,
     this.nutriscoreGrade,
+    required this.sugarsLevel,
+    required this.fatLevel,
+    required this.saturatedFatLevel,
+    required this.saltLevel,
     this.quantity,
     required this.categoryTags,
   });
@@ -45,11 +54,48 @@ class Food extends HiveObject {
   double? ecoscoreScore;
 
   @HiveField(8)
-  String? nutriscoreGrade;
+  double? packagingScore;
 
   @HiveField(9)
-  String? quantity;
+  double? productionImpactScore;
 
   @HiveField(10)
+  double? transportationImpactScore;
+
+  @HiveField(11)
+  String? nutriscoreGrade;
+
+  @HiveField(12)
+  Level sugarsLevel;
+
+  @HiveField(13)
+  Level fatLevel;
+
+  @HiveField(14)
+  Level saturatedFatLevel;
+
+  @HiveField(15)
+  Level saltLevel;
+
+  @HiveField(16)
+  String? quantity;
+
+  @HiveField(17)
   List<String> categoryTags;
+}
+
+class NutrientLevelAdapter extends TypeAdapter<Level> {
+  @override
+  final typeId = 100;
+
+  @override
+  Level read(BinaryReader reader) {
+    final enumValue = reader.read() as String;
+    return Level.values.firstWhereOrNull((e) => e.value == enumValue) ?? Level.UNDEFINED;
+  }
+
+  @override
+  void write(BinaryWriter writer, Level l) {
+    writer.write(l.value);
+  }
 }
