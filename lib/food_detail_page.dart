@@ -72,10 +72,11 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
-              final editUrl = OpenFoodFactsApi.getEditUrl(widget.food);
-
-              if (await canLaunch(editUrl)) {
-                launch(editUrl);
+              try {
+                await launch(OpenFoodFactsApi.getEditUrl(widget.food));
+              } catch (_) {
+                final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
             },
           ),

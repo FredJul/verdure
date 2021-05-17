@@ -1,9 +1,7 @@
 import 'package:hive/hive.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'food.g.dart';
 
-@JsonSerializable()
 @HiveType(typeId: 0)
 class Food extends HiveObject {
   Food({
