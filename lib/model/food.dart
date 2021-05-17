@@ -1,7 +1,9 @@
+import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:hive/hive.dart';
 
 part 'food.g.dart';
 
+@CopyWith()
 @HiveType(typeId: 0)
 class Food extends HiveObject {
   Food({

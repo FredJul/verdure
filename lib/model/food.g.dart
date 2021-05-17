@@ -3,6 +3,40 @@
 part of 'food.dart';
 
 // **************************************************************************
+// CopyWithGenerator
+// **************************************************************************
+
+extension FoodCopyWith on Food {
+  Food copyWith({
+    String? barcode,
+    String? brands,
+    List<String>? categoryTags,
+    String? ecoscoreGrade,
+    double? ecoscoreScore,
+    String? imageFrontSmallUrl,
+    String? imageFrontUrl,
+    String? imageIngredientsUrl,
+    String? name,
+    String? nutriscoreGrade,
+    String? quantity,
+  }) {
+    return Food(
+      barcode: barcode ?? this.barcode,
+      brands: brands ?? this.brands,
+      categoryTags: categoryTags ?? this.categoryTags,
+      ecoscoreGrade: ecoscoreGrade ?? this.ecoscoreGrade,
+      ecoscoreScore: ecoscoreScore ?? this.ecoscoreScore,
+      imageFrontSmallUrl: imageFrontSmallUrl ?? this.imageFrontSmallUrl,
+      imageFrontUrl: imageFrontUrl ?? this.imageFrontUrl,
+      imageIngredientsUrl: imageIngredientsUrl ?? this.imageIngredientsUrl,
+      name: name ?? this.name,
+      nutriscoreGrade: nutriscoreGrade ?? this.nutriscoreGrade,
+      quantity: quantity ?? this.quantity,
+    );
+  }
+}
+
+// **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 

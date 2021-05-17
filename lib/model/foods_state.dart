@@ -20,7 +20,7 @@ class FoodsState extends ChangeNotifier {
 
   Future<void> addFavoriteFood(Food food) async {
     await _removeFoodFromBox(food, _favFoodsBox);
-    await _favFoodsBox.add(food);
+    await _favFoodsBox.add(food.copyWith()); // Need to copy the object to be able to put it in two boxes
     notifyListeners();
   }
 
