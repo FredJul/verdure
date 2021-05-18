@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecoscore/common/widgets.dart';
+import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -60,16 +60,10 @@ class FoodCard extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
-                          child: SvgPicture.asset(
-                            'assets/ecoscore-${food.ecoscoreGrade?.letter ?? 'unknown'}.svg',
-                            height: 24,
-                          ),
+                          child: EcoscoreImage(grade: food.ecoscoreGrade),
                         ),
                         const Gap(12),
-                        SvgPicture.asset(
-                          'assets/nutriscore-${food.nutriscoreGrade?.letter ?? 'unknown'}.svg',
-                          height: 32,
-                        ),
+                        NutriscoreImage(grade: food.nutriscoreGrade),
                       ],
                     ),
                   ],
@@ -102,8 +96,7 @@ class FoodIcon extends StatelessWidget {
               height: size,
               width: size,
               child: Center(
-                child: SvgPicture.asset(
-                  'assets/generic_food.svg',
+                child: Assets.genericFood.svg(
                   width: size - 16,
                   height: size - 16,
                 ),
@@ -130,8 +123,7 @@ class FoodIcon extends StatelessWidget {
                   height: size,
                   width: size,
                   child: Center(
-                    child: SvgPicture.asset(
-                      'assets/generic_food.svg',
+                    child: Assets.genericFood.svg(
                       width: size - 16,
                       height: size - 16,
                     ),
@@ -140,5 +132,61 @@ class FoodIcon extends StatelessWidget {
               ),
             ),
     );
+  }
+}
+
+class EcoscoreImage extends StatelessWidget {
+  const EcoscoreImage({
+    this.grade,
+  });
+
+  final Grade? grade;
+
+  @override
+  Widget build(BuildContext context) {
+    const height = 24.0;
+
+    switch (grade) {
+      case Grade.a:
+        return Assets.ecoscoreA.svg(height: height);
+      case Grade.b:
+        return Assets.ecoscoreB.svg(height: height);
+      case Grade.c:
+        return Assets.ecoscoreC.svg(height: height);
+      case Grade.d:
+        return Assets.ecoscoreD.svg(height: height);
+      case Grade.e:
+        return Assets.ecoscoreE.svg(height: height);
+      case null:
+        return Assets.ecoscoreUnknown.svg(height: height);
+    }
+  }
+}
+
+class NutriscoreImage extends StatelessWidget {
+  const NutriscoreImage({
+    this.grade,
+  });
+
+  final Grade? grade;
+
+  @override
+  Widget build(BuildContext context) {
+    const height = 32.0;
+
+    switch (grade) {
+      case Grade.a:
+        return Assets.nutriscoreA.svg(height: height);
+      case Grade.b:
+        return Assets.nutriscoreB.svg(height: height);
+      case Grade.c:
+        return Assets.nutriscoreC.svg(height: height);
+      case Grade.d:
+        return Assets.nutriscoreD.svg(height: height);
+      case Grade.e:
+        return Assets.nutriscoreE.svg(height: height);
+      case null:
+        return Assets.nutriscoreUnknown.svg(height: height);
+    }
   }
 }

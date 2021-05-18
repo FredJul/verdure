@@ -2,12 +2,12 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:ecoscore/api/open_food_facts_api.dart';
 import 'package:ecoscore/common/observer_state.dart';
 import 'package:ecoscore/food_detail_page.dart';
+import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_portal/flutter_portal.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
@@ -51,10 +51,7 @@ class _HomePageState extends ObserverState<HomePage> {
         controller: _scrollController,
         children: [
           const Gap(24),
-          SvgPicture.asset(
-            'assets/logo_full.svg',
-            height: 64,
-          ),
+          Assets.logoFull.svg(height: 64),
           const Gap(24),
           PortalEntry(
             portalAnchor: Alignment.topLeft,
@@ -73,10 +70,7 @@ class _HomePageState extends ObserverState<HomePage> {
                 padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
-                    SvgPicture.asset(
-                      'assets/earth.svg',
-                      height: 64,
-                    ),
+                    Assets.earth.svg(height: 64),
                     const Gap(12),
                     Expanded(
                       child: Column(

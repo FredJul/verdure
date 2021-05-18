@@ -11,6 +11,7 @@ analyzer:
     implicit-dynamic: false
   exclude:
     - build/**
+    - lib/gen/**
     - lib/generated_plugin_registrant.dart
     - "**/*.g.dart"
     - "**/*.freezed.dart"

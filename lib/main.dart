@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:ecoscore/gen/colors.gen.dart';
+import 'package:ecoscore/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -9,7 +11,6 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'common/extensions.dart';
 import 'main_page.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';
@@ -69,11 +70,11 @@ class MyApp extends StatelessWidget {
         ],
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: const Color(0xFF66b254).toMaterialColor(),
+          primarySwatch: ColorName.primary,
           scaffoldBackgroundColor: Colors.white,
           brightness: Brightness.light,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: 'Nunito',
+          fontFamily: FontFamily.nunito,
         ),
         home: MainPage(),
       ),

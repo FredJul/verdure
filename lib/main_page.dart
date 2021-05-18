@@ -1,8 +1,8 @@
+import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/home_page.dart';
 import 'package:ecoscore/scan_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 import 'common/extensions.dart';
@@ -74,10 +74,7 @@ class _MainPageState extends State<MainPage> {
         child: FloatingActionButton(
           elevation: 0,
           onPressed: () => context.pushScreen(ScanPage()),
-          child: SvgPicture.asset(
-            'assets/scanner.svg',
-            height: 24,
-          ),
+          child: Assets.scanner.svg(height: 24),
         ),
       ),
     );

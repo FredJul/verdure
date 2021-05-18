@@ -1,7 +1,6 @@
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -126,20 +125,14 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                     style: context.textTheme.subtitle1,
                   ),
                   const Gap(8),
-                  SvgPicture.asset(
-                    'assets/ecoscore-${widget.food.ecoscoreGrade?.letter ?? 'unknown'}.svg',
-                    height: 24,
-                  ),
+                  EcoscoreImage(grade: widget.food.ecoscoreGrade),
                   const Gap(32),
                   Text(
                     context.i18n.nutritionalValues,
                     style: context.textTheme.subtitle1,
                   ),
                   const Gap(8),
-                  SvgPicture.asset(
-                    'assets/nutriscore-${widget.food.nutriscoreGrade?.letter ?? 'unknown'}.svg',
-                    height: 32,
-                  ),
+                  NutriscoreImage(grade: widget.food.nutriscoreGrade),
                   const Gap(32),
                   Text(
                     context.i18n.betterFoods,
