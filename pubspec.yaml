@@ -47,7 +47,7 @@ flutter_gen:
     flutter_svg: true
   colors:
     inputs:
-      - lib./gen  /colors.xml
+      - colors/colors.xml
 
 flutter:
   generate: true # for l10n
