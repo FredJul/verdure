@@ -16,7 +16,6 @@ class OpenFoodFactsApi {
     ProductField.NAME,
     ProductField.BRANDS,
     ProductField.ECOSCORE_GRADE,
-    ProductField.ECOSCORE_SCORE,
     ProductField.ECOSCORE_DATA,
     ProductField.NUTRISCORE,
     ProductField.IMAGE_FRONT_URL,
@@ -40,13 +39,11 @@ class OpenFoodFactsApi {
   static Future<List<Food>> getBetterFoods(Food food) async {
     void removeWorseProducts(List<Product>? products) {
       products?.removeWhere((p) =>
-          p.getFixedEcoscoreGrade() == null ||
-          (food.ecoscoreGrade != null && p.getFixedEcoscoreGrade()!.compareTo(food.ecoscoreGrade!) > 0));
+          p.ecoscoreGradeEnum == null || (food.ecoscoreGrade != null && p.ecoscoreGradeEnum!.index > food.ecoscoreGrade!.index));
       products?.removeWhere((p) =>
-          p.getFixedNutriscoreGrade() == null ||
-          (food.nutriscoreGrade != null && p.getFixedNutriscoreGrade()!.compareTo(food.nutriscoreGrade!) > 0));
-      products?.removeWhere(
-          (p) => p.getFixedEcoscoreGrade() == food.ecoscoreGrade && p.getFixedNutriscoreGrade() == food.nutriscoreGrade);
+          p.nutriscoreGradeEnum == null ||
+          (food.nutriscoreGrade != null && p.nutriscoreGradeEnum!.index > food.nutriscoreGrade!.index));
+      products?.removeWhere((p) => p.ecoscoreGradeEnum == food.ecoscoreGrade && p.nutriscoreGradeEnum == food.nutriscoreGrade);
     }
 
     List<Product>? products;
@@ -96,8 +93,8 @@ class OpenFoodFactsApi {
     }
 
     products = products?.sorted([
-      SortedComparable<Product, String>((p) => p.getFixedEcoscoreGrade()!),
-      SortedComparable<Product, String>((p) => p.getFixedNutriscoreGrade()!),
+      SortedComparable<Product, int>((p) => p.ecoscoreGradeEnum!.index),
+      SortedComparable<Product, int>((p) => p.nutriscoreGradeEnum!.index),
     ]);
 
     return products?.take(20).map((p) => p.toFood()).toList() ?? [];
@@ -127,8 +124,30 @@ class OpenFoodFactsApi {
 }
 
 extension _ProductExtension on Product {
-  String? getFixedEcoscoreGrade() => ecoscoreGrade?.length == 1 ? ecoscoreGrade : null;
-  String? getFixedNutriscoreGrade() => nutriscore?.length == 1 ? nutriscore : null;
+  static Grade? _gradeFromLetter(String? letter) {
+    switch (letter) {
+      case 'a':
+      case 'A':
+        return Grade.a;
+      case 'b':
+      case 'B':
+        return Grade.b;
+      case 'c':
+      case 'C':
+        return Grade.c;
+      case 'd':
+      case 'D':
+        return Grade.d;
+      case 'e':
+      case 'E':
+        return Grade.e;
+      default:
+        return null;
+    }
+  }
+
+  Grade? get ecoscoreGradeEnum => _gradeFromLetter(ecoscoreGrade);
+  Grade? get nutriscoreGradeEnum => _gradeFromLetter(nutriscore);
 
   Food toFood() {
     // Normalize brands
@@ -148,6 +167,31 @@ extension _ProductExtension on Product {
       brandsSet = null;
     }
 
+    ImpactLevel? scoreToImpactLevel(double? score) {
+      if (score == null) {
+        return null;
+      } else if (score < 33) {
+        return ImpactLevel.high;
+      } else if (score > 66) {
+        return ImpactLevel.low;
+      } else {
+        return ImpactLevel.moderate;
+      }
+    }
+
+    ImpactLevel? nutrientLevelToImpactLevel(Level? level) {
+      switch (level) {
+        case Level.LOW:
+          return ImpactLevel.low;
+        case Level.MODERATE:
+          return ImpactLevel.moderate;
+        case Level.HIGH:
+          return ImpactLevel.high;
+        default:
+          return null;
+      }
+    }
+
     return Food(
       barcode: barcode ?? '',
       name: productName ?? '',
@@ -155,16 +199,15 @@ extension _ProductExtension on Product {
       imageFrontSmallUrl: imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl,
-      ecoscoreGrade: getFixedEcoscoreGrade(),
-      ecoscoreScore: ecoscoreScore,
-      packagingScore: ecoscoreData?.adjustments?.packaging?.score,
-      productionImpactScore: ecoscoreData?.adjustments?.originsOfIngredients?.epiScore,
-      transportationImpactScore: ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore,
-      nutriscoreGrade: getFixedNutriscoreGrade(),
-      sugarsLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SUGARS] ?? Level.UNDEFINED,
-      fatLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_FAT] ?? Level.UNDEFINED,
-      saturatedFatLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SATURATED_FAT] ?? Level.UNDEFINED,
-      saltLevel: nutrientLevels?.levels[NutrientLevels.NUTRIENT_SALT] ?? Level.UNDEFINED,
+      ecoscoreGrade: ecoscoreGradeEnum,
+      packagingImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.packaging?.score),
+      productionImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.originsOfIngredients?.epiScore),
+      transportationImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore),
+      nutriscoreGrade: nutriscoreGradeEnum,
+      sugarsLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_SUGARS]),
+      fatLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_FAT]),
+      saturatedFatLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_SATURATED_FAT]),
+      saltLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_SALT]),
       quantity: quantity?.isEmpty == true ? null : quantity,
       categoryTags: categoriesTags ?? List.empty(growable: true),
     );

@@ -11,43 +11,39 @@ extension FoodCopyWith on Food {
     String? barcode,
     String? brands,
     List<String>? categoryTags,
-    String? ecoscoreGrade,
-    double? ecoscoreScore,
-    Level? fatLevel,
+    Grade? ecoscoreGrade,
+    ImpactLevel? fatLevel,
     String? imageFrontSmallUrl,
     String? imageFrontUrl,
     String? imageIngredientsUrl,
     String? name,
-    String? nutriscoreGrade,
-    double? packagingScore,
-    double? productionImpactScore,
+    Grade? nutriscoreGrade,
+    ImpactLevel? packagingImpact,
+    ImpactLevel? productionImpact,
     String? quantity,
-    Level? saltLevel,
-    Level? saturatedFatLevel,
-    Level? sugarsLevel,
-    double? transportationImpactScore,
+    ImpactLevel? saltLevel,
+    ImpactLevel? saturatedFatLevel,
+    ImpactLevel? sugarsLevel,
+    ImpactLevel? transportationImpact,
   }) {
     return Food(
       barcode: barcode ?? this.barcode,
       brands: brands ?? this.brands,
       categoryTags: categoryTags ?? this.categoryTags,
       ecoscoreGrade: ecoscoreGrade ?? this.ecoscoreGrade,
-      ecoscoreScore: ecoscoreScore ?? this.ecoscoreScore,
       fatLevel: fatLevel ?? this.fatLevel,
       imageFrontSmallUrl: imageFrontSmallUrl ?? this.imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl ?? this.imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl ?? this.imageIngredientsUrl,
       name: name ?? this.name,
       nutriscoreGrade: nutriscoreGrade ?? this.nutriscoreGrade,
-      packagingScore: packagingScore ?? this.packagingScore,
-      productionImpactScore:
-          productionImpactScore ?? this.productionImpactScore,
+      packagingImpact: packagingImpact ?? this.packagingImpact,
+      productionImpact: productionImpact ?? this.productionImpact,
       quantity: quantity ?? this.quantity,
       saltLevel: saltLevel ?? this.saltLevel,
       saturatedFatLevel: saturatedFatLevel ?? this.saturatedFatLevel,
       sugarsLevel: sugarsLevel ?? this.sugarsLevel,
-      transportationImpactScore:
-          transportationImpactScore ?? this.transportationImpactScore,
+      transportationImpact: transportationImpact ?? this.transportationImpact,
     );
   }
 }
@@ -73,25 +69,24 @@ class FoodAdapter extends TypeAdapter<Food> {
       imageFrontSmallUrl: fields[3] as String?,
       imageFrontUrl: fields[4] as String?,
       imageIngredientsUrl: fields[5] as String?,
-      ecoscoreGrade: fields[6] as String?,
-      ecoscoreScore: fields[7] as double?,
-      packagingScore: fields[8] as double?,
-      productionImpactScore: fields[9] as double?,
-      transportationImpactScore: fields[10] as double?,
-      nutriscoreGrade: fields[11] as String?,
-      sugarsLevel: fields[12] as Level,
-      fatLevel: fields[13] as Level,
-      saturatedFatLevel: fields[14] as Level,
-      saltLevel: fields[15] as Level,
-      quantity: fields[16] as String?,
-      categoryTags: (fields[17] as List).cast<String>(),
+      ecoscoreGrade: fields[6] as Grade?,
+      packagingImpact: fields[7] as ImpactLevel?,
+      productionImpact: fields[8] as ImpactLevel?,
+      transportationImpact: fields[9] as ImpactLevel?,
+      nutriscoreGrade: fields[10] as Grade?,
+      sugarsLevel: fields[11] as ImpactLevel?,
+      fatLevel: fields[12] as ImpactLevel?,
+      saturatedFatLevel: fields[13] as ImpactLevel?,
+      saltLevel: fields[14] as ImpactLevel?,
+      quantity: fields[15] as String?,
+      categoryTags: (fields[16] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Food obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.barcode)
       ..writeByte(1)
@@ -107,26 +102,24 @@ class FoodAdapter extends TypeAdapter<Food> {
       ..writeByte(6)
       ..write(obj.ecoscoreGrade)
       ..writeByte(7)
-      ..write(obj.ecoscoreScore)
+      ..write(obj.packagingImpact)
       ..writeByte(8)
-      ..write(obj.packagingScore)
+      ..write(obj.productionImpact)
       ..writeByte(9)
-      ..write(obj.productionImpactScore)
+      ..write(obj.transportationImpact)
       ..writeByte(10)
-      ..write(obj.transportationImpactScore)
-      ..writeByte(11)
       ..write(obj.nutriscoreGrade)
-      ..writeByte(12)
+      ..writeByte(11)
       ..write(obj.sugarsLevel)
-      ..writeByte(13)
+      ..writeByte(12)
       ..write(obj.fatLevel)
-      ..writeByte(14)
+      ..writeByte(13)
       ..write(obj.saturatedFatLevel)
-      ..writeByte(15)
+      ..writeByte(14)
       ..write(obj.saltLevel)
-      ..writeByte(16)
+      ..writeByte(15)
       ..write(obj.quantity)
-      ..writeByte(17)
+      ..writeByte(16)
       ..write(obj.categoryTags);
   }
 

@@ -1,7 +1,5 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
-import 'package:ecoscore/common/extensions.dart';
 import 'package:hive/hive.dart';
-import 'package:openfoodfacts/model/NutrientLevels.dart';
 
 part 'food.g.dart';
 
@@ -16,10 +14,9 @@ class Food extends HiveObject {
     this.imageFrontUrl,
     this.imageIngredientsUrl,
     this.ecoscoreGrade,
-    this.ecoscoreScore,
-    this.packagingScore,
-    this.productionImpactScore,
-    this.transportationImpactScore,
+    this.packagingImpact,
+    this.productionImpact,
+    this.transportationImpact,
     this.nutriscoreGrade,
     required this.sugarsLevel,
     required this.fatLevel,
@@ -48,54 +45,86 @@ class Food extends HiveObject {
   String? imageIngredientsUrl;
 
   @HiveField(6)
-  String? ecoscoreGrade;
+  Grade? ecoscoreGrade;
 
   @HiveField(7)
-  double? ecoscoreScore;
+  ImpactLevel? packagingImpact;
 
   @HiveField(8)
-  double? packagingScore;
+  ImpactLevel? productionImpact;
 
   @HiveField(9)
-  double? productionImpactScore;
+  ImpactLevel? transportationImpact;
 
   @HiveField(10)
-  double? transportationImpactScore;
+  Grade? nutriscoreGrade;
 
   @HiveField(11)
-  String? nutriscoreGrade;
+  ImpactLevel? sugarsLevel;
 
   @HiveField(12)
-  Level sugarsLevel;
+  ImpactLevel? fatLevel;
 
   @HiveField(13)
-  Level fatLevel;
+  ImpactLevel? saturatedFatLevel;
 
   @HiveField(14)
-  Level saturatedFatLevel;
+  ImpactLevel? saltLevel;
 
   @HiveField(15)
-  Level saltLevel;
-
-  @HiveField(16)
   String? quantity;
 
-  @HiveField(17)
+  @HiveField(16)
   List<String> categoryTags;
 }
 
-class NutrientLevelAdapter extends TypeAdapter<Level> {
+enum Grade { a, b, c, d, e }
+
+extension GradeExtension on Grade {
+  String get letter {
+    switch (this) {
+      case Grade.a:
+        return 'a';
+      case Grade.b:
+        return 'b';
+      case Grade.c:
+        return 'c';
+      case Grade.d:
+        return 'd';
+      case Grade.e:
+        return 'e';
+    }
+  }
+}
+
+class GradeAdapter extends TypeAdapter<Grade> {
   @override
   final typeId = 100;
 
   @override
-  Level read(BinaryReader reader) {
-    final enumValue = reader.read() as String;
-    return Level.values.firstWhereOrNull((e) => e.value == enumValue) ?? Level.UNDEFINED;
+  Grade read(BinaryReader reader) {
+    return Grade.values[reader.read() as int];
   }
 
   @override
-  void write(BinaryWriter writer, Level l) {
-    writer.write(l.value);
+  void write(BinaryWriter writer, Grade l) {
+    writer.write(l.index);
+  }
+}
+
+enum ImpactLevel { low, moderate, high }
+
+class ImpactLevelAdapter extends TypeAdapter<ImpactLevel> {
+  @override
+  final typeId = 101;
+
+  @override
+  ImpactLevel read(BinaryReader reader) {
+    return ImpactLevel.values[reader.read() as int];
+  }
+
+  @override
+  void write(BinaryWriter writer, ImpactLevel l) {
+    writer.write(l.index);
   }
 }

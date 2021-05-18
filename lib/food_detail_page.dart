@@ -127,7 +127,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                   ),
                   const Gap(8),
                   SvgPicture.asset(
-                    'assets/ecoscore-${widget.food.ecoscoreGrade ?? 'unknown'}.svg',
+                    'assets/ecoscore-${widget.food.ecoscoreGrade?.letter ?? 'unknown'}.svg',
                     height: 24,
                   ),
                   const Gap(32),
@@ -137,7 +137,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                   ),
                   const Gap(8),
                   SvgPicture.asset(
-                    'assets/nutriscore-${widget.food.nutriscoreGrade ?? 'unknown'}.svg',
+                    'assets/nutriscore-${widget.food.nutriscoreGrade?.letter ?? 'unknown'}.svg',
                     height: 32,
                   ),
                   const Gap(32),

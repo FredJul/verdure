@@ -17,7 +17,8 @@ import 'model/foods_state.dart';
 Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(FoodAdapter());
-  Hive.registerAdapter(NutrientLevelAdapter());
+  Hive.registerAdapter(GradeAdapter());
+  Hive.registerAdapter(ImpactLevelAdapter());
 
   Future<Box<Food>> openBox(String boxName) async {
     Box<Food> box;

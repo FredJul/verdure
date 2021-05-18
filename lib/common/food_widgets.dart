@@ -61,13 +61,13 @@ class FoodCard extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 6),
                           child: SvgPicture.asset(
-                            'assets/ecoscore-${food.ecoscoreGrade ?? 'unknown'}.svg',
+                            'assets/ecoscore-${food.ecoscoreGrade?.letter ?? 'unknown'}.svg',
                             height: 24,
                           ),
                         ),
                         const Gap(12),
                         SvgPicture.asset(
-                          'assets/nutriscore-${food.nutriscoreGrade ?? 'unknown'}.svg',
+                          'assets/nutriscore-${food.nutriscoreGrade?.letter ?? 'unknown'}.svg',
                           height: 32,
                         ),
                       ],
