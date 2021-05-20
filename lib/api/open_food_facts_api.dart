@@ -24,12 +24,15 @@ class OpenFoodFactsApi {
     ProductField.CATEGORIES_TAGS,
   ];
 
+  static String get _lc => window.locale.languageCode;
+  static String get _cc => 'fr'; //TODO use window.locale.countryCode when the app will be open to all countries
+
   static Future<Food?> getFood(String barcode) async {
     final ProductQueryConfiguration configuration = ProductQueryConfiguration(
       barcode,
       fields: _productFields,
-      lc: window.locale.languageCode,
-      cc: window.locale.countryCode,
+      lc: _lc,
+      cc: _cc,
     );
 
     final ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
@@ -63,8 +66,8 @@ class OpenFoodFactsApi {
                 )),
             const SortBy(option: SortOption.POPULARITY),
           ],
-          lc: window.locale.languageCode,
-          cc: window.locale.countryCode,
+          lc: _lc,
+          cc: _cc,
         ),
       );
 
@@ -83,8 +86,8 @@ class OpenFoodFactsApi {
             SearchTerms(terms: [food.name]),
             const SortBy(option: SortOption.POPULARITY),
           ],
-          lc: window.locale.languageCode,
-          cc: window.locale.countryCode,
+          lc: _lc,
+          cc: _cc,
         ),
       );
 
@@ -109,8 +112,8 @@ class OpenFoodFactsApi {
           const PageSize(size: 50),
           SearchTerms(terms: [terms]),
         ],
-        lc: window.locale.languageCode,
-        cc: window.locale.countryCode,
+        lc: _lc,
+        cc: _cc,
       ),
     );
 
@@ -118,7 +121,7 @@ class OpenFoodFactsApi {
   }
 
   static String getEditUrl(Food food) {
-    final isFr = window.locale.languageCode.toLowerCase() == 'fr';
+    final isFr = _lc.toLowerCase() == 'fr';
     return 'https://${isFr ? 'fr' : 'world'}.openfoodfacts.org/cgi/product.pl?type=edit&code=${food.barcode}';
   }
 }
