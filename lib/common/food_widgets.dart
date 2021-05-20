@@ -10,6 +10,9 @@ import 'package:shimmer/shimmer.dart';
 import 'extensions.dart';
 
 class FoodCard extends StatelessWidget {
+  static const minHeight = 96.0;
+  static const minWidth = 296.0;
+
   const FoodCard({
     Key? key,
     required this.food,
@@ -21,55 +24,58 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.black12),
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-      ),
-      child: Tap(
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Row(
-            children: [
-              Hero(
-                tag: food.barcode,
-                child: FoodIcon(food: food, size: 72),
-              ),
-              const Gap(12),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      food.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    if (food.brands != null || food.quantity != null)
-                      Text(
-                        '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
-                        overflow: TextOverflow.ellipsis,
-                        style: context.textTheme.caption,
-                      ),
-                    const Gap(4),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 6),
-                          child: EcoscoreImage(grade: food.ecoscoreGrade),
-                        ),
-                        const Gap(12),
-                        NutriscoreImage(grade: food.nutriscoreGrade),
-                      ],
-                    ),
-                  ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minWidth: minWidth, minHeight: minHeight),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.black12),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        ),
+        child: Tap(
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Hero(
+                  tag: food.barcode,
+                  child: FoodIcon(food: food, size: 72),
                 ),
-              ),
-            ],
+                const Gap(12),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        food.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: context.textTheme.subtitle2?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      if (food.brands != null || food.quantity != null)
+                        Text(
+                          '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.caption,
+                        ),
+                      const Gap(4),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 6),
+                            child: EcoscoreImage(grade: food.ecoscoreGrade),
+                          ),
+                          const Gap(12),
+                          NutriscoreImage(grade: food.nutriscoreGrade),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

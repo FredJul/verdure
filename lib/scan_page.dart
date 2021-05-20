@@ -71,7 +71,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 32),
                 child: SizedBox(
-                  height: 96,
+                  height: FoodCard.minHeight,
                   child: AutoAnimList(
                     controller: _listController,
                     scrollDirection: Axis.horizontal,
@@ -81,7 +81,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
                             key: ValueKey(food),
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: SizedBox(
-                              width: 296,
+                              width: FoodCard.minWidth,
                               child: FoodCard(
                                 food: food,
                                 onTap: () => context.pushScreen(FoodDetailPage(food: food)),

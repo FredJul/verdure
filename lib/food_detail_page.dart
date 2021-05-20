@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'api/open_food_facts_api.dart';
@@ -24,6 +25,7 @@ class FoodDetailPage extends StatefulWidget {
 
 class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
   var _betterFoods = <Food>[];
+  var _betterFoodsLoading = true;
   var _betterFoodsError = false;
 
   @override
@@ -31,17 +33,25 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
     super.initState();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _fetchBetterAlternatives();
+      _fetchBetterFoods();
     });
   }
 
-  void _fetchBetterAlternatives() {
+  void _fetchBetterFoods() {
+    setState(() {
+      _betterFoodsLoading = true;
+    });
+
     observeFuture<List<Food>>(OpenFoodFactsApi.getBetterFoods(widget.food), (betterFoods) {
       setState(() {
+        _betterFoodsLoading = false;
         _betterFoods = betterFoods;
       });
     }, onError: (_) {
-      _betterFoodsError = true;
+      setState(() {
+        _betterFoodsLoading = false;
+        _betterFoodsError = true;
+      });
     });
   }
 
@@ -142,36 +152,72 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                 ],
               ),
             ),
-            if (_betterFoodsError)
-              ElevatedButton(
-                onPressed: () {
-                  _fetchBetterAlternatives();
-                },
-                child: Text('Retry'),
-              )
-            else
-              SizedBox(
-                height: 96,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  children: _betterFoods
-                      .map((food) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: SizedBox(
-                              width: 296,
-                              child: FoodCard(
-                                food: food,
-                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
-              ),
+            _buildBetterFoods(context),
           ],
         ),
       ),
+    );
+  }
+
+  SizedBox _buildBetterFoods(BuildContext context) {
+    return SizedBox(
+      height: FoodCard.minHeight,
+      child: _betterFoodsLoading
+          ? Padding(
+              padding: const EdgeInsets.only(left: 24),
+              child: Shimmer.fromColors(
+                baseColor: Colors.grey[100]!,
+                highlightColor: Colors.white,
+                child: SizedBox(
+                  width: FoodCard.minWidth,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          : _betterFoodsError
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      OutlinedButton(
+                        onPressed: () {
+                          _fetchBetterFoods();
+                        },
+                        child: Text(context.i18n.retry),
+                      ),
+                    ],
+                  ),
+                )
+              : _betterFoods.isEmpty
+                  ? Center(
+                      child: Text(
+                        context.i18n.noAlternativeFound,
+                        style: context.textTheme.bodyText1?.copyWith(color: Colors.grey),
+                      ),
+                    )
+                  : ListView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      children: _betterFoods
+                          .map((food) => Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: SizedBox(
+                                  width: FoodCard.minWidth,
+                                  child: FoodCard(
+                                    food: food,
+                                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
     );
   }
 }
