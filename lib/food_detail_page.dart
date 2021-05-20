@@ -1,3 +1,4 @@
+import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,19 +67,6 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(
-              isInFavorites ? Icons.favorite : Icons.favorite_outline,
-              color: Colors.red[400],
-            ),
-            onPressed: () {
-              if (isInFavorites) {
-                foodsState.removeFavoriteFood(widget.food);
-              } else {
-                foodsState.addFavoriteFood(widget.food);
-              }
-            },
-          ),
-          IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () async {
               try {
@@ -123,9 +111,47 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                         ),
                       ),
                       const Gap(16),
-                      Hero(
-                        tag: widget.food.barcode,
-                        child: FoodIcon(food: widget.food, size: 128),
+                      Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black12),
+                              borderRadius: const BorderRadius.all(Radius.circular(12)),
+                            ),
+                            child: Hero(
+                              tag: widget.food.barcode,
+                              child: FoodIcon(food: widget.food, size: 128),
+                            ),
+                          ),
+                          Positioned(
+                            right: 4,
+                            bottom: 4,
+                            child: Tap(
+                              borderRadius: const BorderRadius.all(Radius.circular(36)),
+                              onTap: () {
+                                if (isInFavorites) {
+                                  foodsState.removeFavoriteFood(widget.food);
+                                } else {
+                                  foodsState.addFavoriteFood(widget.food);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withAlpha(220),
+                                  borderRadius: const BorderRadius.all(Radius.circular(36)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Icon(
+                                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
+                                    color: Colors.red[400],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
