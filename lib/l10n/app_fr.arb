@@ -9,6 +9,17 @@
     "betterFoods": "Meilleures alternatives",
     "nutritionalValues": "Valeurs nutritionnelles",
     "browserOpeningError": "Une erreur s'est produite lors du lancement du navigateur.",
+    "production": "Production",
+    "transportation": "Transport",
+    "packaging": "Emballage",
+    "sugars": "Sucres",
+    "fat": "Graisses",
+    "saturatedFat": "Graisses saturées",
+    "salt": "Sel",
+    "lowImpact": "Faible impact",
+    "moderateImpact": "Impact modéré",
+    "highImpact": "Fort impact",
+    "unknownImpact": "Données manquantes",
     "retry": "Une erreur s'est produite, veuillez réessayer",
     "noAlternativeFound": "Aucune alternative trouvée"
 }

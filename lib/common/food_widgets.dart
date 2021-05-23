@@ -144,14 +144,14 @@ class FoodIcon extends StatelessWidget {
 class EcoscoreImage extends StatelessWidget {
   const EcoscoreImage({
     this.grade,
+    this.height = 24.0,
   });
 
   final Grade? grade;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    const height = 24.0;
-
     switch (grade) {
       case Grade.a:
         return Assets.ecoscoreA.svg(height: height);
@@ -172,14 +172,14 @@ class EcoscoreImage extends StatelessWidget {
 class NutriscoreImage extends StatelessWidget {
   const NutriscoreImage({
     this.grade,
+    this.height = 32.0,
   });
 
   final Grade? grade;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
-    const height = 32.0;
-
     switch (grade) {
       case Grade.a:
         return Assets.nutriscoreA.svg(height: height);

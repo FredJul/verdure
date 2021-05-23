@@ -156,19 +156,46 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                     ],
                   ),
                   const Gap(32),
-                  Text(
-                    context.i18n.environmentalImpact,
-                    style: context.textTheme.subtitle1,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          context.i18n.environmentalImpact,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.subtitle1,
+                        ),
+                      ),
+                      EcoscoreImage(
+                        grade: widget.food.ecoscoreGrade,
+                        height: 32,
+                      ),
+                    ],
                   ),
                   const Gap(8),
-                  EcoscoreImage(grade: widget.food.ecoscoreGrade),
-                  const Gap(32),
-                  Text(
-                    context.i18n.nutritionalValues,
-                    style: context.textTheme.subtitle1,
+                  _ImpactLevelIndicator(name: context.i18n.production, level: widget.food.productionImpact),
+                  _ImpactLevelIndicator(name: context.i18n.transportation, level: widget.food.transportationImpact),
+                  _ImpactLevelIndicator(name: context.i18n.packaging, level: widget.food.packagingImpact),
+                  const Gap(24),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          context.i18n.nutritionalValues,
+                          overflow: TextOverflow.ellipsis,
+                          style: context.textTheme.subtitle1,
+                        ),
+                      ),
+                      NutriscoreImage(
+                        grade: widget.food.nutriscoreGrade,
+                        height: 42,
+                      ),
+                    ],
                   ),
                   const Gap(8),
-                  NutriscoreImage(grade: widget.food.nutriscoreGrade),
+                  _ImpactLevelIndicator(name: context.i18n.sugars, level: widget.food.sugarsLevel),
+                  _ImpactLevelIndicator(name: context.i18n.fat, level: widget.food.fatLevel),
+                  _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: widget.food.saturatedFatLevel),
+                  _ImpactLevelIndicator(name: context.i18n.salt, level: widget.food.saltLevel),
                   const Gap(32),
                   Text(
                     context.i18n.betterFoods,
@@ -179,6 +206,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
               ),
             ),
             _buildBetterFoods(context),
+            const Gap(32),
           ],
         ),
       ),
@@ -244,6 +272,60 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                               ))
                           .toList(),
                     ),
+    );
+  }
+}
+
+class _ImpactLevelIndicator extends StatelessWidget {
+  final String name;
+  final ImpactLevel? level;
+
+  const _ImpactLevelIndicator({
+    Key? key,
+    required this.name,
+    required this.level,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(name),
+                Text(
+                  level == ImpactLevel.low
+                      ? context.i18n.lowImpact
+                      : level == ImpactLevel.moderate
+                          ? context.i18n.moderateImpact
+                          : level == ImpactLevel.high
+                              ? context.i18n.highImpact
+                              : context.i18n.unknownImpact,
+                  style: context.textTheme.caption,
+                ),
+              ],
+            ),
+          ),
+        ),
+        Container(
+          width: 16,
+          height: 16,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: level == ImpactLevel.low
+                ? Colors.green
+                : level == ImpactLevel.moderate
+                    ? Colors.orange
+                    : level == ImpactLevel.high
+                        ? Colors.red
+                        : Colors.grey,
+          ),
+        ),
+      ],
     );
   }
 }
