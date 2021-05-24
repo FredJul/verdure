@@ -1,9 +1,5 @@
+import 'package:dartx/dartx.dart';
 import 'package:easy_debounce/easy_debounce.dart';
-import 'package:ecoscore/api/open_food_facts_api.dart';
-import 'package:ecoscore/common/observer_state.dart';
-import 'package:ecoscore/food_detail_page.dart';
-import 'package:ecoscore/gen/assets.gen.dart';
-import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -12,8 +8,13 @@ import 'package:gap/gap.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
 
+import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
 import 'common/food_widgets.dart';
+import 'common/observer_state.dart';
+import 'food_detail_page.dart';
+import 'gen/assets.gen.dart';
+import 'model/food.dart';
 import 'model/foods_state.dart';
 
 class HomePage extends StatefulWidget {
@@ -133,7 +134,7 @@ class _HomePageState extends ObserverState<HomePage> {
 
             EasyDebounce.debounce(
               'search_key',
-              const Duration(seconds: 2),
+              2.seconds,
               () => observeFuture<List<Food>>(
                 OpenFoodFactsApi.search(query),
                 (foods) => setState(() {

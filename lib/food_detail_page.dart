@@ -1,5 +1,4 @@
-import 'package:ecoscore/common/widgets.dart';
-import 'package:ecoscore/model/food.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -11,9 +10,11 @@ import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
 import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
+import 'common/widgets.dart';
+import 'model/food.dart';
 import 'model/foods_state.dart';
 
-class FoodDetailPage extends StatefulWidget {
+class FoodDetailPage extends StatelessWidget {
   const FoodDetailPage({
     required this.food,
   });
@@ -21,45 +22,8 @@ class FoodDetailPage extends StatefulWidget {
   final Food food;
 
   @override
-  _FoodDetailPageState createState() => _FoodDetailPageState();
-}
-
-class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
-  var _betterFoods = <Food>[];
-  var _betterFoodsLoading = true;
-  var _betterFoodsError = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      _fetchBetterFoods();
-    });
-  }
-
-  void _fetchBetterFoods() {
-    setState(() {
-      _betterFoodsLoading = true;
-    });
-
-    observeFuture<List<Food>>(OpenFoodFactsApi.getBetterFoods(widget.food), (betterFoods) {
-      setState(() {
-        _betterFoodsLoading = false;
-        _betterFoods = betterFoods;
-      });
-    }, onError: (_) {
-      setState(() {
-        _betterFoodsLoading = false;
-        _betterFoodsError = true;
-      });
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final foodsState = context.watch<FoodsState>();
-    final isInFavorites = foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
 
     return Scaffold(
       appBar: AppBar(
@@ -70,7 +34,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
             icon: const Icon(Icons.edit),
             onPressed: () async {
               try {
-                await launch(OpenFoodFactsApi.getEditUrl(widget.food));
+                await launch(OpenFoodFactsApi.getEditUrl(food));
               } catch (_) {
                 final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -85,138 +49,292 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.food.name,
-                              maxLines: 3,
-                              overflow: TextOverflow.ellipsis,
-                              style: context.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
-                            ),
-                            if (widget.food.brands != null || widget.food.quantity != null)
-                              Text(
-                                '${widget.food.brands ?? ''}${widget.food.brands != null && widget.food.quantity != null ? ' - ' : ''}${widget.food.quantity ?? ''}',
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: context.textTheme.subtitle2,
-                              ),
-                          ],
-                        ),
-                      ),
-                      const Gap(16),
-                      Stack(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.black12),
-                              borderRadius: const BorderRadius.all(Radius.circular(12)),
-                            ),
-                            child: Hero(
-                              tag: widget.food.barcode,
-                              child: FoodIcon(food: widget.food, size: 128),
-                            ),
-                          ),
-                          Positioned(
-                            right: 4,
-                            bottom: 4,
-                            child: Tap(
-                              borderRadius: const BorderRadius.all(Radius.circular(36)),
-                              onTap: () {
-                                if (isInFavorites) {
-                                  foodsState.removeFavoriteFood(widget.food);
-                                } else {
-                                  foodsState.addFavoriteFood(widget.food);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withAlpha(220),
-                                  borderRadius: const BorderRadius.all(Radius.circular(36)),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Icon(
-                                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
-                                    color: Colors.red[400],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Gap(32),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          context.i18n.environmentalImpact,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          food.name,
+                          maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.subtitle1,
+                          style: context.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
                         ),
-                      ),
-                      EcoscoreImage(
-                        grade: widget.food.ecoscoreGrade,
-                        height: 32,
-                      ),
-                    ],
+                        if (food.brands != null || food.quantity != null)
+                          Text(
+                            '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: context.textTheme.subtitle2,
+                          ),
+                      ],
+                    ),
                   ),
-                  const Gap(8),
-                  _ImpactLevelIndicator(name: context.i18n.production, level: widget.food.productionImpact),
-                  _ImpactLevelIndicator(name: context.i18n.transportation, level: widget.food.transportationImpact),
-                  _ImpactLevelIndicator(name: context.i18n.packaging, level: widget.food.packagingImpact),
-                  const Gap(24),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          context.i18n.nutritionalValues,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.subtitle1,
-                        ),
-                      ),
-                      NutriscoreImage(
-                        grade: widget.food.nutriscoreGrade,
-                        height: 42,
-                      ),
-                    ],
-                  ),
-                  const Gap(8),
-                  _ImpactLevelIndicator(name: context.i18n.sugars, level: widget.food.sugarsLevel),
-                  _ImpactLevelIndicator(name: context.i18n.fat, level: widget.food.fatLevel),
-                  _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: widget.food.saturatedFatLevel),
-                  _ImpactLevelIndicator(name: context.i18n.salt, level: widget.food.saltLevel),
-                  const Gap(32),
-                  Text(
-                    context.i18n.betterFoods,
-                    style: context.textTheme.subtitle1,
-                  ),
-                  const Gap(8),
+                  const Gap(16),
+                  _LargeFoodIcon(food: food, foodsState: foodsState),
                 ],
               ),
             ),
-            _buildBetterFoods(context),
+            const Gap(32),
+            _Environment(food: food),
+            const Gap(24),
+            _Nutrients(food: food),
+            const Gap(32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                context.i18n.alternatives,
+                style: context.textTheme.subtitle1,
+              ),
+            ),
+            const Gap(8),
+            _AlternativesList(food: food, foodsState: foodsState),
             const Gap(32),
           ],
         ),
       ),
     );
   }
+}
 
-  SizedBox _buildBetterFoods(BuildContext context) {
+class _Environment extends StatelessWidget {
+  const _Environment({
+    Key? key,
+    required this.food,
+  }) : super(key: key);
+
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black26, blurRadius: 4),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    context.i18n.environmentalImpact,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.subtitle1,
+                  ),
+                ),
+                EcoscoreImage(
+                  grade: food.ecoscoreGrade,
+                  height: 32,
+                ),
+              ],
+            ),
+            const Gap(8),
+            _ImpactLevelIndicator(name: context.i18n.production, level: food.productionImpact),
+            _ImpactLevelIndicator(name: context.i18n.transportation, level: food.transportationImpact),
+            _ImpactLevelIndicator(name: context.i18n.packaging, level: food.packagingImpact),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Nutrients extends StatelessWidget {
+  const _Nutrients({
+    Key? key,
+    required this.food,
+  }) : super(key: key);
+
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(color: Colors.black26, blurRadius: 4),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    context.i18n.nutritionalValues,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.subtitle1,
+                  ),
+                ),
+                NutriscoreImage(
+                  grade: food.nutriscoreGrade,
+                  height: 42,
+                ),
+              ],
+            ),
+            const Gap(8),
+            _ImpactLevelIndicator(name: context.i18n.sugars, level: food.sugarsLevel),
+            _ImpactLevelIndicator(name: context.i18n.fat, level: food.fatLevel),
+            _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: food.saturatedFatLevel),
+            _ImpactLevelIndicator(name: context.i18n.salt, level: food.saltLevel),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LargeFoodIcon extends StatefulWidget {
+  const _LargeFoodIcon({
+    Key? key,
+    required this.food,
+    required this.foodsState,
+  }) : super(key: key);
+
+  final Food food;
+  final FoodsState foodsState;
+
+  @override
+  _LargeFoodIconState createState() => _LargeFoodIconState();
+}
+
+class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: 100.milliseconds,
+    vsync: this,
+  );
+  late final Animation<double> _animation = CurvedAnimation(
+    parent: _controller,
+    curve: Curves.easeInOut,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+
+    delay(400.milliseconds, () {
+      _controller.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isInFavorites = widget.foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
+
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.black12),
+            borderRadius: const BorderRadius.all(Radius.circular(12)),
+          ),
+          child: Hero(
+            tag: widget.food.barcode,
+            child: FoodIcon(food: widget.food, size: 128),
+          ),
+        ),
+        Positioned(
+          right: 4,
+          bottom: 4,
+          child: ScaleTransition(
+            scale: _animation,
+            child: Tap(
+              borderRadius: const BorderRadius.all(Radius.circular(36)),
+              onTap: () {
+                if (isInFavorites) {
+                  widget.foodsState.removeFavoriteFood(widget.food);
+                } else {
+                  widget.foodsState.addFavoriteFood(widget.food);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(220),
+                  borderRadius: const BorderRadius.all(Radius.circular(36)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(
+                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
+                    color: Colors.red[400],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _AlternativesList extends StatefulWidget {
+  const _AlternativesList({
+    Key? key,
+    required this.food,
+    required this.foodsState,
+  }) : super(key: key);
+
+  final Food food;
+  final FoodsState foodsState;
+
+  @override
+  _AlternativesListState createState() => _AlternativesListState();
+}
+
+class _AlternativesListState extends ObserverState<_AlternativesList> {
+  var _alternatives = <Food>[];
+  var _alternativesLoading = true;
+  var _alternativesError = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _fetchAlternatives();
+    });
+  }
+
+  void _fetchAlternatives() {
+    setState(() {
+      _alternativesLoading = true;
+    });
+
+    observeFuture<List<Food>>(OpenFoodFactsApi.getAlternatives(widget.food), (alternatives) {
+      setState(() {
+        _alternativesLoading = false;
+        _alternatives = alternatives;
+      });
+    }, onError: (_) {
+      setState(() {
+        _alternativesLoading = false;
+        _alternativesError = true;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: FoodCard.minHeight,
-      child: _betterFoodsLoading
+      child: _alternativesLoading
           ? Padding(
               padding: const EdgeInsets.only(left: 24),
               child: Shimmer.fromColors(
@@ -234,7 +352,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                 ),
               ),
             )
-          : _betterFoodsError
+          : _alternativesError
               ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -242,14 +360,14 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                     children: [
                       OutlinedButton(
                         onPressed: () {
-                          _fetchBetterFoods();
+                          _fetchAlternatives();
                         },
                         child: Text(context.i18n.retry),
                       ),
                     ],
                   ),
                 )
-              : _betterFoods.isEmpty
+              : _alternatives.isEmpty
                   ? Center(
                       child: Text(
                         context.i18n.noAlternativeFound,
@@ -259,7 +377,7 @@ class _FoodDetailPageState extends ObserverState<FoodDetailPage> {
                   : ListView(
                       scrollDirection: Axis.horizontal,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      children: _betterFoods
+                      children: _alternatives
                           .map((food) => Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 8),
                                 child: SizedBox(
@@ -319,10 +437,10 @@ class _ImpactLevelIndicator extends StatelessWidget {
             color: level == ImpactLevel.low
                 ? Colors.green
                 : level == ImpactLevel.moderate
-                    ? Colors.orange
+                    ? Colors.yellow[600]
                     : level == ImpactLevel.high
-                        ? Colors.red
-                        : Colors.grey,
+                        ? Colors.red[400]
+                        : Colors.grey[400],
           ),
         ),
       ],

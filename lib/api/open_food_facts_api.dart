@@ -1,12 +1,11 @@
 import 'dart:ui';
 
-import 'package:ecoscore/common/extensions.dart';
+import 'package:dartx/dartx.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:openfoodfacts/model/NutrientLevels.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/model/parameter/TagFilter.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:sorted/sorted.dart';
 
 class OpenFoodFactsApi {
   OpenFoodFactsApi._();
@@ -39,7 +38,7 @@ class OpenFoodFactsApi {
     return result.product?.toFood();
   }
 
-  static Future<List<Food>> getBetterFoods(Food food) async {
+  static Future<List<Food>> getAlternatives(Food food) async {
     void removeWorseProducts(List<Product>? products) {
       products?.removeWhere((p) =>
           p.ecoscoreGradeEnum == null || (food.ecoscoreGrade != null && p.ecoscoreGradeEnum!.index > food.ecoscoreGrade!.index));
@@ -95,10 +94,7 @@ class OpenFoodFactsApi {
       removeWorseProducts(products);
     }
 
-    products = products?.sorted([
-      SortedComparable<Product, int>((p) => p.ecoscoreGradeEnum!.index),
-      SortedComparable<Product, int>((p) => p.nutriscoreGradeEnum!.index),
-    ]);
+    products = products?.sortedBy((p) => p.ecoscoreGradeEnum!.index).thenBy((p) => p.nutriscoreGradeEnum!.index);
 
     return products?.take(20).map((p) => p.toFood()).toList() ?? [];
   }

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ecoscore/model/food.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +12,7 @@ import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
 import 'common/widgets.dart';
 import 'food_detail_page.dart';
+import 'model/food.dart';
 import 'model/foods_state.dart';
 
 class ScanPage extends StatefulWidget {
@@ -119,7 +120,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
             observeFuture<Food?>(OpenFoodFactsApi.getFood(barcode.code), (food) {
               if (food != null && food.name.isNotEmpty) {
                 foodsState.addScannedFood(food);
-                _listController.animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                _listController.animateTo(0, duration: 300.milliseconds, curve: Curves.easeInOut);
               }
             }, onError: (_) {
               //TODO display snackbar?

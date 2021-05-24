@@ -1,12 +1,13 @@
-import 'package:ecoscore/gen/assets.gen.dart';
-import 'package:ecoscore/home_page.dart';
-import 'package:ecoscore/scan_page.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import 'common/extensions.dart';
 import 'favorites_page.dart';
+import 'gen/assets.gen.dart';
+import 'home_page.dart';
+import 'scan_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -83,7 +84,7 @@ class _MainPageState extends State<MainPage> {
   Widget _buildBottomBarItem({required int idx, required IconData icon, required String name}) => Expanded(
         child: InkWell(
           highlightColor: Colors.transparent,
-          onTap: () => _pageController.animateToPage(idx, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut),
+          onTap: () => _pageController.animateToPage(idx, duration: 300.milliseconds, curve: Curves.easeInOut),
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(

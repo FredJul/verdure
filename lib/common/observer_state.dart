@@ -43,4 +43,10 @@ abstract class ObserverState<E extends StatefulWidget> extends State<E> with Wid
 
     _subscriptions.add(s);
   }
+
+  void delay(Duration duration, VoidCallback onDelayed) {
+    observeFuture<void>(Future<void>.delayed(duration), (_) {
+      onDelayed();
+    });
+  }
 }

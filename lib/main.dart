@@ -1,8 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:ecoscore/gen/colors.gen.dart';
-import 'package:ecoscore/gen/fonts.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +9,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
+import 'gen/colors.gen.dart';
+import 'gen/fonts.gen.dart';
 import 'main_page.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';

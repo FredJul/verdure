@@ -198,7 +198,7 @@ packages:
     source: hosted
     version: "2.0.1"
   dartx:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dartx
       url: "https://pub.dartlang.org"
@@ -651,13 +651,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  sorted:
-    dependency: "direct main"
-    description:
-      name: sorted
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   source_gen:
     dependency: transitive
     description:

@@ -22,16 +22,6 @@ extension ListExtension<E> on List<E> {
         ),
       )
       .values;
-
-  E? firstWhereOrNull(bool Function(E element) test) {
-    for (final e in this) {
-      if (test(e)) {
-        return e;
-      }
-    }
-
-    return null;
-  }
 }
 
 extension MapExtension<K, V> on Map<K, V> {
