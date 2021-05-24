@@ -11,6 +11,7 @@ import 'common/extensions.dart';
 import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
 import 'common/widgets.dart';
+import 'gen/colors.gen.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';
 
@@ -26,71 +27,92 @@ class FoodDetailPage extends StatelessWidget {
     final foodsState = context.watch<FoodsState>();
 
     return Scaffold(
+      backgroundColor: ColorName.primary[50],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              try {
-                await launch(OpenFoodFactsApi.getEditUrl(food));
-              } catch (_) {
-                final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
-            },
-          ),
-        ],
+        iconTheme: IconThemeData(
+          color: ColorName.primary[900],
+        ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _FoodHeader(food: food, foodsState: foodsState),
+              const Gap(32),
+              _Environment(food: food),
+              const Gap(24),
+              _Nutrients(food: food),
+              const Gap(32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  context.i18n.alternatives,
+                  style: context.textTheme.subtitle1,
+                ),
+              ),
+              const Gap(8),
+              _AlternativesList(food: food, foodsState: foodsState),
+              const Gap(32),
+              _AboutData(food: food),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FoodHeader extends StatelessWidget {
+  const _FoodHeader({
+    Key? key,
+    required this.food,
+    required this.foodsState,
+  }) : super(key: key);
+
+  final Food food;
+  final FoodsState foodsState;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(36), bottomRight: Radius.circular(36)),
+        color: ColorName.primary[50],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          food.name,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                          style: context.textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        if (food.brands != null || food.quantity != null)
-                          Text(
-                            '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: context.textTheme.subtitle2,
-                          ),
-                      ],
+                  Text(
+                    food.name,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.headline6?.copyWith(
+                      color: ColorName.primary[900],
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const Gap(16),
-                  _LargeFoodIcon(food: food, foodsState: foodsState),
+                  if (food.brands != null || food.quantity != null)
+                    Text(
+                      '${food.brands ?? ''}${food.brands != null && food.quantity != null ? ' - ' : ''}${food.quantity ?? ''}',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: context.textTheme.subtitle2?.copyWith(
+                        color: ColorName.primary[900],
+                      ),
+                    ),
                 ],
               ),
             ),
-            const Gap(32),
-            _Environment(food: food),
-            const Gap(24),
-            _Nutrients(food: food),
-            const Gap(32),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Text(
-                context.i18n.alternatives,
-                style: context.textTheme.subtitle1,
-              ),
-            ),
-            const Gap(8),
-            _AlternativesList(food: food, foodsState: foodsState),
-            const Gap(32),
+            _LargeFoodIcon(food: food, foodsState: foodsState),
           ],
         ),
       ),
@@ -238,20 +260,23 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
 
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.black12),
-            borderRadius: const BorderRadius.all(Radius.circular(12)),
-          ),
-          child: Hero(
-            tag: widget.food.barcode,
-            child: FoodIcon(food: widget.food, size: 128),
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black12),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+            ),
+            child: Hero(
+              tag: widget.food.barcode,
+              child: FoodIcon(food: widget.food, size: 128),
+            ),
           ),
         ),
         Positioned(
-          right: 4,
-          bottom: 4,
+          right: 0,
+          bottom: 0,
           child: ScaleTransition(
             scale: _animation,
             child: Tap(
@@ -444,6 +469,75 @@ class _ImpactLevelIndicator extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _AboutData extends StatelessWidget {
+  const _AboutData({
+    Key? key,
+    required this.food,
+  }) : super(key: key);
+
+  final Food food;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tap(
+      onTap: () async {
+        try {
+          await launch(OpenFoodFactsApi.getViewUrl(food));
+        } catch (_) {
+          final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(36), topRight: Radius.circular(36)),
+          color: ColorName.primary[50],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(48),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.i18n.dataSource,
+                      style: context.textTheme.subtitle2?.copyWith(
+                        color: ColorName.primary[900],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Gap(8),
+                    Text(
+                      context.i18n.dataModification,
+                      style: context.textTheme.subtitle2?.copyWith(
+                        color: ColorName.primary[900],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Gap(24),
+              Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  color: ColorName.primary,
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                child: const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

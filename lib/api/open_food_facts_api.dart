@@ -116,10 +116,7 @@ class OpenFoodFactsApi {
     return searchResult.products?.map((p) => p.toFood()).toList() ?? [];
   }
 
-  static String getEditUrl(Food food) {
-    final isFr = _lc.toLowerCase() == 'fr';
-    return 'https://${isFr ? 'fr' : 'world'}.openfoodfacts.org/cgi/product.pl?type=edit&code=${food.barcode}';
-  }
+  static String getViewUrl(Food food) => 'https://openfoodfacts.org/product/${food.barcode}';
 }
 
 extension _ProductExtension on Product {
