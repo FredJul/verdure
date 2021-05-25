@@ -51,10 +51,13 @@ class _ScanPageState extends ObserverState<ScanPage> {
       body: Stack(
         children: [
           _buildQrView(context, foodsState),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: IconButton(
+          AppBar(
+            iconTheme: const IconThemeData(
+              color: Colors.white,
+            ),
+            backgroundColor: Colors.transparent,
+            actions: [
+              IconButton(
                 icon: const Icon(
                   Icons.flash_on,
                   color: Colors.white,
@@ -64,7 +67,7 @@ class _ScanPageState extends ObserverState<ScanPage> {
                   setState(() {});
                 },
               ),
-            ),
+            ],
           ),
           SafeArea(
             child: Align(

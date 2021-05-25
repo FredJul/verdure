@@ -47,16 +47,16 @@ class FoodDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Gap(32),
+                  const Gap(22),
                   _Environment(food: food),
-                  const Gap(24),
+                  const Gap(22),
                   _Nutrients(food: food),
-                  const Gap(32),
+                  const Gap(22),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
                       context.i18n.alternatives,
-                      style: context.textTheme.subtitle1,
+                      style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                   const Gap(8),
@@ -234,38 +234,30 @@ class _Environment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 4),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.i18n.environmentalImpact,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              EcoscoreImage(
+                grade: food.ecoscoreGrade,
+                height: 32,
+              ),
+            ],
+          ),
+          const Gap(8),
+          _ImpactLevelIndicator(name: context.i18n.production, level: food.productionImpact),
+          _ImpactLevelIndicator(name: context.i18n.transportation, level: food.transportationImpact),
+          _ImpactLevelIndicator(name: context.i18n.packaging, level: food.packagingImpact),
         ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    context.i18n.environmentalImpact,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.subtitle1,
-                  ),
-                ),
-                EcoscoreImage(
-                  grade: food.ecoscoreGrade,
-                  height: 32,
-                ),
-              ],
-            ),
-            const Gap(8),
-            _ImpactLevelIndicator(name: context.i18n.production, level: food.productionImpact),
-            _ImpactLevelIndicator(name: context.i18n.transportation, level: food.transportationImpact),
-            _ImpactLevelIndicator(name: context.i18n.packaging, level: food.packagingImpact),
-          ],
-        ),
       ),
     );
   }
@@ -281,39 +273,31 @@ class _Nutrients extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.black26, blurRadius: 4),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  context.i18n.nutritionalValues,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                ),
+              ),
+              NutriscoreImage(
+                grade: food.nutriscoreGrade,
+                height: 42,
+              ),
+            ],
+          ),
+          const Gap(8),
+          _ImpactLevelIndicator(name: context.i18n.sugars, level: food.sugarsLevel),
+          _ImpactLevelIndicator(name: context.i18n.fat, level: food.fatLevel),
+          _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: food.saturatedFatLevel),
+          _ImpactLevelIndicator(name: context.i18n.salt, level: food.saltLevel),
         ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    context.i18n.nutritionalValues,
-                    overflow: TextOverflow.ellipsis,
-                    style: context.textTheme.subtitle1,
-                  ),
-                ),
-                NutriscoreImage(
-                  grade: food.nutriscoreGrade,
-                  height: 42,
-                ),
-              ],
-            ),
-            const Gap(8),
-            _ImpactLevelIndicator(name: context.i18n.sugars, level: food.sugarsLevel),
-            _ImpactLevelIndicator(name: context.i18n.fat, level: food.fatLevel),
-            _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: food.saturatedFatLevel),
-            _ImpactLevelIndicator(name: context.i18n.salt, level: food.saltLevel),
-          ],
-        ),
       ),
     );
   }
