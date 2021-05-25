@@ -116,7 +116,7 @@ class OpenFoodFactsApi {
     return searchResult.products?.map((p) => p.toFood()).toList() ?? [];
   }
 
-  static String getViewUrl(Food food) => 'https://openfoodfacts.org/product/${food.barcode}';
+  static String getViewUrl(Food food) => 'https://$_cc.openfoodfacts.org/product/${food.barcode}';
 }
 
 extension _ProductExtension on Product {

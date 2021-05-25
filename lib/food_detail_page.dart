@@ -27,40 +27,47 @@ class FoodDetailPage extends StatelessWidget {
     final foodsState = context.watch<FoodsState>();
 
     return Scaffold(
-      backgroundColor: ColorName.primary[50],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(
-          color: ColorName.primary[900],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _FoodHeader(food: food, foodsState: foodsState),
-              const Gap(32),
-              _Environment(food: food),
-              const Gap(24),
-              _Nutrients(food: food),
-              const Gap(32),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  context.i18n.alternatives,
-                  style: context.textTheme.subtitle1,
-                ),
-              ),
-              const Gap(8),
-              _AlternativesList(food: food, foodsState: foodsState),
-              const Gap(32),
-              _AboutData(food: food),
-            ],
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            iconTheme: IconThemeData(
+              color: ColorName.primary[900],
+            ),
+            backgroundColor: Colors.white,
+            pinned: true,
+            expandedHeight: 224,
+            title: DisapearingSliverAppBarTitle(child: Text(food.name)),
+            flexibleSpace: FlexibleSpaceBar(
+              background: _FoodHeader(food: food, foodsState: foodsState),
+            ),
           ),
-        ),
+          SliverToBoxAdapter(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Gap(32),
+                  _Environment(food: food),
+                  const Gap(24),
+                  _Nutrients(food: food),
+                  const Gap(32),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(
+                      context.i18n.alternatives,
+                      style: context.textTheme.subtitle1,
+                    ),
+                  ),
+                  const Gap(8),
+                  _AlternativesList(food: food, foodsState: foodsState),
+                  const Gap(32),
+                  _AboutData(food: food),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -84,12 +91,13 @@ class _FoodHeader extends StatelessWidget {
         color: ColorName.primary[50],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+        padding: const EdgeInsets.only(top: 64, left: 24, right: 16, bottom: 16),
         child: Row(
           children: [
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     food.name,
@@ -116,6 +124,102 @@ class _FoodHeader extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _LargeFoodIcon extends StatefulWidget {
+  const _LargeFoodIcon({
+    Key? key,
+    required this.food,
+    required this.foodsState,
+  }) : super(key: key);
+
+  final Food food;
+  final FoodsState foodsState;
+
+  @override
+  _LargeFoodIconState createState() => _LargeFoodIconState();
+}
+
+class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTickerProviderStateMixin {
+  late final AnimationController _favAnimController = AnimationController(
+    duration: 100.milliseconds,
+    vsync: this,
+  );
+  late final Animation<double> _favAnimation = CurvedAnimation(
+    parent: _favAnimController,
+    curve: Curves.easeInOut,
+  );
+
+  @override
+  void initState() {
+    super.initState();
+
+    // We wait for the hero animation to be done before displaying the favorite button animation
+    delay(400.milliseconds, () {
+      _favAnimController.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _favAnimController.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isInFavorites = widget.foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
+
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.black12),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+            ),
+            child: Hero(
+              tag: widget.food.barcode,
+              child: FoodIcon(food: widget.food, size: 128),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          bottom: 0,
+          child: ScaleTransition(
+            scale: _favAnimation,
+            child: Tap(
+              borderRadius: const BorderRadius.all(Radius.circular(36)),
+              onTap: () {
+                if (isInFavorites) {
+                  widget.foodsState.removeFavoriteFood(widget.food);
+                } else {
+                  widget.foodsState.addFavoriteFood(widget.food);
+                }
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black12),
+                  color: Colors.white.withAlpha(220),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(
+                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
+                    color: Colors.red[400],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -211,100 +315,6 @@ class _Nutrients extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _LargeFoodIcon extends StatefulWidget {
-  const _LargeFoodIcon({
-    Key? key,
-    required this.food,
-    required this.foodsState,
-  }) : super(key: key);
-
-  final Food food;
-  final FoodsState foodsState;
-
-  @override
-  _LargeFoodIconState createState() => _LargeFoodIconState();
-}
-
-class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: 100.milliseconds,
-    vsync: this,
-  );
-  late final Animation<double> _animation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeInOut,
-  );
-
-  @override
-  void initState() {
-    super.initState();
-
-    delay(400.milliseconds, () {
-      _controller.forward();
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isInFavorites = widget.foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
-
-    return Stack(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(12),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(color: Colors.black12),
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-            ),
-            child: Hero(
-              tag: widget.food.barcode,
-              child: FoodIcon(food: widget.food, size: 128),
-            ),
-          ),
-        ),
-        Positioned(
-          right: 0,
-          bottom: 0,
-          child: ScaleTransition(
-            scale: _animation,
-            child: Tap(
-              borderRadius: const BorderRadius.all(Radius.circular(36)),
-              onTap: () {
-                if (isInFavorites) {
-                  widget.foodsState.removeFavoriteFood(widget.food);
-                } else {
-                  widget.foodsState.addFavoriteFood(widget.food);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(220),
-                  borderRadius: const BorderRadius.all(Radius.circular(36)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Icon(
-                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
-                    color: Colors.red[400],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
@@ -483,7 +493,7 @@ class _AboutData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tap(
+    return GestureDetector(
       onTap: () async {
         try {
           await launch(OpenFoodFactsApi.getViewUrl(food));
@@ -498,7 +508,7 @@ class _AboutData extends StatelessWidget {
           color: ColorName.primary[50],
         ),
         child: Padding(
-          padding: const EdgeInsets.all(48),
+          padding: const EdgeInsets.all(32),
           child: Row(
             children: [
               Expanded(
@@ -522,7 +532,7 @@ class _AboutData extends StatelessWidget {
                   ],
                 ),
               ),
-              const Gap(24),
+              const Gap(16),
               Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
