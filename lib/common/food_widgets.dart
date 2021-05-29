@@ -10,7 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'extensions.dart';
 
 class FoodCard extends StatelessWidget {
-  static const minHeight = 96.0;
+  static const minHeight = 104.0;
   static const minWidth = 296.0;
 
   const FoodCard({
@@ -41,7 +41,7 @@ class FoodCard extends StatelessWidget {
               children: [
                 Hero(
                   tag: food.barcode,
-                  child: FoodIcon(food: food, size: 72),
+                  child: FoodIcon(food: food, size: 86),
                 ),
                 const Gap(12),
                 Expanded(
@@ -122,18 +122,10 @@ class FoodIcon extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              errorWidget: (context, url, dynamic error) => SizedBox(
-                height: size,
-                width: size,
-                child: SizedBox(
-                  height: size,
-                  width: size,
-                  child: Center(
-                    child: Assets.genericFood.svg(
-                      width: size - 16,
-                      height: size - 16,
-                    ),
-                  ),
+              errorWidget: (context, url, dynamic error) => Center(
+                child: Assets.genericFood.svg(
+                  width: size - 16,
+                  height: size - 16,
                 ),
               ),
             ),
@@ -144,7 +136,7 @@ class FoodIcon extends StatelessWidget {
 class EcoscoreImage extends StatelessWidget {
   const EcoscoreImage({
     this.grade,
-    this.height = 24.0,
+    this.height = 32.0,
   });
 
   final Grade? grade;
@@ -172,7 +164,7 @@ class EcoscoreImage extends StatelessWidget {
 class NutriscoreImage extends StatelessWidget {
   const NutriscoreImage({
     this.grade,
-    this.height = 32.0,
+    this.height = 38.0,
   });
 
   final Grade? grade;

@@ -11,6 +11,7 @@ import 'common/extensions.dart';
 import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
 import 'common/widgets.dart';
+import 'food_image_page.dart';
 import 'gen/colors.gen.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';
@@ -35,7 +36,7 @@ class FoodDetailPage extends StatelessWidget {
             ),
             backgroundColor: Colors.white,
             pinned: true,
-            expandedHeight: 224,
+            expandedHeight: 236,
             title: DisapearingSliverAppBarTitle(child: Text(food.name)),
             flexibleSpace: FlexibleSpaceBar(
               background: _FoodHeader(food: food, foodsState: foodsState),
@@ -184,7 +185,10 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
             ),
             child: Hero(
               tag: widget.food.barcode,
-              child: FoodIcon(food: widget.food, size: 128),
+              child: GestureDetector(
+                onTap: () => context.pushScreen(FoodImagePage(food: widget.food)),
+                child: FoodIcon(food: widget.food, size: 136),
+              ),
             ),
           ),
         ),
@@ -249,7 +253,7 @@ class _Environment extends StatelessWidget {
               ),
               EcoscoreImage(
                 grade: food.ecoscoreGrade,
-                height: 32,
+                height: 36,
               ),
             ],
           ),
@@ -288,7 +292,7 @@ class _Nutrients extends StatelessWidget {
               ),
               NutriscoreImage(
                 grade: food.nutriscoreGrade,
-                height: 42,
+                height: 46,
               ),
             ],
           ),

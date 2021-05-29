@@ -45,10 +45,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white70,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    // Current design does not fit really well with the status bar, so it is hidden for now
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 
     // Block rotation on small screens (smartphones) since current UI is not always adapted to small height
     final windowSize = MediaQueryData.fromWindow(window).size;
