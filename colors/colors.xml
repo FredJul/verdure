@@ -1,1 +1,4 @@
-<color name="primary" type="material">#66b254</color>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary" type="material">#66b254</color>
+</resources>

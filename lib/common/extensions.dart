@@ -12,27 +12,3 @@ extension BuildContextExtension on BuildContext {
 
   AppLocalizations get i18n => AppLocalizations.of(this)!;
 }
-
-extension ListExtension<E> on List<E> {
-  Iterable<T> mapIndexed<T>(T Function(int idx, E element) f) => asMap()
-      .map(
-        (idx, element) => MapEntry(
-          idx,
-          f(idx, element),
-        ),
-      )
-      .values;
-}
-
-extension MapExtension<K, V> on Map<K, V> {
-  Iterable<T> mapIndexed<T>(T Function(int idx, K key, V value) f) => keys
-      .toList()
-      .asMap()
-      .map(
-        (idx, key) => MapEntry(
-          idx,
-          f(idx, key, values.elementAt(idx)),
-        ),
-      )
-      .values;
-}
