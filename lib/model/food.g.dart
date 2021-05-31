@@ -13,18 +13,22 @@ extension FoodCopyWith on Food {
     List<String>? categoryTags,
     Grade? ecoscoreGrade,
     ImpactLevel? fatLevel,
+    double? fatQuantity,
     String? imageFrontSmallUrl,
     String? imageFrontUrl,
     String? imageIngredientsUrl,
+    double? ingredientsScore,
     String? name,
     Grade? nutriscoreGrade,
-    ImpactLevel? packagingImpact,
-    ImpactLevel? productionImpact,
+    double? packagingScore,
     String? quantity,
     ImpactLevel? saltLevel,
+    double? saltQuantity,
     ImpactLevel? saturatedFatLevel,
+    double? saturatedFatQuantity,
     ImpactLevel? sugarsLevel,
-    ImpactLevel? transportationImpact,
+    double? sugarsQuantity,
+    double? transportationScore,
   }) {
     return Food(
       barcode: barcode ?? this.barcode,
@@ -32,18 +36,22 @@ extension FoodCopyWith on Food {
       categoryTags: categoryTags ?? this.categoryTags,
       ecoscoreGrade: ecoscoreGrade ?? this.ecoscoreGrade,
       fatLevel: fatLevel ?? this.fatLevel,
+      fatQuantity: fatQuantity ?? this.fatQuantity,
       imageFrontSmallUrl: imageFrontSmallUrl ?? this.imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl ?? this.imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl ?? this.imageIngredientsUrl,
+      ingredientsScore: ingredientsScore ?? this.ingredientsScore,
       name: name ?? this.name,
       nutriscoreGrade: nutriscoreGrade ?? this.nutriscoreGrade,
-      packagingImpact: packagingImpact ?? this.packagingImpact,
-      productionImpact: productionImpact ?? this.productionImpact,
+      packagingScore: packagingScore ?? this.packagingScore,
       quantity: quantity ?? this.quantity,
       saltLevel: saltLevel ?? this.saltLevel,
+      saltQuantity: saltQuantity ?? this.saltQuantity,
       saturatedFatLevel: saturatedFatLevel ?? this.saturatedFatLevel,
+      saturatedFatQuantity: saturatedFatQuantity ?? this.saturatedFatQuantity,
       sugarsLevel: sugarsLevel ?? this.sugarsLevel,
-      transportationImpact: transportationImpact ?? this.transportationImpact,
+      sugarsQuantity: sugarsQuantity ?? this.sugarsQuantity,
+      transportationScore: transportationScore ?? this.transportationScore,
     );
   }
 }
@@ -70,23 +78,27 @@ class FoodAdapter extends TypeAdapter<Food> {
       imageFrontUrl: fields[4] as String?,
       imageIngredientsUrl: fields[5] as String?,
       ecoscoreGrade: fields[6] as Grade?,
-      packagingImpact: fields[7] as ImpactLevel?,
-      productionImpact: fields[8] as ImpactLevel?,
-      transportationImpact: fields[9] as ImpactLevel?,
+      ingredientsScore: fields[7] as double?,
+      packagingScore: fields[8] as double?,
+      transportationScore: fields[9] as double?,
       nutriscoreGrade: fields[10] as Grade?,
-      sugarsLevel: fields[11] as ImpactLevel?,
-      fatLevel: fields[12] as ImpactLevel?,
-      saturatedFatLevel: fields[13] as ImpactLevel?,
-      saltLevel: fields[14] as ImpactLevel?,
-      quantity: fields[15] as String?,
-      categoryTags: (fields[16] as List).cast<String>(),
+      sugarsQuantity: fields[11] as double?,
+      fatQuantity: fields[12] as double?,
+      saturatedFatQuantity: fields[13] as double?,
+      saltQuantity: fields[14] as double?,
+      sugarsLevel: fields[15] as ImpactLevel?,
+      fatLevel: fields[16] as ImpactLevel?,
+      saturatedFatLevel: fields[17] as ImpactLevel?,
+      saltLevel: fields[18] as ImpactLevel?,
+      quantity: fields[19] as String?,
+      categoryTags: (fields[20] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Food obj) {
     writer
-      ..writeByte(17)
+      ..writeByte(21)
       ..writeByte(0)
       ..write(obj.barcode)
       ..writeByte(1)
@@ -102,24 +114,32 @@ class FoodAdapter extends TypeAdapter<Food> {
       ..writeByte(6)
       ..write(obj.ecoscoreGrade)
       ..writeByte(7)
-      ..write(obj.packagingImpact)
+      ..write(obj.ingredientsScore)
       ..writeByte(8)
-      ..write(obj.productionImpact)
+      ..write(obj.packagingScore)
       ..writeByte(9)
-      ..write(obj.transportationImpact)
+      ..write(obj.transportationScore)
       ..writeByte(10)
       ..write(obj.nutriscoreGrade)
       ..writeByte(11)
-      ..write(obj.sugarsLevel)
+      ..write(obj.sugarsQuantity)
       ..writeByte(12)
-      ..write(obj.fatLevel)
+      ..write(obj.fatQuantity)
       ..writeByte(13)
-      ..write(obj.saturatedFatLevel)
+      ..write(obj.saturatedFatQuantity)
       ..writeByte(14)
-      ..write(obj.saltLevel)
+      ..write(obj.saltQuantity)
       ..writeByte(15)
-      ..write(obj.quantity)
+      ..write(obj.sugarsLevel)
       ..writeByte(16)
+      ..write(obj.fatLevel)
+      ..writeByte(17)
+      ..write(obj.saturatedFatLevel)
+      ..writeByte(18)
+      ..write(obj.saltLevel)
+      ..writeByte(19)
+      ..write(obj.quantity)
+      ..writeByte(20)
       ..write(obj.categoryTags);
   }
 

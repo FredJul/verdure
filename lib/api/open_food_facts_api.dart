@@ -19,6 +19,7 @@ class OpenFoodFactsApi {
     ProductField.NUTRISCORE,
     ProductField.IMAGE_FRONT_URL,
     ProductField.QUANTITY,
+    ProductField.NUTRIMENTS,
     ProductField.NUTRIENT_LEVELS,
     ProductField.CATEGORIES_TAGS,
   ];
@@ -163,18 +164,6 @@ extension _ProductExtension on Product {
       brandsSet = null;
     }
 
-    ImpactLevel? scoreToImpactLevel(double? score) {
-      if (score == null) {
-        return null;
-      } else if (score < 33) {
-        return ImpactLevel.high;
-      } else if (score > 66) {
-        return ImpactLevel.low;
-      } else {
-        return ImpactLevel.moderate;
-      }
-    }
-
     ImpactLevel? nutrientLevelToImpactLevel(Level? level) {
       switch (level) {
         case Level.LOW:
@@ -196,10 +185,13 @@ extension _ProductExtension on Product {
       imageFrontUrl: imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl,
       ecoscoreGrade: ecoscoreGradeEnum,
-      packagingImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.packaging?.score),
-      productionImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.originsOfIngredients?.epiScore),
-      transportationImpact: scoreToImpactLevel(ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore),
+      packagingScore: ecoscoreData?.adjustments?.packaging?.score,
+      transportationScore: ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore,
       nutriscoreGrade: nutriscoreGradeEnum,
+      sugarsQuantity: nutriments?.sugars,
+      fatQuantity: nutriments?.fat,
+      saturatedFatQuantity: nutriments?.saturatedFat,
+      saltQuantity: nutriments?.salt,
       sugarsLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_SUGARS]),
       fatLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_FAT]),
       saturatedFatLevel: nutrientLevelToImpactLevel(nutrientLevels?.levels[NutrientLevels.NUTRIENT_SATURATED_FAT]),

@@ -14,14 +14,18 @@ class Food extends HiveObject {
     this.imageFrontUrl,
     this.imageIngredientsUrl,
     this.ecoscoreGrade,
-    this.packagingImpact,
-    this.productionImpact,
-    this.transportationImpact,
+    this.ingredientsScore,
+    this.packagingScore,
+    this.transportationScore,
     this.nutriscoreGrade,
-    required this.sugarsLevel,
-    required this.fatLevel,
-    required this.saturatedFatLevel,
-    required this.saltLevel,
+    this.sugarsQuantity,
+    this.fatQuantity,
+    this.saturatedFatQuantity,
+    this.saltQuantity,
+    this.sugarsLevel,
+    this.fatLevel,
+    this.saturatedFatLevel,
+    this.saltLevel,
     this.quantity,
     required this.categoryTags,
   });
@@ -48,34 +52,62 @@ class Food extends HiveObject {
   Grade? ecoscoreGrade;
 
   @HiveField(7)
-  ImpactLevel? packagingImpact;
+  double? ingredientsScore;
 
   @HiveField(8)
-  ImpactLevel? productionImpact;
+  double? packagingScore;
 
   @HiveField(9)
-  ImpactLevel? transportationImpact;
+  double? transportationScore;
 
   @HiveField(10)
   Grade? nutriscoreGrade;
 
   @HiveField(11)
-  ImpactLevel? sugarsLevel;
+  double? sugarsQuantity;
 
   @HiveField(12)
-  ImpactLevel? fatLevel;
+  double? fatQuantity;
 
   @HiveField(13)
-  ImpactLevel? saturatedFatLevel;
+  double? saturatedFatQuantity;
 
   @HiveField(14)
-  ImpactLevel? saltLevel;
+  double? saltQuantity;
 
   @HiveField(15)
-  String? quantity;
+  ImpactLevel? sugarsLevel;
 
   @HiveField(16)
+  ImpactLevel? fatLevel;
+
+  @HiveField(17)
+  ImpactLevel? saturatedFatLevel;
+
+  @HiveField(18)
+  ImpactLevel? saltLevel;
+
+  @HiveField(19)
+  String? quantity;
+
+  @HiveField(20)
   List<String> categoryTags;
+
+  ImpactLevel? get ingredientsImpact => _scoreToImpactLevel(ingredientsScore);
+  ImpactLevel? get packagingImpact => _scoreToImpactLevel(packagingScore);
+  ImpactLevel? get transportationImpact => _scoreToImpactLevel(transportationScore);
+
+  ImpactLevel? _scoreToImpactLevel(double? score) {
+    if (score == null) {
+      return null;
+    } else if (score < 33) {
+      return ImpactLevel.high;
+    } else if (score > 66) {
+      return ImpactLevel.low;
+    } else {
+      return ImpactLevel.moderate;
+    }
+  }
 }
 
 enum Grade { a, b, c, d, e }
