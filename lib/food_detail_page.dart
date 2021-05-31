@@ -238,6 +238,8 @@ class _Environment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? scoreToString(double? score) => score?.toInt().let((it) => '$it/100');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -258,9 +260,21 @@ class _Environment extends StatelessWidget {
             ],
           ),
           const Gap(8),
-          _ImpactLevelIndicator(name: context.i18n.production, level: food.productionImpact),
-          _ImpactLevelIndicator(name: context.i18n.transportation, level: food.transportationImpact),
-          _ImpactLevelIndicator(name: context.i18n.packaging, level: food.packagingImpact),
+          _ImpactLevelIndicator(
+            name: context.i18n.ingredients,
+            value: scoreToString(food.ingredientsScore),
+            level: food.ingredientsImpact,
+          ),
+          _ImpactLevelIndicator(
+            name: context.i18n.transportation,
+            value: scoreToString(food.transportationScore),
+            level: food.transportationImpact,
+          ),
+          _ImpactLevelIndicator(
+            name: context.i18n.packaging,
+            value: scoreToString(food.packagingScore),
+            level: food.packagingImpact,
+          ),
         ],
       ),
     );
@@ -277,6 +291,8 @@ class _Nutrients extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? quantityToString(double? quantity) => quantity?.toShortString(context, 2).let((it) => '$it g');
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -297,10 +313,26 @@ class _Nutrients extends StatelessWidget {
             ],
           ),
           const Gap(8),
-          _ImpactLevelIndicator(name: context.i18n.sugars, level: food.sugarsLevel),
-          _ImpactLevelIndicator(name: context.i18n.fat, level: food.fatLevel),
-          _ImpactLevelIndicator(name: context.i18n.saturatedFat, level: food.saturatedFatLevel),
-          _ImpactLevelIndicator(name: context.i18n.salt, level: food.saltLevel),
+          _ImpactLevelIndicator(
+            name: context.i18n.sugars,
+            value: quantityToString(food.sugarsQuantity),
+            level: food.sugarsLevel,
+          ),
+          _ImpactLevelIndicator(
+            name: context.i18n.fat,
+            value: quantityToString(food.fatQuantity),
+            level: food.fatLevel,
+          ),
+          _ImpactLevelIndicator(
+            name: context.i18n.saturatedFat,
+            value: quantityToString(food.saturatedFatQuantity),
+            level: food.saturatedFatLevel,
+          ),
+          _ImpactLevelIndicator(
+            name: context.i18n.salt,
+            value: quantityToString(food.saltQuantity),
+            level: food.saltLevel,
+          ),
         ],
       ),
     );
@@ -419,11 +451,13 @@ class _AlternativesListState extends ObserverState<_AlternativesList> {
 
 class _ImpactLevelIndicator extends StatelessWidget {
   final String name;
+  final String? value;
   final ImpactLevel? level;
 
   const _ImpactLevelIndicator({
     Key? key,
     required this.name,
+    required this.value,
     required this.level,
   }) : super(key: key);
 
@@ -452,6 +486,9 @@ class _ImpactLevelIndicator extends StatelessWidget {
             ),
           ),
         ),
+        const Gap(16),
+        if (value != null) Text(value!, style: context.textTheme.caption),
+        const Gap(8),
         Container(
           width: 16,
           height: 16,
