@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:ui';
 
 import 'package:dartx/dartx.dart';
@@ -27,6 +28,8 @@ class OpenFoodFactsApi {
   static String get _lc => window.locale.languageCode;
   static String get _cc => 'fr'; //TODO use window.locale.countryCode when the app will be open to all countries
 
+  static final _alternativesCache = HashMap<String, List<Food>>();
+
   static Future<Food?> getFood(String barcode) async {
     final ProductQueryConfiguration configuration = ProductQueryConfiguration(
       barcode,
@@ -36,10 +39,27 @@ class OpenFoodFactsApi {
     );
 
     final ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
-    return result.product?.toFood();
+    final food = result.product?.toFood();
+
+    // We try to update the alternative foods cache
+    if (food != null) {
+      for (final cacheList in _alternativesCache.values) {
+        cacheList.forEachIndexed((element, index) {
+          if (element.barcode == food.barcode) {
+            cacheList[index] = food;
+          }
+        });
+      }
+    }
+
+    return food;
   }
 
   static Future<List<Food>> getAlternatives(Food food) async {
+    if (_alternativesCache.containsKey(food.barcode)) {
+      return Future.value(_alternativesCache[food.barcode]);
+    }
+
     Future<SearchResult> search(Parameter param) {
       return OpenFoodAPIClient.searchProducts(
         null,
@@ -105,7 +125,10 @@ class OpenFoodFactsApi {
 
     products = products?.sortedBy((p) => p.ecoscoreGradeEnum!.index).thenBy((p) => p.nutriscoreGradeEnum!.index);
 
-    return products?.take(20).map((p) => p.toFood()).toList() ?? [];
+    final foods = products?.take(20).map((p) => p.toFood()).toList() ?? [];
+    _alternativesCache[food.barcode] = foods;
+
+    return foods;
   }
 
   static Future<List<Food>> search(String terms) async {
