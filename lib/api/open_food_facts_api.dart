@@ -40,6 +40,22 @@ class OpenFoodFactsApi {
   }
 
   static Future<List<Food>> getAlternatives(Food food) async {
+    Future<SearchResult> search(Parameter param) {
+      return OpenFoodAPIClient.searchProducts(
+        null,
+        ProductSearchQueryConfiguration(
+          fields: _productFields,
+          parametersList: [
+            const PageSize(size: 100),
+            param,
+            const SortBy(option: SortOption.POPULARITY),
+          ],
+          lc: _lc,
+          cc: _cc,
+        ),
+      );
+    }
+
     void removeWorseProducts(List<Product>? products) {
       products?.removeWhere((p) =>
           p.ecoscoreGradeEnum == null || (food.ecoscoreGrade != null && p.ecoscoreGradeEnum!.index > food.ecoscoreGrade!.index));
@@ -51,23 +67,27 @@ class OpenFoodFactsApi {
 
     List<Product>? products;
 
-    // We first search for products in the same categories
+    // We first search for products in the same category
     if (food.categoryTags.isNotEmpty) {
-      final searchResult = await OpenFoodAPIClient.searchProducts(
-        null,
-        ProductSearchQueryConfiguration(
-          fields: _productFields,
-          parametersList: [
-            const PageSize(size: 100),
-            ...food.categoryTags.map((tag) => TagFilter(
-                  tagType: 'categories',
-                  contains: true,
-                  tagName: tag,
-                )),
-            const SortBy(option: SortOption.POPULARITY),
-          ],
-          lc: _lc,
-          cc: _cc,
+      final searchResult = await search(
+        TagFilter(
+          tagType: 'categories',
+          contains: true,
+          tagName: food.categoryTags.last, // The last category seems to be the most relevant
+        ),
+      );
+
+      products = searchResult.products;
+      removeWorseProducts(products);
+    }
+
+    // If we do not find better alternatives, we try to search with another category
+    if ((products?.length ?? 0) == 0 && food.categoryTags.length >= 2) {
+      final searchResult = await search(
+        TagFilter(
+          tagType: 'categories',
+          contains: true,
+          tagName: food.categoryTags[food.categoryTags.lastIndex - 1], // Seems to be the second most relevant category
         ),
       );
 
@@ -77,19 +97,7 @@ class OpenFoodFactsApi {
 
     // If we do not find better alternatives, we try to search with the product name
     if ((products?.length ?? 0) == 0) {
-      final searchResult = await OpenFoodAPIClient.searchProducts(
-        null,
-        ProductSearchQueryConfiguration(
-          fields: _productFields,
-          parametersList: [
-            const PageSize(size: 100),
-            SearchTerms(terms: [food.name]),
-            const SortBy(option: SortOption.POPULARITY),
-          ],
-          lc: _lc,
-          cc: _cc,
-        ),
-      );
+      final searchResult = await search(SearchTerms(terms: [food.name]));
 
       products = searchResult.products;
       removeWorseProducts(products);

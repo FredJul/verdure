@@ -197,21 +197,21 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
           bottom: 0,
           child: ScaleTransition(
             scale: _favAnimation,
-            child: Tap(
-              borderRadius: const BorderRadius.all(Radius.circular(36)),
-              onTap: () {
-                if (isInFavorites) {
-                  widget.foodsState.removeFavoriteFood(widget.food);
-                } else {
-                  widget.foodsState.addFavoriteFood(widget.food);
-                }
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black12),
-                  color: Colors.white.withAlpha(220),
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black12),
+                color: Colors.white.withAlpha(220),
+              ),
+              child: Tap(
+                borderRadius: const BorderRadius.all(Radius.circular(36)),
+                onTap: () {
+                  if (isInFavorites) {
+                    widget.foodsState.removeFavoriteFood(widget.food);
+                  } else {
+                    widget.foodsState.addFavoriteFood(widget.food);
+                  }
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8),
                   child: Icon(
@@ -429,21 +429,23 @@ class _AlternativesListState extends ObserverState<_AlternativesList> {
                         style: context.textTheme.bodyText1?.copyWith(color: Colors.grey),
                       ),
                     )
-                  : ListView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      children: _alternatives
-                          .map((food) => Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8),
-                                child: SizedBox(
-                                  width: FoodCard.minWidth,
-                                  child: FoodCard(
-                                    food: food,
-                                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                  : FadeInAppear(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        children: _alternatives
+                            .map((food) => Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: SizedBox(
+                                    width: FoodCard.minWidth,
+                                    child: FoodCard(
+                                      food: food,
+                                      onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                    ),
                                   ),
-                                ),
-                              ))
-                          .toList(),
+                                ))
+                            .toList(),
+                      ),
                     ),
     );
   }
@@ -518,20 +520,21 @@ class _AboutData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        try {
-          await launch(OpenFoodFactsApi.getViewUrl(food));
-        } catch (_) {
-          final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(36), topRight: Radius.circular(36)),
-          color: ColorName.primary[50],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(36), topRight: Radius.circular(36)),
+        color: ColorName.primary[50],
+      ),
+      child: Tap(
+        borderRadius: const BorderRadius.only(topLeft: Radius.circular(36), topRight: Radius.circular(36)),
+        onTap: () async {
+          try {
+            await launch(OpenFoodFactsApi.getViewUrl(food));
+          } catch (_) {
+            final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(32),
           child: Row(

@@ -65,7 +65,7 @@ class _HomePageState extends ObserverState<HomePage> {
           ),
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 24),
-            child: FoodImpactExplanation(),
+            child: _FoodImpactExplanation(),
           ),
           const Gap(32),
           Padding(
@@ -149,8 +149,8 @@ class _HomePageState extends ObserverState<HomePage> {
       );
 }
 
-class FoodImpactExplanation extends StatelessWidget {
-  const FoodImpactExplanation({
+class _FoodImpactExplanation extends StatelessWidget {
+  const _FoodImpactExplanation({
     Key? key,
   }) : super(key: key);
 

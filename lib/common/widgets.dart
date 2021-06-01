@@ -171,3 +171,41 @@ class _AutoAnimListState extends State<AutoAnimList> {
     );
   }
 }
+
+class FadeInAppear extends StatefulWidget {
+  const FadeInAppear({
+    Key? key,
+    this.child,
+    this.duration = const Duration(milliseconds: 400),
+  }) : super(key: key);
+
+  final Widget? child;
+  final Duration duration;
+
+  @override
+  _FadeInAppearState createState() => _FadeInAppearState();
+}
+
+class _FadeInAppearState extends State<FadeInAppear> {
+  var _init = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      setState(() {
+        _init = true;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: _init ? 1 : 0,
+      duration: widget.duration,
+      child: widget.child,
+    );
+  }
+}
