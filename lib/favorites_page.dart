@@ -24,13 +24,18 @@ class FavoritesPage extends StatelessWidget {
           ),
         ),
         const Gap(8),
-        ...foodsState.favoriteFoods.reversed.map((food) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-              child: FoodCard(
-                food: food,
-                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-              ),
-            )),
+        if (foodsState.favoriteFoods.isNotEmpty)
+          ...foodsState.favoriteFoods.reversed.map((food) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                child: FoodCard(
+                  food: food,
+                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                ),
+              ))
+        else ...[
+          const Gap(148),
+          FoodEmptyView(subtitle: context.i18n.noFavoriteFood),
+        ],
         const Gap(48),
       ],
     );

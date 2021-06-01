@@ -7,13 +7,16 @@ import 'package:flutter_portal/flutter_portal.dart';
 import 'package:gap/gap.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'api/open_food_facts_api.dart';
 import 'common/extensions.dart';
 import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
+import 'common/widgets.dart';
 import 'food_detail_page.dart';
 import 'gen/assets.gen.dart';
+import 'gen/colors.gen.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';
 
@@ -60,34 +63,9 @@ class _HomePageState extends ObserverState<HomePage> {
             portal: _buildSearchBar(context),
             child: const Gap(72),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.lightGreen[50],
-                borderRadius: const BorderRadius.all(Radius.circular(12)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Assets.earth.svg(height: 64),
-                    const Gap(12),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(context.i18n.whyReduceImpactExplanation),
-                          const Gap(8),
-                          Text(context.i18n.learnMore),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24),
+            child: FoodImpactExplanation(),
           ),
           const Gap(32),
           Padding(
@@ -98,13 +76,16 @@ class _HomePageState extends ObserverState<HomePage> {
             ),
           ),
           const Gap(8),
-          ...foodsState.scannedFoods.reversed.map((food) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                child: FoodCard(
-                  food: food,
-                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                ),
-              )),
+          if (foodsState.scannedFoods.isNotEmpty)
+            ...foodsState.scannedFoods.reversed.map((food) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                  child: FoodCard(
+                    food: food,
+                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                  ),
+                ))
+          else
+            FoodEmptyView(subtitle: context.i18n.noScannedFood),
           const Gap(48),
         ],
       ),
@@ -166,4 +147,58 @@ class _HomePageState extends ObserverState<HomePage> {
           );
         },
       );
+}
+
+class FoodImpactExplanation extends StatelessWidget {
+  const FoodImpactExplanation({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.lightGreen[50],
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+      ),
+      child: Tap(
+        borderRadius: const BorderRadius.all(Radius.circular(12)),
+        onTap: () async {
+          try {
+            //TODO change the link when the app will be translated
+            await launch('https://www.wwf.fr/agir-au-quotidien/alimentation');
+          } catch (_) {
+            final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Assets.earth.svg(height: 64),
+              const Gap(12),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(context.i18n.whyReduceImpactExplanation),
+                    const Gap(8),
+                    Text(
+                      context.i18n.learnMore,
+                      style: context.textTheme.subtitle2?.copyWith(
+                        color: ColorName.primary[900],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
