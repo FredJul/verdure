@@ -60,7 +60,7 @@ class FoodDetailPage extends StatelessWidget {
                       style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const Gap(8),
+                  const Gap(16),
                   _AlternativesList(food: food, foodsState: foodsState),
                   const Gap(32),
                   _AboutData(food: food),
@@ -250,6 +250,7 @@ class _Environment extends StatelessWidget {
                 child: Text(
                   context.i18n.environmentalImpact,
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
@@ -303,6 +304,7 @@ class _Nutrients extends StatelessWidget {
                 child: Text(
                   context.i18n.nutritionalValues,
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
