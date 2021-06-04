@@ -19,39 +19,56 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final foodsState = context.watch<FoodsState>();
 
-    return ListView(
-      padding: const EdgeInsets.all(24),
-      children: [
-        Assets.logoFull.svg(height: 64),
-        const Gap(24),
-        GestureDetector(
-          behavior: HitTestBehavior.translucent, // needed with IgnorePointer as child
-          onTap: () => context.pushScreen(const SearchPage()),
-          child: IgnorePointer(
-            child: SearchBar(
-              onQueryChanged: (_) {},
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          backgroundColor: Colors.white,
+          pinned: true,
+          expandedHeight: 112,
+          title: DisapearingSliverAppBarTitle(child: Assets.logoFull.svg(height: 32)),
+          flexibleSpace: FlexibleSpaceBar(
+            background: Center(
+              child: Assets.logoFull.svg(height: 64),
             ),
           ),
         ),
-        const Gap(24),
-        const _FoodImpactExplanation(),
-        const Gap(32),
-        Text(
-          context.i18n.scannedProducts,
-          style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
-        ),
-        const Gap(8),
-        if (foodsState.scannedFoods.isNotEmpty)
-          ...foodsState.scannedFoods.reversed.map((food) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                child: FoodCard(
-                  food: food,
-                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+        SliverPadding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                GestureDetector(
+                  behavior: HitTestBehavior.translucent, // needed with IgnorePointer as child
+                  onTap: () => context.pushScreen(const SearchPage()),
+                  child: IgnorePointer(
+                    child: SearchBar(
+                      onQueryChanged: (_) {},
+                    ),
+                  ),
                 ),
-              ))
-        else
-          EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
-        const Gap(48),
+                const Gap(24),
+                const _FoodImpactExplanation(),
+                const Gap(32),
+                Text(
+                  context.i18n.scannedProducts,
+                  style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                ),
+                const Gap(8),
+                if (foodsState.scannedFoods.isNotEmpty)
+                  ...foodsState.scannedFoods.reversed.map((food) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                        child: FoodCard(
+                          food: food,
+                          onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                        ),
+                      ))
+                else
+                  EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                const Gap(48),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
