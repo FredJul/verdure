@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -15,31 +16,34 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final foodsState = context.watch<FoodsState>();
 
-    return ListView(
-      children: [
-        const Gap(32),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Text(
-            context.i18n.favoriteTitle,
-            style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+    return AnimatedCrossFade(
+      firstChild: Center(
+        child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
+      ),
+      secondChild: ListView(
+        shrinkWrap: true,
+        children: [
+          const Gap(32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Text(
+              context.i18n.favoriteTitle,
+              style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
-        ),
-        const Gap(8),
-        if (foodsState.favoriteFoods.isNotEmpty)
+          const Gap(8),
           ...foodsState.favoriteFoods.reversed.map((food) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
                 child: FoodCard(
                   food: food,
                   onTap: () => context.pushScreen(FoodDetailPage(food: food)),
                 ),
-              ))
-        else ...[
-          const Gap(148),
-          EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
+              )),
+          const Gap(48),
         ],
-        const Gap(48),
-      ],
+      ),
+      crossFadeState: foodsState.favoriteFoods.isEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+      duration: 200.milliseconds,
     );
   }
 }

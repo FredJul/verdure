@@ -25,6 +25,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.white,
           pinned: true,
           expandedHeight: 112,
+          centerTitle: true,
           title: DisapearingSliverAppBarTitle(child: Assets.logoFull.svg(height: 32)),
           flexibleSpace: FlexibleSpaceBar(
             background: Center(
@@ -33,10 +34,11 @@ class HomePage extends StatelessWidget {
           ),
         ),
         SliverPadding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 24),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate(
-              [
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          sliver: SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent, // needed with IgnorePointer as child
                   onTap: () => context.pushScreen(const SearchPage()),
@@ -53,21 +55,33 @@ class HomePage extends StatelessWidget {
                   context.i18n.scannedProducts,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
-                const Gap(8),
-                if (foodsState.scannedFoods.isNotEmpty)
-                  ...foodsState.scannedFoods.reversed.map((food) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                        child: FoodCard(
-                          food: food,
-                          onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                        ),
-                      ))
-                else
-                  EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
-                const Gap(48),
+                const Gap(12),
               ],
             ),
           ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 96),
+          sliver: foodsState.scannedFoods.isNotEmpty
+              ? SliverList(
+                  delegate: SliverChildListDelegate(
+                    foodsState.scannedFoods.reversed
+                        .map((food) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: FoodCard(
+                                food: food,
+                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                              ),
+                            ))
+                        .toList(),
+                  ),
+                )
+              : SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                  ),
+                ),
         ),
       ],
     );
