@@ -16,14 +16,16 @@ class SearchBar extends StatefulWidget {
     this.showBackButton = false,
     this.isSearching = false,
     this.debounceDelay = const Duration(seconds: 2),
-    required this.onQueryChanged,
+    this.onTyping,
+    this.onQueryChanged,
   }) : super(key: key);
 
   final bool autofocus;
   final bool showBackButton;
   final bool isSearching;
   final Duration debounceDelay;
-  final OnQueryChangedCallback onQueryChanged;
+  final VoidCallback? onTyping;
+  final OnQueryChangedCallback? onQueryChanged;
 
   @override
   _SearchBarState createState() => _SearchBarState();
@@ -61,12 +63,14 @@ class _SearchBarState extends State<SearchBar> {
                   setState(() {}); // Needed to update icons display
 
                   if (query.isEmpty) {
-                    widget.onQueryChanged(query);
+                    widget.onQueryChanged?.call(query);
                   } else {
+                    widget.onTyping?.call();
+
                     EasyDebounce.debounce(
                       tag,
                       widget.debounceDelay,
-                      () => widget.onQueryChanged(query),
+                      () => widget.onQueryChanged?.call(query),
                     );
                   }
                 },
@@ -100,7 +104,7 @@ class _SearchBarState extends State<SearchBar> {
                             EasyDebounce.cancel(tag);
 
                             _searchController.clear();
-                            widget.onQueryChanged('');
+                            widget.onQueryChanged?.call('');
                           }),
                           color: Colors.grey[800],
                           icon: const Icon(Icons.clear),

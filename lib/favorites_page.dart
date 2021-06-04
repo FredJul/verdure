@@ -16,34 +16,36 @@ class FavoritesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final foodsState = context.watch<FoodsState>();
 
-    return AnimatedCrossFade(
-      firstChild: Center(
-        child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
-      ),
-      secondChild: ListView(
-        shrinkWrap: true,
-        children: [
-          const Gap(32),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              context.i18n.favoriteTitle,
-              style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: AnimatedCrossFade(
+        firstChild: Center(
+          child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
+        ),
+        secondChild: ListView(
+          shrinkWrap: true,
+          children: [
+            const Gap(32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                context.i18n.favoriteTitle,
+                style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          const Gap(8),
-          ...foodsState.favoriteFoods.reversed.map((food) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                child: FoodCard(
-                  food: food,
-                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                ),
-              )),
-          const Gap(48),
-        ],
+            const Gap(8),
+            ...foodsState.favoriteFoods.reversed.map((food) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                  child: FoodCard(
+                    food: food,
+                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                  ),
+                )),
+            const Gap(48),
+          ],
+        ),
+        crossFadeState: foodsState.favoriteFoods.isEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+        duration: 200.milliseconds,
       ),
-      crossFadeState: foodsState.favoriteFoods.isEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
-      duration: 200.milliseconds,
     );
   }
 }

@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
           pinned: true,
           expandedHeight: 112,
           centerTitle: true,
-          title: DisapearingSliverAppBarTitle(child: Assets.logoFull.svg(height: 32)),
+          title: DisapearingSliverAppBarTitle(child: Assets.logoFull.svg(height: 42)),
           flexibleSpace: FlexibleSpaceBar(
             background: Center(
               child: Assets.logoFull.svg(height: 64),
@@ -42,10 +42,8 @@ class HomePage extends StatelessWidget {
                 GestureDetector(
                   behavior: HitTestBehavior.translucent, // needed with IgnorePointer as child
                   onTap: () => context.pushScreen(const SearchPage()),
-                  child: IgnorePointer(
-                    child: SearchBar(
-                      onQueryChanged: (_) {},
-                    ),
+                  child: const IgnorePointer(
+                    child: SearchBar(),
                   ),
                 ),
                 const Gap(24),
