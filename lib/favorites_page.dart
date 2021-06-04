@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 import 'common/extensions.dart';
 import 'common/food_widgets.dart';
+import 'common/widgets.dart';
 import 'food_detail_page.dart';
+import 'gen/assets.gen.dart';
 import 'model/foods_state.dart';
 
 class FavoritesPage extends StatelessWidget {
@@ -34,7 +36,7 @@ class FavoritesPage extends StatelessWidget {
               ))
         else ...[
           const Gap(148),
-          FoodEmptyView(subtitle: context.i18n.noFavoriteFood),
+          EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
         ],
         const Gap(48),
       ],

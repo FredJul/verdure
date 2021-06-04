@@ -188,25 +188,3 @@ class NutriscoreImage extends StatelessWidget {
     }
   }
 }
-
-class FoodEmptyView extends StatelessWidget {
-  const FoodEmptyView({
-    required this.subtitle,
-  });
-
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: [
-          Assets.genericFood.svg(width: 100),
-          const Gap(8),
-          Text(subtitle, style: context.textTheme.caption),
-        ],
-      ),
-    );
-  }
-}

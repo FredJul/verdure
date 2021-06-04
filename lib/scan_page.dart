@@ -7,10 +7,10 @@ import 'package:provider/provider.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'api/open_food_facts_api.dart';
+import 'common/auto_anim_list.dart';
 import 'common/extensions.dart';
 import 'common/food_widgets.dart';
 import 'common/observer_state.dart';
-import 'common/widgets.dart';
 import 'food_detail_page.dart';
 import 'model/food.dart';
 import 'model/foods_state.dart';

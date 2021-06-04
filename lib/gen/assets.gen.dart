@@ -29,6 +29,7 @@ class Assets {
   static const SvgGenImage nutriscoreUnknown =
       SvgGenImage('assets/nutriscore-unknown.svg');
   static const SvgGenImage scanner = SvgGenImage('assets/scanner.svg');
+  static const SvgGenImage search = SvgGenImage('assets/search.svg');
 }
 
 class AssetGenImage extends AssetImage {

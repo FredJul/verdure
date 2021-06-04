@@ -7,6 +7,8 @@
     "favoriteTitle": "Favoris",
     "noFavoriteFood": "Aucun produit mis en favori",
     "scannedProducts": "Produits scannés",
+    "searchError": "Une erreur s'est produite, merci de vérifier votre connexion.",
+    "noSearchResult": "Aucun produit trouvé",
     "environmentalImpact": "Impact environnemental",
     "alternatives": "Alternatives",
     "nutritionalValues": "Valeurs nutritionnelles pour 100g",
