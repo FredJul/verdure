@@ -28,45 +28,60 @@ class FoodDetailPage extends StatelessWidget {
     final foodsState = context.watch<FoodsState>();
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            iconTheme: IconThemeData(
-              color: ColorName.primary[900],
-            ),
-            backgroundColor: Colors.white,
-            pinned: true,
-            expandedHeight: 236,
-            title: DisapearingSliverAppBarTitle(child: Text(food.name)),
-            flexibleSpace: FlexibleSpaceBar(
-              background: _FoodHeader(food: food, foodsState: foodsState),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Gap(22),
-                  _Environment(food: food),
-                  const Gap(22),
-                  _Nutrients(food: food),
-                  const Gap(22),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Text(
-                      context.i18n.alternatives,
-                      style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  const Gap(16),
-                  _AlternativesList(food: food, foodsState: foodsState),
-                  const Gap(32),
-                  _AboutData(food: food),
-                ],
+      body: Stack(
+        children: [
+          // Small hack to have white background on top (for status bar), and green background on bottom (for scrolling effect on iOS)
+          Column(
+            children: [
+              const Expanded(child: SizedBox()),
+              Expanded(
+                child: Container(
+                  color: ColorName.primary[50],
+                ),
               ),
-            ),
+            ],
+          ),
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                iconTheme: IconThemeData(
+                  color: ColorName.primary[900],
+                ),
+                backgroundColor: Colors.white,
+                pinned: true,
+                expandedHeight: 236,
+                title: DisapearingSliverAppBarTitle(child: Text(food.name)),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: _FoodHeader(food: food, foodsState: foodsState),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Gap(22),
+                      _Environment(food: food),
+                      const Gap(22),
+                      _Nutrients(food: food),
+                      const Gap(22),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Text(
+                          context.i18n.alternatives,
+                          style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const Gap(16),
+                      _AlternativesList(food: food, foodsState: foodsState),
+                      const Gap(32),
+                      _AboutData(food: food),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
