@@ -18,6 +18,7 @@ class Assets {
   static const SvgGenImage ecoscoreE = SvgGenImage('assets/ecoscore-e.svg');
   static const SvgGenImage ecoscoreUnknown =
       SvgGenImage('assets/ecoscore-unknown.svg');
+  static const SvgGenImage favorites = SvgGenImage('assets/favorites.svg');
   static const SvgGenImage genericFood = SvgGenImage('assets/generic_food.svg');
   static const SvgGenImage logo = SvgGenImage('assets/logo.svg');
   static const SvgGenImage logoFull = SvgGenImage('assets/logo_full.svg');

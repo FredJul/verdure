@@ -10,6 +10,10 @@ extension StringExtension on String {
   String capitalize() => length > 1 ? this[0].toUpperCase() + substring(1) : toUpperCase();
 }
 
+extension IterableExtension on Iterable? {
+  bool get isNullOrEmpty => this == null || this?.isEmpty == true;
+}
+
 extension BuildContextExtension on BuildContext {
   void pushScreen<S extends Widget>(S screen) => Navigator.push(this, MaterialPageRoute<S>(builder: (context) => screen));
 

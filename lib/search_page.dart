@@ -23,7 +23,7 @@ class _SearchPageState extends ObserverState<SearchPage> {
   var _hasEmptyQuery = true;
   var _isSearching = false;
   var _hasError = false;
-  var _searchResults = List<Food>.empty();
+  List<Food>? _searchResults;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _SearchPageState extends ObserverState<SearchPage> {
                     if (query.isEmpty) {
                       _hasEmptyQuery = true;
                       _isSearching = false;
-                      _searchResults.clear();
+                      _searchResults = [];
                     } else {
                       _hasEmptyQuery = false;
                       _isSearching = true;
@@ -73,27 +73,29 @@ class _SearchPageState extends ObserverState<SearchPage> {
                 firstChild: Center(
                   child: EmptyView(
                       icon: Assets.search,
-                      subtitle: _hasEmptyQuery
-                          ? ''
-                          : _hasError
-                              ? context.i18n.searchError
+                      subtitle: _hasError
+                          ? context.i18n.searchError
+                          : _searchResults == null || _hasEmptyQuery
+                              ? ''
                               : context.i18n.noSearchResult),
                 ),
                 secondChild: ListView(
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(top: 4, left: 24, right: 24, bottom: 24),
                   children: _searchResults
-                      .map((food) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: FoodCard(
-                              food: food,
-                              onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                            ),
-                          ))
-                      .toList(),
+                          ?.map((food) => Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                child: FoodCard(
+                                  food: food,
+                                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                ),
+                              ))
+                          .toList() ??
+                      [],
                 ),
-                crossFadeState:
-                    _hasError || _hasEmptyQuery || _searchResults.isEmpty ? CrossFadeState.showFirst : CrossFadeState.showSecond,
+                crossFadeState: _hasError || _hasEmptyQuery || _searchResults.isNullOrEmpty
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
                 duration: 200.milliseconds,
               ),
             ),

@@ -148,7 +148,7 @@ class EmptyView extends StatelessWidget {
         children: [
           icon.svg(width: 100),
           const Gap(12),
-          Text(subtitle, style: context.textTheme.caption),
+          Text(subtitle, textAlign: TextAlign.center, style: context.textTheme.caption),
         ],
       ),
     );

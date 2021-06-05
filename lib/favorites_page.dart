@@ -19,7 +19,7 @@ class FavoritesPage extends StatelessWidget {
     return SafeArea(
       child: AnimatedCrossFade(
         firstChild: Center(
-          child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noFavoriteFood),
+          child: EmptyView(icon: Assets.favorites, subtitle: context.i18n.noFavoriteFood),
         ),
         secondChild: ListView(
           shrinkWrap: true,

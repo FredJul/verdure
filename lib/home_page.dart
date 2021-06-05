@@ -76,8 +76,11 @@ class HomePage extends StatelessWidget {
                 )
               : SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Center(
-                    child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 64),
+                    child: Center(
+                      child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                    ),
                   ),
                 ),
         ),
