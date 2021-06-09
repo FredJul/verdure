@@ -110,7 +110,7 @@ class Food extends HiveObject {
   }
 }
 
-enum Grade { a, b, c, d, e }
+enum Grade { a, b, c, d, e, notApplicable }
 
 extension GradeExtension on Grade {
   String get letter {
@@ -125,6 +125,8 @@ extension GradeExtension on Grade {
         return 'd';
       case Grade.e:
         return 'e';
+      case Grade.notApplicable:
+        throw UnsupportedError;
     }
   }
 }

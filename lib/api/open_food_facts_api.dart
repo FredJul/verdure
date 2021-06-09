@@ -169,6 +169,8 @@ extension _ProductExtension on Product {
       case 'e':
       case 'E':
         return Grade.e;
+      case 'not-applicable':
+        return Grade.notApplicable;
       default:
         return null;
     }
@@ -208,6 +210,15 @@ extension _ProductExtension on Product {
       }
     }
 
+    // TODO not sure why but some scores seem to be negatives, for now we just ignore that
+    double? normalizeScore(double? score) => score == null
+        ? score
+        : score < 0
+            ? 0
+            : score > 100
+                ? 100
+                : score;
+
     return Food(
       barcode: barcode ?? '',
       name: productName ?? '',
@@ -216,8 +227,8 @@ extension _ProductExtension on Product {
       imageFrontUrl: imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl,
       ecoscoreGrade: ecoscoreGradeEnum,
-      packagingScore: ecoscoreData?.adjustments?.packaging?.score,
-      transportationScore: ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore,
+      packagingScore: normalizeScore(ecoscoreData?.adjustments?.packaging?.score),
+      transportationScore: normalizeScore(ecoscoreData?.adjustments?.originsOfIngredients?.transportationScore),
       nutriscoreGrade: nutriscoreGradeEnum,
       sugarsQuantity: nutriments?.sugars,
       fatQuantity: nutriments?.fat,

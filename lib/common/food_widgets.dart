@@ -155,6 +155,8 @@ class EcoscoreImage extends StatelessWidget {
         return Assets.ecoscoreD.svg(height: height);
       case Grade.e:
         return Assets.ecoscoreE.svg(height: height);
+      case Grade.notApplicable:
+        return const SizedBox(); // We display nothing when not applicable
       case null:
         return Assets.ecoscoreUnknown.svg(height: height);
     }
@@ -183,6 +185,8 @@ class NutriscoreImage extends StatelessWidget {
         return Assets.nutriscoreD.svg(height: height);
       case Grade.e:
         return Assets.nutriscoreE.svg(height: height);
+      case Grade.notApplicable:
+        return const SizedBox(); // We display nothing when not applicable
       case null:
         return Assets.nutriscoreUnknown.svg(height: height);
     }

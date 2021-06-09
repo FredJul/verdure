@@ -28,7 +28,7 @@ dependencies:
   intl: ^0.17.0
   openfoodfacts: ^1.1.0-beta
   provider: ^5.0.0
-  qr_code_scanner: ^0.4.0
+  qr_code_scanner: ^0.5.1
   shimmer: ^2.0.0
   url_launcher: ^6.0.3
 

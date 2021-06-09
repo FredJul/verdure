@@ -258,6 +258,7 @@ class _Environment extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -276,21 +277,28 @@ class _Environment extends StatelessWidget {
             ],
           ),
           const Gap(8),
-          _ImpactLevelIndicator(
-            name: context.i18n.ingredients,
-            value: scoreToString(food.ingredientsScore),
-            level: food.ingredientsImpact,
-          ),
-          _ImpactLevelIndicator(
-            name: context.i18n.transportation,
-            value: scoreToString(food.transportationScore),
-            level: food.transportationImpact,
-          ),
-          _ImpactLevelIndicator(
-            name: context.i18n.packaging,
-            value: scoreToString(food.packagingScore),
-            level: food.packagingImpact,
-          ),
+          if (food.ecoscoreGrade == Grade.notApplicable)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(context.i18n.notApplicableWarning, style: context.textTheme.caption),
+            )
+          else ...[
+            _ImpactLevelIndicator(
+              name: context.i18n.ingredients,
+              value: scoreToString(food.ingredientsScore),
+              level: food.ingredientsImpact,
+            ),
+            _ImpactLevelIndicator(
+              name: context.i18n.transportation,
+              value: scoreToString(food.transportationScore),
+              level: food.transportationImpact,
+            ),
+            _ImpactLevelIndicator(
+              name: context.i18n.packaging,
+              value: scoreToString(food.packagingScore),
+              level: food.packagingImpact,
+            ),
+          ],
         ],
       ),
     );
@@ -312,6 +320,7 @@ class _Nutrients extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -330,26 +339,33 @@ class _Nutrients extends StatelessWidget {
             ],
           ),
           const Gap(8),
-          _ImpactLevelIndicator(
-            name: context.i18n.sugars,
-            value: quantityToString(food.sugarsQuantity),
-            level: food.sugarsLevel,
-          ),
-          _ImpactLevelIndicator(
-            name: context.i18n.fat,
-            value: quantityToString(food.fatQuantity),
-            level: food.fatLevel,
-          ),
-          _ImpactLevelIndicator(
-            name: context.i18n.saturatedFat,
-            value: quantityToString(food.saturatedFatQuantity),
-            level: food.saturatedFatLevel,
-          ),
-          _ImpactLevelIndicator(
-            name: context.i18n.salt,
-            value: quantityToString(food.saltQuantity),
-            level: food.saltLevel,
-          ),
+          if (food.nutriscoreGrade == Grade.notApplicable)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Text(context.i18n.notApplicableWarning, style: context.textTheme.caption),
+            )
+          else ...[
+            _ImpactLevelIndicator(
+              name: context.i18n.sugars,
+              value: quantityToString(food.sugarsQuantity),
+              level: food.sugarsLevel,
+            ),
+            _ImpactLevelIndicator(
+              name: context.i18n.fat,
+              value: quantityToString(food.fatQuantity),
+              level: food.fatLevel,
+            ),
+            _ImpactLevelIndicator(
+              name: context.i18n.saturatedFat,
+              value: quantityToString(food.saturatedFatQuantity),
+              level: food.saturatedFatLevel,
+            ),
+            _ImpactLevelIndicator(
+              name: context.i18n.salt,
+              value: quantityToString(food.saltQuantity),
+              level: food.saltLevel,
+            ),
+          ],
         ],
       ),
     );

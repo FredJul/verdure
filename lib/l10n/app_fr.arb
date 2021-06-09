@@ -11,6 +11,7 @@
     "noSearchResult": "Aucun produit trouvé",
     "environmentalImpact": "Impact environnemental",
     "alternatives": "Alternatives",
+    "notApplicableWarning": "Not applicable for this product.",
     "nutritionalValues": "Valeurs nutritionnelles pour 100g",
     "browserOpeningError": "Une erreur s'est produite lors du lancement du navigateur.",
     "ingredients": "Ingrédients",
@@ -26,6 +27,6 @@
     "unknownImpact": "Données manquantes",
     "retry": "Une erreur s'est produite, veuillez réessayer",
     "noAlternativeFound": "Aucune alternative trouvée",
-    "dataSource": "Les informations proviennent de la base de données ouverte OpenFoodFacts.",
-    "dataModification": "Vous pouvez consulter les informations détaillées de ce produit et aider à les compléter en allant sur sa page dédiée."
+    "dataSource": "Les informations proviennent de la base de données collaborative OpenFoodFacts.",
+    "dataModification": "Vous pouvez consulter les informations détaillées de ce produit sur sa page dédiée et contribuer en ajoutant les informations manquantes ou en les aidant financièrement."
 }
