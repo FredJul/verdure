@@ -277,6 +277,17 @@ class _Environment extends StatelessWidget {
             ],
           ),
           const Gap(8),
+          if (food.missingEcoscoreDataWarning)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Icon(Icons.warning, color: Colors.orange[300]),
+                  const Gap(8),
+                  Expanded(child: Text(context.i18n.missingEcoscoreDataWarning, style: context.textTheme.caption)),
+                ],
+              ),
+            ),
           if (food.ecoscoreGrade == Grade.notApplicable)
             Padding(
               padding: const EdgeInsets.all(8),

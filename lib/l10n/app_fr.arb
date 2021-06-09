@@ -12,6 +12,7 @@
     "environmentalImpact": "Impact environnemental",
     "alternatives": "Alternatives",
     "notApplicableWarning": "Not applicable for this product.",
+    "missingEcoscoreDataWarning": "Certaines informations nécessaires pour un calcul précis ne sont pas renseignées.",
     "nutritionalValues": "Valeurs nutritionnelles pour 100g",
     "browserOpeningError": "Une erreur s'est produite lors du lancement du navigateur.",
     "ingredients": "Ingrédients",

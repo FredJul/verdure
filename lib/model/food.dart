@@ -17,6 +17,7 @@ class Food extends HiveObject {
     this.ingredientsScore,
     this.packagingScore,
     this.transportationScore,
+    this.missingEcoscoreDataWarning = false,
     this.nutriscoreGrade,
     this.sugarsQuantity,
     this.fatQuantity,
@@ -61,36 +62,39 @@ class Food extends HiveObject {
   double? transportationScore;
 
   @HiveField(10)
-  Grade? nutriscoreGrade;
+  bool missingEcoscoreDataWarning;
 
   @HiveField(11)
-  double? sugarsQuantity;
+  Grade? nutriscoreGrade;
 
   @HiveField(12)
-  double? fatQuantity;
+  double? sugarsQuantity;
 
   @HiveField(13)
-  double? saturatedFatQuantity;
+  double? fatQuantity;
 
   @HiveField(14)
-  double? saltQuantity;
+  double? saturatedFatQuantity;
 
   @HiveField(15)
-  ImpactLevel? sugarsLevel;
+  double? saltQuantity;
 
   @HiveField(16)
-  ImpactLevel? fatLevel;
+  ImpactLevel? sugarsLevel;
 
   @HiveField(17)
-  ImpactLevel? saturatedFatLevel;
+  ImpactLevel? fatLevel;
 
   @HiveField(18)
-  ImpactLevel? saltLevel;
+  ImpactLevel? saturatedFatLevel;
 
   @HiveField(19)
-  String? quantity;
+  ImpactLevel? saltLevel;
 
   @HiveField(20)
+  String? quantity;
+
+  @HiveField(21)
   List<String> categoryTags;
 
   ImpactLevel? get ingredientsImpact => _scoreToImpactLevel(ingredientsScore);
