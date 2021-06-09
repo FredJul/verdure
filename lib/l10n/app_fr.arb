@@ -7,6 +7,7 @@
     "favoriteTitle": "Favoris",
     "noFavoriteFood": "Aucun produit mis en favori",
     "scannedProducts": "Produits scannés",
+    "deleteScannedProductMessage": "Supprimer ce produit de la liste ?",
     "searchError": "Une erreur s'est produite, merci de vérifier votre connexion.",
     "noSearchResult": "Aucun produit trouvé",
     "environmentalImpact": "Impact environnemental",

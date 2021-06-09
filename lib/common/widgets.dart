@@ -11,12 +11,14 @@ class Tap extends StatelessWidget {
     Key? key,
     this.child,
     this.onTap,
+    this.onLongPress,
     this.customBorder,
     this.borderRadius,
   }) : super(key: key);
 
   final Widget? child;
   final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final ShapeBorder? customBorder;
   final BorderRadius? borderRadius;
 
@@ -27,6 +29,7 @@ class Tap extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
+        onLongPress: onLongPress,
         customBorder: customBorder,
         borderRadius: borderRadius,
         child: child,

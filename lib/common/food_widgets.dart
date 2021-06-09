@@ -17,10 +17,12 @@ class FoodCard extends StatelessWidget {
     Key? key,
     required this.food,
     this.onTap,
+    this.onLongPress,
   }) : super(key: key);
 
   final Food food;
   final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class FoodCard extends StatelessWidget {
         child: Tap(
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           onTap: onTap,
+          onLongPress: onLongPress,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Row(

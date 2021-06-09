@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:ecoscore/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +70,16 @@ class HomePage extends StatelessWidget {
                               child: FoodCard(
                                 food: food,
                                 onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                onLongPress: () {
+                                  showOkCancelAlertDialog(
+                                    context: context,
+                                    message: context.i18n.deleteScannedProductMessage,
+                                  ).then((result) {
+                                    if (result == OkCancelResult.ok) {
+                                      foodsState.deleteScannedFood(food);
+                                    }
+                                  });
+                                },
                               ),
                             ))
                         .toList(),
