@@ -24,6 +24,7 @@ class _SearchPageState extends ObserverState<SearchPage> {
   var _isSearching = false;
   var _hasError = false;
   List<Food>? _searchResults;
+  final _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,7 @@ class _SearchPageState extends ObserverState<SearchPage> {
                         OpenFoodFactsApi.search(query),
                         (foods) => setState(() {
                           _searchResults = foods;
+                          _scrollController.jumpTo(0);
                           _isSearching = false;
                           _hasError = false;
                         }),
@@ -80,6 +82,7 @@ class _SearchPageState extends ObserverState<SearchPage> {
                               : context.i18n.noSearchResult),
                 ),
                 secondChild: ListView(
+                  controller: _scrollController,
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(top: 4, left: 24, right: 24, bottom: 24),
                   children: _searchResults
