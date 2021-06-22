@@ -1,15 +1,15 @@
 import 'package:dartx/dartx.dart';
+import 'package:ecoscore/common/extensions.dart';
+import 'package:ecoscore/common/food_widgets.dart';
+import 'package:ecoscore/common/widgets.dart';
+import 'package:ecoscore/gen/assets.gen.dart';
+import 'package:ecoscore/model/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import 'common/extensions.dart';
-import 'common/food_widgets.dart';
-import 'common/widgets.dart';
 import 'food_detail_page.dart';
-import 'gen/assets.gen.dart';
-import 'model/providers.dart';
 
 class FavoritesPage extends ConsumerWidget {
   @override

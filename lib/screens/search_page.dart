@@ -1,16 +1,16 @@
 import 'package:dartx/dartx.dart';
+import 'package:ecoscore/api/open_food_facts_api.dart';
+import 'package:ecoscore/common/extensions.dart';
+import 'package:ecoscore/common/food_widgets.dart';
+import 'package:ecoscore/common/observer_state.dart';
+import 'package:ecoscore/common/search_bar.dart';
+import 'package:ecoscore/common/widgets.dart';
+import 'package:ecoscore/gen/assets.gen.dart';
+import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'api/open_food_facts_api.dart';
-import 'common/extensions.dart';
-import 'common/food_widgets.dart';
-import 'common/observer_state.dart';
-import 'common/search_bar.dart';
-import 'common/widgets.dart';
 import 'food_detail_page.dart';
-import 'gen/assets.gen.dart';
-import 'model/food.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);

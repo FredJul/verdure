@@ -1,4 +1,12 @@
 import 'package:dartx/dartx.dart';
+import 'package:ecoscore/api/open_food_facts_api.dart';
+import 'package:ecoscore/common/extensions.dart';
+import 'package:ecoscore/common/food_widgets.dart';
+import 'package:ecoscore/common/observer_state.dart';
+import 'package:ecoscore/common/widgets.dart';
+import 'package:ecoscore/gen/colors.gen.dart';
+import 'package:ecoscore/model/food.dart';
+import 'package:ecoscore/model/providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,15 +14,7 @@ import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'api/open_food_facts_api.dart';
-import 'common/extensions.dart';
-import 'common/food_widgets.dart';
-import 'common/observer_state.dart';
-import 'common/widgets.dart';
 import 'food_image_page.dart';
-import 'gen/colors.gen.dart';
-import 'model/food.dart';
-import 'model/providers.dart';
 
 class FoodDetailPage extends StatelessWidget {
   const FoodDetailPage({

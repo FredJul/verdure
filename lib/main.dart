@@ -11,8 +11,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import 'gen/colors.gen.dart';
 import 'gen/fonts.gen.dart';
-import 'main_page.dart';
 import 'model/food.dart';
+import 'screens/main_page.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();

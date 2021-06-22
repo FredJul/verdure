@@ -1,12 +1,12 @@
 import 'package:dartx/dartx.dart';
+import 'package:ecoscore/common/extensions.dart';
+import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
-import 'common/extensions.dart';
 import 'favorites_page.dart';
-import 'gen/assets.gen.dart';
 import 'home_page.dart';
 import 'scan_page.dart';
 
@@ -81,6 +81,7 @@ class _BottomBarItem extends ConsumerWidget {
   final int idx;
   final IconData icon;
   final String name;
+
   const _BottomBarItem({Key? key, required this.idx, required this.icon, required this.name}) : super(key: key);
 
   @override

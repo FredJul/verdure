@@ -1,19 +1,19 @@
 import 'dart:io';
 
 import 'package:dartx/dartx.dart';
+import 'package:ecoscore/api/open_food_facts_api.dart';
+import 'package:ecoscore/common/auto_anim_list.dart';
+import 'package:ecoscore/common/extensions.dart';
+import 'package:ecoscore/common/food_widgets.dart';
+import 'package:ecoscore/common/observer_state.dart';
+import 'package:ecoscore/model/food.dart';
+import 'package:ecoscore/model/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-import 'api/open_food_facts_api.dart';
-import 'common/auto_anim_list.dart';
-import 'common/extensions.dart';
-import 'common/food_widgets.dart';
-import 'common/observer_state.dart';
 import 'food_detail_page.dart';
-import 'model/food.dart';
-import 'model/providers.dart';
 
 class ScanPage extends StatefulWidget {
   @override
