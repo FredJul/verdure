@@ -1,9 +1,10 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:dartx/dartx.dart';
 import 'package:ecoscore/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'common/extensions.dart';
@@ -13,12 +14,13 @@ import 'common/widgets.dart';
 import 'food_detail_page.dart';
 import 'gen/assets.gen.dart';
 import 'gen/colors.gen.dart';
-import 'model/foods_state.dart';
+import 'model/providers.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final foodsState = context.watch<FoodsState>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final scannedFoods = ref.watch(scannedFoodsProvider).data;
+    final foodRepository = ref.watch(foodRepositoryProvider).data;
 
     return CustomScrollView(
       slivers: [
@@ -59,42 +61,43 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-        SliverPadding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 96),
-          sliver: foodsState.scannedFoods.isNotEmpty
-              ? SliverList(
-                  delegate: SliverChildListDelegate(
-                    foodsState.scannedFoods.reversed
-                        .map((food) => Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 4),
-                              child: FoodCard(
-                                food: food,
-                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                                onLongPress: () {
-                                  showOkCancelAlertDialog(
-                                    context: context,
-                                    message: context.i18n.deleteScannedProductMessage,
-                                  ).then((result) {
-                                    if (result == OkCancelResult.ok) {
-                                      foodsState.deleteScannedFood(food);
-                                    }
-                                  });
-                                },
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                )
-              : SliverFillRemaining(
-                  hasScrollBody: false,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 64),
-                    child: Center(
-                      child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+        if (scannedFoods != null)
+          SliverPadding(
+            padding: const EdgeInsets.only(left: 24, right: 24, bottom: 96),
+            sliver: scannedFoods.value.isNotEmpty
+                ? SliverList(
+                    delegate: SliverChildListDelegate(
+                      scannedFoods.value.reversed
+                          .map((food) => Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4),
+                                child: FoodCard(
+                                  food: food,
+                                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                  onLongPress: () {
+                                    showOkCancelAlertDialog(
+                                      context: context,
+                                      message: context.i18n.deleteScannedProductMessage,
+                                    ).then((result) {
+                                      if (result == OkCancelResult.ok) {
+                                        foodRepository?.value.deleteScannedFood(food);
+                                      }
+                                    });
+                                  },
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                  )
+                : SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 64),
+                      child: Center(
+                        child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                      ),
                     ),
                   ),
-                ),
-        ),
+          ),
       ],
     );
   }

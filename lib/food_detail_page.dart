@@ -1,8 +1,8 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,7 +14,7 @@ import 'common/widgets.dart';
 import 'food_image_page.dart';
 import 'gen/colors.gen.dart';
 import 'model/food.dart';
-import 'model/foods_state.dart';
+import 'model/providers.dart';
 
 class FoodDetailPage extends StatelessWidget {
   const FoodDetailPage({
@@ -25,8 +25,6 @@ class FoodDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foodsState = context.watch<FoodsState>();
-
     return Scaffold(
       body: Stack(
         children: [
@@ -52,7 +50,7 @@ class FoodDetailPage extends StatelessWidget {
                 expandedHeight: 236,
                 title: DisapearingSliverAppBarTitle(child: Text(food.name)),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: _FoodHeader(food: food, foodsState: foodsState),
+                  background: _FoodHeader(food: food),
                 ),
               ),
               SliverToBoxAdapter(
@@ -74,7 +72,7 @@ class FoodDetailPage extends StatelessWidget {
                         ),
                       ),
                       const Gap(16),
-                      _AlternativesList(food: food, foodsState: foodsState),
+                      _AlternativesList(food: food),
                       const Gap(32),
                       _AboutData(food: food),
                     ],
@@ -93,11 +91,9 @@ class _FoodHeader extends StatelessWidget {
   const _FoodHeader({
     Key? key,
     required this.food,
-    required this.foodsState,
   }) : super(key: key);
 
   final Food food;
-  final FoodsState foodsState;
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +132,7 @@ class _FoodHeader extends StatelessWidget {
                 ],
               ),
             ),
-            _LargeFoodIcon(food: food, foodsState: foodsState),
+            _LargeFoodIcon(food: food),
           ],
         ),
       ),
@@ -148,11 +144,9 @@ class _LargeFoodIcon extends StatefulWidget {
   const _LargeFoodIcon({
     Key? key,
     required this.food,
-    required this.foodsState,
   }) : super(key: key);
 
   final Food food;
-  final FoodsState foodsState;
 
   @override
   _LargeFoodIconState createState() => _LargeFoodIconState();
@@ -186,8 +180,6 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
 
   @override
   Widget build(BuildContext context) {
-    final isInFavorites = widget.foodsState.favoriteFoods.indexWhere((e) => e.barcode == widget.food.barcode) != -1;
-
     return Stack(
       children: [
         Padding(
@@ -218,22 +210,31 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
                 border: Border.all(color: Colors.black12),
                 color: Colors.white.withAlpha(220),
               ),
-              child: Tap(
-                borderRadius: const BorderRadius.all(Radius.circular(36)),
-                onTap: () {
-                  if (isInFavorites) {
-                    widget.foodsState.removeFavoriteFood(widget.food);
-                  } else {
-                    widget.foodsState.addFavoriteFood(widget.food);
-                  }
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final favFoods = ref.watch(favFoodsProvider).data;
+                  final foodRepository = ref.watch(foodRepositoryProvider).data;
+
+                  final isInFavorites = favFoods?.value.toList().indexWhere((e) => e.barcode == widget.food.barcode) != -1;
+
+                  return Tap(
+                    borderRadius: const BorderRadius.all(Radius.circular(36)),
+                    onTap: () {
+                      if (isInFavorites) {
+                        foodRepository?.value.removeFavoriteFood(widget.food);
+                      } else {
+                        foodRepository?.value.addFavoriteFood(widget.food);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Icon(
+                        isInFavorites ? Icons.favorite : Icons.favorite_outline,
+                        color: Colors.red[400],
+                      ),
+                    ),
+                  );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Icon(
-                    isInFavorites ? Icons.favorite : Icons.favorite_outline,
-                    color: Colors.red[400],
-                  ),
-                ),
               ),
             ),
           ),
@@ -387,11 +388,9 @@ class _AlternativesList extends StatefulWidget {
   const _AlternativesList({
     Key? key,
     required this.food,
-    required this.foodsState,
   }) : super(key: key);
 
   final Food food;
-  final FoodsState foodsState;
 
   @override
   _AlternativesListState createState() => _AlternativesListState();

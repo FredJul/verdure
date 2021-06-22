@@ -5,15 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
 
 import 'gen/colors.gen.dart';
 import 'gen/fonts.gen.dart';
 import 'main_page.dart';
 import 'model/food.dart';
-import 'model/foods_state.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -21,28 +20,10 @@ Future<void> main() async {
   Hive.registerAdapter(GradeAdapter());
   Hive.registerAdapter(ImpactLevelAdapter());
 
-  Future<Box<Food>> openBox(String boxName) async {
-    Box<Food> box;
-    try {
-      box = await Hive.openBox(boxName);
-    } catch (_) {
-      // In case of migration issue, we simply erase everything :)
-      await Hive.deleteBoxFromDisk(boxName);
-      box = await Hive.openBox(boxName);
-    }
-
-    return box;
-  }
-
-  runApp(MyApp(await openBox('scanned_foods'), await openBox('fav_foods')));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Box<Food> _scannedFoodsBox;
-  final Box<Food> _favFoodsBox;
-
-  const MyApp(this._scannedFoodsBox, this._favFoodsBox);
-
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -56,8 +37,7 @@ class MyApp extends StatelessWidget {
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     }
 
-    return ChangeNotifierProvider(
-      create: (_) => FoodsState(_scannedFoodsBox, _favFoodsBox),
+    return ProviderScope(
       child: MaterialApp(
         title: 'Verdure',
         localizationsDelegates: const [
