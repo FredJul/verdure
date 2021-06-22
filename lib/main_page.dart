@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 
 import 'common/extensions.dart';
@@ -9,32 +10,26 @@ import 'gen/assets.gen.dart';
 import 'home_page.dart';
 import 'scan_page.dart';
 
-class MainPage extends StatefulWidget {
+final _currentPageProvider = StateProvider((ref) => 0);
+
+final _pageControllerProvider = Provider<PageController>((ref) {
+  final pageController = PageController();
+  pageController.addListener(() {
+    ref.read(_currentPageProvider).state = pageController.page?.toInt() ?? 0;
+  });
+
+  return pageController;
+});
+
+class MainPage extends ConsumerWidget {
   @override
-  _MainPageState createState() => _MainPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageController = ref.read(_pageControllerProvider);
 
-class _MainPageState extends State<MainPage> {
-  var _currentPage = 0;
-  final PageController _pageController = PageController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    _pageController.addListener(() {
-      setState(() {
-        _currentPage = _pageController.page?.toInt() ?? 0;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false, // To avoid the FAB to be visible when the keyboard is up
       body: PageView(
-        controller: _pageController,
+        controller: pageController,
         physics: const NeverScrollableScrollPhysics(), // Avoid a gesture conflict with the search bar
         children: [
           HomePage(),
@@ -53,9 +48,9 @@ class _MainPageState extends State<MainPage> {
           notchMargin: 0,
           child: Row(
             children: [
-              _buildBottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: context.i18n.homeTitle),
+              _BottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: context.i18n.homeTitle),
               const Gap(76),
-              _buildBottomBarItem(idx: 1, icon: Icons.favorite, name: context.i18n.favoriteTitle),
+              _BottomBarItem(idx: 1, icon: Icons.favorite, name: context.i18n.favoriteTitle),
             ],
           ),
         ),
@@ -80,27 +75,40 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+}
 
-  Widget _buildBottomBarItem({required int idx, required IconData icon, required String name}) => Expanded(
-        child: InkWell(
-          highlightColor: Colors.transparent,
-          onTap: () => _pageController.animateToPage(idx, duration: 300.milliseconds, curve: Curves.easeInOut),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(icon, color: _currentPage == idx ? Theme.of(context).primaryColor : Colors.black26),
-                Text(
-                  name,
-                  style: context.textTheme.subtitle2?.copyWith(
-                    color: _currentPage == idx ? Theme.of(context).primaryColor : Colors.black26,
-                    fontWeight: FontWeight.bold,
-                  ),
+class _BottomBarItem extends ConsumerWidget {
+  final int idx;
+  final IconData icon;
+  final String name;
+  const _BottomBarItem({Key? key, required this.idx, required this.icon, required this.name}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final pageController = ref.read(_pageControllerProvider);
+    final currentPage = ref.watch(_currentPageProvider).state;
+
+    return Expanded(
+      child: InkWell(
+        highlightColor: Colors.transparent,
+        onTap: () => pageController.animateToPage(idx, duration: 300.milliseconds, curve: Curves.easeInOut),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, color: currentPage == idx ? Theme.of(context).primaryColor : Colors.black26),
+              Text(
+                name,
+                style: context.textTheme.subtitle2?.copyWith(
+                  color: currentPage == idx ? Theme.of(context).primaryColor : Colors.black26,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
 }
