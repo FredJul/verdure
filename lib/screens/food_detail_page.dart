@@ -16,7 +16,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'food_image_page.dart';
 
-class FoodDetailPage extends StatelessWidget {
+final _updatedFoodProvider = FutureProvider.family.autoDispose<Food?, String>((ref, barcode) async {
+  final foodRepository = await ref.watch(foodRepositoryProvider.future);
+  return foodRepository.refreshFood(barcode);
+});
+
+class FoodDetailPage extends ConsumerWidget {
   const FoodDetailPage({
     required this.food,
   });
@@ -24,7 +29,9 @@ class FoodDetailPage extends StatelessWidget {
   final Food food;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final updatedFood = ref.watch(_updatedFoodProvider(food.barcode)).data?.value ?? food;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -48,9 +55,9 @@ class FoodDetailPage extends StatelessWidget {
                 backgroundColor: Colors.white,
                 pinned: true,
                 expandedHeight: 236,
-                title: DisapearingSliverAppBarTitle(child: Text(food.name)),
+                title: DisapearingSliverAppBarTitle(child: Text(updatedFood.name)),
                 flexibleSpace: FlexibleSpaceBar(
-                  background: _FoodHeader(food: food),
+                  background: _FoodHeader(food: updatedFood),
                 ),
               ),
               SliverToBoxAdapter(
@@ -60,9 +67,9 @@ class FoodDetailPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Gap(22),
-                      _Environment(food: food),
+                      _Environment(food: updatedFood),
                       const Gap(22),
-                      _Nutrients(food: food),
+                      _Nutrients(food: updatedFood),
                       const Gap(22),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -72,9 +79,9 @@ class FoodDetailPage extends StatelessWidget {
                         ),
                       ),
                       const Gap(16),
-                      _AlternativesList(food: food),
+                      _AlternativesList(food: updatedFood),
                       const Gap(32),
-                      _AboutData(food: food),
+                      _AboutData(food: updatedFood),
                     ],
                   ),
                 ),

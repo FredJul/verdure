@@ -1,3 +1,4 @@
+import 'package:ecoscore/api/open_food_facts_api.dart';
 import 'package:hive/hive.dart';
 
 import 'food.dart';
@@ -7,6 +8,28 @@ class FoodRepository {
   final Box<Food> _favFoodsBox;
 
   FoodRepository(this._scannedFoodsBox, this._favFoodsBox);
+
+  Future<Food?> refreshFood(String barcode) async {
+    final food = await OpenFoodFactsApi.getFood(barcode);
+
+    if (food != null) {
+      for (int i = 0; i < _scannedFoodsBox.length; i++) {
+        if (_scannedFoodsBox.getAt(i)!.barcode == barcode) {
+          await _scannedFoodsBox.putAt(i, food);
+          break;
+        }
+      }
+
+      for (int i = 0; i < _favFoodsBox.length; i++) {
+        if (_favFoodsBox.getAt(i)!.barcode == barcode) {
+          await _favFoodsBox.putAt(i, food);
+          break;
+        }
+      }
+    }
+
+    return food;
+  }
 
   Future<void> addScannedFood(Food food) async {
     await _removeFoodFromBox(food, _scannedFoodsBox);

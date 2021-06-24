@@ -30,7 +30,7 @@ final scannedFoodsProvider = StreamProvider.autoDispose((ref) async* {
 
   yield* Stream.value(box.values);
   yield* box.watch().map((boxEvent) {
-    return boxEvent.value == null ? List<Food>.empty() : boxEvent.value as Iterable<Food>;
+    return box.values;
   });
 });
 
@@ -39,7 +39,7 @@ final favFoodsProvider = StreamProvider.autoDispose((ref) async* {
 
   yield* Stream.value(box.values);
   yield* box.watch().map((boxEvent) {
-    return boxEvent.value == null ? List<Food>.empty() : boxEvent.value as Iterable<Food>;
+    return box.values;
   });
 });
 
