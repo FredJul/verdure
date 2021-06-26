@@ -136,7 +136,8 @@ class _ScanPageState extends ObserverState<ScanPage> {
                     _listController.animateTo(0, duration: 300.milliseconds, curve: Curves.easeInOut);
                   }
                 }, onError: (_) {
-                  //TODO display snackbar?
+                  final snackBar = SnackBar(content: Text(context.i18n.searchError));
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 });
               }
             });
