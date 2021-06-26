@@ -278,6 +278,7 @@ class _Environment extends StatelessWidget {
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
+              const Gap(8),
               EcoscoreImage(
                 grade: food.ecoscoreGrade,
                 height: 36,
@@ -351,6 +352,7 @@ class _Nutrients extends StatelessWidget {
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
+              const Gap(8),
               NutriscoreImage(
                 grade: food.nutriscoreGrade,
                 height: 46,

@@ -20,7 +20,11 @@ Future<void> main() async {
   Hive.registerAdapter(GradeAdapter());
   Hive.registerAdapter(ImpactLevelAdapter());
 
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -37,27 +41,25 @@ class MyApp extends StatelessWidget {
       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     }
 
-    return ProviderScope(
-      child: MaterialApp(
-        title: 'Verdure',
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('fr', ''),
-        ],
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: ColorName.primary,
-          scaffoldBackgroundColor: Colors.white,
-          brightness: Brightness.light,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: FontFamily.nunito,
-        ),
-        home: MainPage(),
+    return MaterialApp(
+      title: 'Verdure',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', ''),
+      ],
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: ColorName.primary,
+        scaffoldBackgroundColor: Colors.white,
+        brightness: Brightness.light,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: FontFamily.nunito,
       ),
+      home: MainPage(),
     );
   }
 }

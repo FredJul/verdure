@@ -29,18 +29,14 @@ final scannedFoodsProvider = StreamProvider.autoDispose((ref) async* {
   final box = await ref.watch(scannedFoodsBoxProvider.future);
 
   yield* Stream.value(box.values);
-  yield* box.watch().map((boxEvent) {
-    return box.values;
-  });
+  yield* box.watch().map((boxEvent) => box.values);
 });
 
 final favFoodsProvider = StreamProvider.autoDispose((ref) async* {
   final box = await ref.watch(favFoodsBoxProvider.future);
 
   yield* Stream.value(box.values);
-  yield* box.watch().map((boxEvent) {
-    return box.values;
-  });
+  yield* box.watch().map((boxEvent) => box.values);
 });
 
 Future<Box<T>> _safeOpenBox<T>(String boxName) async {
