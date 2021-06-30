@@ -14,7 +14,6 @@ extension FoodCopyWith on Food {
     Grade? ecoscoreGrade,
     ImpactLevel? fatLevel,
     double? fatQuantity,
-    String? imageFrontSmallUrl,
     String? imageFrontUrl,
     String? imageIngredientsUrl,
     double? ingredientsScore,
@@ -38,7 +37,6 @@ extension FoodCopyWith on Food {
       ecoscoreGrade: ecoscoreGrade ?? this.ecoscoreGrade,
       fatLevel: fatLevel ?? this.fatLevel,
       fatQuantity: fatQuantity ?? this.fatQuantity,
-      imageFrontSmallUrl: imageFrontSmallUrl ?? this.imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl ?? this.imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl ?? this.imageIngredientsUrl,
       ingredientsScore: ingredientsScore ?? this.ingredientsScore,
@@ -77,32 +75,31 @@ class FoodAdapter extends TypeAdapter<Food> {
       barcode: fields[0] as String,
       name: fields[1] as String,
       brands: fields[2] as String?,
-      imageFrontSmallUrl: fields[3] as String?,
-      imageFrontUrl: fields[4] as String?,
-      imageIngredientsUrl: fields[5] as String?,
-      ecoscoreGrade: fields[6] as Grade?,
-      ingredientsScore: fields[7] as double?,
-      packagingScore: fields[8] as double?,
-      transportationScore: fields[9] as double?,
-      missingEcoscoreDataWarning: fields[10] as bool,
-      nutriscoreGrade: fields[11] as Grade?,
-      sugarsQuantity: fields[12] as double?,
-      fatQuantity: fields[13] as double?,
-      saturatedFatQuantity: fields[14] as double?,
-      saltQuantity: fields[15] as double?,
-      sugarsLevel: fields[16] as ImpactLevel?,
-      fatLevel: fields[17] as ImpactLevel?,
-      saturatedFatLevel: fields[18] as ImpactLevel?,
-      saltLevel: fields[19] as ImpactLevel?,
-      quantity: fields[20] as String?,
-      categoryTags: (fields[21] as List).cast<String>(),
+      imageFrontUrl: fields[3] as String?,
+      imageIngredientsUrl: fields[4] as String?,
+      ecoscoreGrade: fields[5] as Grade?,
+      ingredientsScore: fields[6] as double?,
+      packagingScore: fields[7] as double?,
+      transportationScore: fields[8] as double?,
+      missingEcoscoreDataWarning: fields[9] as bool,
+      nutriscoreGrade: fields[10] as Grade?,
+      sugarsQuantity: fields[11] as double?,
+      fatQuantity: fields[12] as double?,
+      saturatedFatQuantity: fields[13] as double?,
+      saltQuantity: fields[14] as double?,
+      sugarsLevel: fields[15] as ImpactLevel?,
+      fatLevel: fields[16] as ImpactLevel?,
+      saturatedFatLevel: fields[17] as ImpactLevel?,
+      saltLevel: fields[18] as ImpactLevel?,
+      quantity: fields[19] as String?,
+      categoryTags: (fields[20] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Food obj) {
     writer
-      ..writeByte(22)
+      ..writeByte(21)
       ..writeByte(0)
       ..write(obj.barcode)
       ..writeByte(1)
@@ -110,42 +107,40 @@ class FoodAdapter extends TypeAdapter<Food> {
       ..writeByte(2)
       ..write(obj.brands)
       ..writeByte(3)
-      ..write(obj.imageFrontSmallUrl)
-      ..writeByte(4)
       ..write(obj.imageFrontUrl)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.imageIngredientsUrl)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.ecoscoreGrade)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.ingredientsScore)
-      ..writeByte(8)
+      ..writeByte(7)
       ..write(obj.packagingScore)
-      ..writeByte(9)
+      ..writeByte(8)
       ..write(obj.transportationScore)
-      ..writeByte(10)
+      ..writeByte(9)
       ..write(obj.missingEcoscoreDataWarning)
-      ..writeByte(11)
+      ..writeByte(10)
       ..write(obj.nutriscoreGrade)
-      ..writeByte(12)
+      ..writeByte(11)
       ..write(obj.sugarsQuantity)
-      ..writeByte(13)
+      ..writeByte(12)
       ..write(obj.fatQuantity)
-      ..writeByte(14)
+      ..writeByte(13)
       ..write(obj.saturatedFatQuantity)
-      ..writeByte(15)
+      ..writeByte(14)
       ..write(obj.saltQuantity)
-      ..writeByte(16)
+      ..writeByte(15)
       ..write(obj.sugarsLevel)
-      ..writeByte(17)
+      ..writeByte(16)
       ..write(obj.fatLevel)
-      ..writeByte(18)
+      ..writeByte(17)
       ..write(obj.saturatedFatLevel)
-      ..writeByte(19)
+      ..writeByte(18)
       ..write(obj.saltLevel)
-      ..writeByte(20)
+      ..writeByte(19)
       ..write(obj.quantity)
-      ..writeByte(21)
+      ..writeByte(20)
       ..write(obj.categoryTags);
   }
 

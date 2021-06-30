@@ -199,9 +199,12 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
             ),
             child: Hero(
               tag: widget.food.barcode,
-              child: GestureDetector(
-                onTap: () => context.pushScreen(FoodImagePage(food: widget.food)),
-                child: FoodIcon(food: widget.food, size: 136),
+              child: IgnorePointer(
+                ignoring: widget.food.imageFrontUrl == null,
+                child: GestureDetector(
+                  onTap: () => context.pushScreen(FoodImagePage(imageUrl: widget.food.imageFrontUrl!)),
+                  child: FoodIcon(food: widget.food, size: 136),
+                ),
               ),
             ),
           ),
@@ -310,12 +313,12 @@ class _Environment extends StatelessWidget {
             ),
             _ImpactLevelIndicator(
               name: context.i18n.transportation,
-              value: scoreToString(food.transportationScore),
+              value: null, // I don't want to display the score to let the user focus on the ingredients score
               level: food.transportationImpact,
             ),
             _ImpactLevelIndicator(
               name: context.i18n.packaging,
-              value: scoreToString(food.packagingScore),
+              value: null, // I don't want to display the score to let the user focus on the ingredients score
               level: food.packagingImpact,
             ),
           ],
@@ -387,6 +390,17 @@ class _Nutrients extends StatelessWidget {
               level: food.saltLevel,
             ),
           ],
+          if (food.imageIngredientsUrl != null)
+            Align(
+              alignment: Alignment.topRight,
+              child: TextButton(
+                onPressed: () => context.pushScreen(FoodImagePage(imageUrl: food.imageIngredientsUrl!)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Text(context.i18n.seeIngredients, style: context.textTheme.caption?.copyWith(color: ColorName.primary)),
+                ),
+              ),
+            ),
         ],
       ),
     );

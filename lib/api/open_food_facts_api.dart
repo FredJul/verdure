@@ -22,6 +22,7 @@ class OpenFoodFactsApi {
     ProductField.QUANTITY,
     ProductField.NUTRIMENTS,
     ProductField.NUTRIENT_LEVELS,
+    ProductField.IMAGE_INGREDIENTS_URL,
     ProductField.CATEGORIES_TAGS,
   ];
 
@@ -223,7 +224,6 @@ extension _ProductExtension on Product {
       barcode: barcode ?? '',
       name: productName ?? '',
       brands: brandsSet?.join(', '),
-      imageFrontSmallUrl: imageFrontSmallUrl,
       imageFrontUrl: imageFrontUrl,
       imageIngredientsUrl: imageIngredientsUrl,
       ecoscoreGrade: ecoscoreGradeEnum,

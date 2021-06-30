@@ -1,15 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
-import 'package:ecoscore/model/food.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FoodImagePage extends StatelessWidget {
   const FoodImagePage({
-    required this.food,
+    required this.imageUrl,
   });
 
-  final Food food;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class FoodImagePage extends StatelessWidget {
       body: Center(
         child: CachedNetworkImage(
           fit: BoxFit.contain,
-          imageUrl: food.imageFrontUrl!,
+          imageUrl: imageUrl,
           errorWidget: (context, url, dynamic error) => Assets.genericFood.svg(height: defaultSize),
         ),
       ),

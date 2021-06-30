@@ -10,7 +10,6 @@ class Food extends HiveObject {
     required this.barcode,
     required this.name,
     this.brands,
-    this.imageFrontSmallUrl,
     this.imageFrontUrl,
     this.imageIngredientsUrl,
     this.ecoscoreGrade,
@@ -41,60 +40,57 @@ class Food extends HiveObject {
   String? brands;
 
   @HiveField(3)
-  String? imageFrontSmallUrl;
-
-  @HiveField(4)
   String? imageFrontUrl;
 
-  @HiveField(5)
+  @HiveField(4)
   String? imageIngredientsUrl;
 
-  @HiveField(6)
+  @HiveField(5)
   Grade? ecoscoreGrade;
 
-  @HiveField(7)
+  @HiveField(6)
   double? ingredientsScore;
 
-  @HiveField(8)
+  @HiveField(7)
   double? packagingScore;
 
-  @HiveField(9)
+  @HiveField(8)
   double? transportationScore;
 
-  @HiveField(10)
+  @HiveField(9)
   bool missingEcoscoreDataWarning;
 
-  @HiveField(11)
+  @HiveField(10)
   Grade? nutriscoreGrade;
 
-  @HiveField(12)
+  @HiveField(11)
   double? sugarsQuantity;
 
-  @HiveField(13)
+  @HiveField(12)
   double? fatQuantity;
 
-  @HiveField(14)
+  @HiveField(13)
   double? saturatedFatQuantity;
 
-  @HiveField(15)
+  @HiveField(14)
   double? saltQuantity;
 
-  @HiveField(16)
+  @HiveField(15)
   ImpactLevel? sugarsLevel;
 
-  @HiveField(17)
+  @HiveField(16)
   ImpactLevel? fatLevel;
 
-  @HiveField(18)
+  @HiveField(17)
   ImpactLevel? saturatedFatLevel;
 
-  @HiveField(19)
+  @HiveField(18)
   ImpactLevel? saltLevel;
 
-  @HiveField(20)
+  @HiveField(19)
   String? quantity;
 
-  @HiveField(21)
+  @HiveField(20)
   List<String> categoryTags;
 
   ImpactLevel? get ingredientsImpact => _scoreToImpactLevel(ingredientsScore);

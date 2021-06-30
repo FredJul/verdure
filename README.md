@@ -1,10 +1,10 @@
 ![Banner](/raw_graphics/banner.png)
 
-# Verdure - mangez responsable
+## Que permet l'application ?
 
 ![screenshot](/raw_graphics/screenshot.png)
 
-Verdure est une application permettant de scanner vos produits alimentaires pour en connaitre leurs qualités nutritionnelles mais aussi – et surtout – leurs impacts environnementaux.
+Verdure est une application mobile permettant de scanner vos produits alimentaires pour en connaitre leurs qualités nutritionnelles mais aussi – et surtout – leurs impacts environnementaux.
 
 Parce que réduire notre impact devient un enjeu des plus importants, Verdure essaye de vous aider en vous proposant des produits similaires avec un impact plus faible.
 
