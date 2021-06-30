@@ -397,7 +397,8 @@ class _Nutrients extends StatelessWidget {
                 onPressed: () => context.pushScreen(FoodImagePage(imageUrl: food.imageIngredientsUrl!)),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Text(context.i18n.seeIngredients, style: context.textTheme.caption?.copyWith(color: ColorName.primary)),
+                  child: Text(context.i18n.seeIngredients,
+                      style: context.textTheme.bodyText1?.copyWith(color: ColorName.primary[900], fontWeight: FontWeight.bold)),
                 ),
               ),
             ),

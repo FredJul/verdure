@@ -2,8 +2,6 @@
 
 ## Que permet l'application ?
 
-![screenshot](/raw_graphics/screenshot.png)
-
 Verdure est une application mobile permettant de scanner vos produits alimentaires pour en connaitre leurs qualités nutritionnelles mais aussi – et surtout – leurs impacts environnementaux.
 
 Parce que réduire notre impact devient un enjeu des plus importants, Verdure essaye de vous aider en vous proposant des produits similaires avec un impact plus faible.
@@ -16,8 +14,13 @@ L'Eco-score est une notation environnementale calculée par OpenFoodFacts, vous 
 
 ## Contact et assistance
 
-Please write to warmd_app@icloud.com or create a ticket here for any bug report or suggestion.
 Vous pouvez écrire à [verdure_app@icloud.com](mailto:verdure_app@icloud.com) ou créer un ticket [ici](https://github.com/FredJul/verdure/issues/new) pour toute remontée de bug ou suggestion.
+
+## Politique de confidentialité
+
+Toutes les données de l'application sont uniquement conservées en local sur votre appareil.
+
+Seul les codes barres et vos recherches sont envoyés sur les serveurs d'OpenFoodFact afin de pouvoir récupérer les informations des différents produits.
 
 ## Contribuer
 

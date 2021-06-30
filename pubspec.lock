@@ -297,7 +297,7 @@ packages:
       name: flutter_riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-dev.1"
+    version: "1.0.0-dev.2"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -605,7 +605,7 @@ packages:
       name: riverpod
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0-dev.1"
+    version: "1.0.0-dev.2"
   rxdart:
     dependency: transitive
     description:
