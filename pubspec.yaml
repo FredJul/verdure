@@ -28,11 +28,8 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.0.0
   intl: ^0.17.0
-  openfoodfacts:
-    git:
-      url: https://github.com/openfoodfacts/openfoodfacts-dart.git
-      ref: db85933
-  qr_code_scanner: ^0.5.1
+  openfoodfacts: ^1.2.0
+  qr_code_scanner: ^1.0.0-alpha.1
   shimmer: ^2.0.0
   url_launcher: ^6.0.3
 
