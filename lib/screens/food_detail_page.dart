@@ -2,7 +2,6 @@ import 'package:dartx/dartx.dart';
 import 'package:ecoscore/api/open_food_facts_api.dart';
 import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/common/food_widgets.dart';
-import 'package:ecoscore/common/observer_state.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/food.dart';
@@ -159,7 +158,7 @@ class _LargeFoodIcon extends StatefulWidget {
   _LargeFoodIconState createState() => _LargeFoodIconState();
 }
 
-class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTickerProviderStateMixin {
+class _LargeFoodIconState extends State<_LargeFoodIcon> with SingleTickerProviderStateMixin {
   late final AnimationController _favAnimController = AnimationController(
     duration: 100.milliseconds,
     vsync: this,
@@ -174,9 +173,7 @@ class _LargeFoodIconState extends ObserverState<_LargeFoodIcon> with SingleTicke
     super.initState();
 
     // We wait for the hero animation to be done before displaying the favorite button animation
-    delay(400.milliseconds, () {
-      _favAnimController.forward();
-    });
+    Future<void>.delayed(400.milliseconds).then((_) => _favAnimController.forward());
   }
 
   @override
@@ -420,7 +417,7 @@ class _AlternativesList extends StatefulWidget {
   _AlternativesListState createState() => _AlternativesListState();
 }
 
-class _AlternativesListState extends ObserverState<_AlternativesList> {
+class _AlternativesListState extends State<_AlternativesList> {
   var _alternatives = <Food>[];
   var _alternativesLoading = true;
   var _alternativesError = false;
@@ -434,22 +431,27 @@ class _AlternativesListState extends ObserverState<_AlternativesList> {
     });
   }
 
-  void _fetchAlternatives() {
+  Future<void> _fetchAlternatives() async {
     setState(() {
       _alternativesLoading = true;
     });
 
-    observeFuture<List<Food>>(OpenFoodFactsApi.getAlternatives(widget.food), (alternatives) {
-      setState(() {
-        _alternativesLoading = false;
-        _alternatives = alternatives;
-      });
-    }, onError: (_) {
-      setState(() {
-        _alternativesLoading = false;
-        _alternativesError = true;
-      });
-    });
+    try {
+      final alternatives = await OpenFoodFactsApi.getAlternatives(widget.food);
+      if (mounted) {
+        setState(() {
+          _alternativesLoading = false;
+          _alternatives = alternatives;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _alternativesLoading = false;
+          _alternativesError = true;
+        });
+      }
+    }
   }
 
   @override

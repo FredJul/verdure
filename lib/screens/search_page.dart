@@ -2,7 +2,6 @@ import 'package:dartx/dartx.dart';
 import 'package:ecoscore/api/open_food_facts_api.dart';
 import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/common/food_widgets.dart';
-import 'package:ecoscore/common/observer_state.dart';
 import 'package:ecoscore/common/search_bar.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
@@ -19,7 +18,7 @@ class SearchPage extends StatefulWidget {
   _SearchPageState createState() => _SearchPageState();
 }
 
-class _SearchPageState extends ObserverState<SearchPage> {
+class _SearchPageState extends State<SearchPage> {
   var _hasEmptyQuery = true;
   var _isSearching = false;
   var _hasError = false;
@@ -52,19 +51,24 @@ class _SearchPageState extends ObserverState<SearchPage> {
                     } else {
                       _hasEmptyQuery = false;
                       _isSearching = true;
-                      observeFuture<List<Food>>(
-                        OpenFoodFactsApi.search(query),
-                        (foods) => setState(() {
-                          _searchResults = foods;
-                          _scrollController.jumpTo(0);
-                          _isSearching = false;
-                          _hasError = false;
-                        }),
-                        onError: (_) => setState(() {
-                          _isSearching = false;
-                          _hasError = true;
-                        }),
-                      );
+
+                      OpenFoodFactsApi.search(query).then((foods) {
+                        if (mounted) {
+                          setState(() {
+                            _searchResults = foods;
+                            _scrollController.jumpTo(0);
+                            _isSearching = false;
+                            _hasError = false;
+                          });
+                        }
+                      }, onError: (Object e) {
+                        if (mounted) {
+                          setState(() {
+                            _isSearching = false;
+                            _hasError = true;
+                          });
+                        }
+                      });
                     }
                   });
                 },

@@ -8,7 +8,7 @@ import 'package:gap/gap.dart';
 
 import 'favorites_page.dart';
 import 'home_page.dart';
-import 'scan_page.dart';
+import 'scan/scan_page.dart';
 
 final _currentPageProvider = StateProvider((ref) => 0);
 
@@ -69,7 +69,7 @@ class MainPage extends ConsumerWidget {
         ),
         child: FloatingActionButton(
           elevation: 0,
-          onPressed: () => context.pushScreen(ScanPage()),
+          onPressed: () => context.pushScreen(const ScanPage()),
           child: Assets.scanner.svg(height: 24),
         ),
       ),
