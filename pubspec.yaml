@@ -5,7 +5,7 @@ description: Wanna save the earth?
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^1.0.0-dev.1
+  flutter_riverpod: ^1.0.0-dev.6
   adaptive_dialog: ^1.0.0
   cached_network_image: ^3.0.0
   copy_with_extension: ^2.0.0

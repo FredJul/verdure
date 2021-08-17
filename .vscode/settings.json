@@ -1,15 +1,15 @@
 {
-    // Automatically format code on save and during typing of certain characters
-    // (like `;` and `}`).
-    "editor.formatOnSave": true,
-    "editor.formatOnType": true,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true,
-        "source.fixAll": true
-    },
     "dart.lineLength": 130,
     "dart.showIgnoreQuickFixes": true,
     "[dart]": {
+        // Automatically format code on save and during typing of certain characters
+        // (like `;` and `}`).
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll": true
+        },
         // Disables built-in highlighting of words that match your selection. Without
         // this, all instances of the selected text will be highlighted, interfering
         // with Dart's ability to highlight only exact references to the selected variable.

@@ -358,7 +358,7 @@ packages:
       name: frontend_server_client
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   gap:
     dependency: "direct main"
     description:
@@ -472,7 +472,7 @@ packages:
       name: lint
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.3"
+    version: "1.6.0"
   logging:
     dependency: transitive
     description:
