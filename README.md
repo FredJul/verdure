@@ -6,6 +6,14 @@ Verdure est une application mobile permettant de scanner vos produits alimentair
 
 Parce que réduire notre impact devient un enjeu des plus importants, Verdure essaye de vous aider en vous proposant des produits similaires avec un impact plus faible.
 
+## Installation
+[<img src="https://itsallwidgets.com/images/google.png"
+     alt="Get the app"
+     height="70">](https://play.google.com/store/apps/details?id=net.frju.ecoscore)
+[<img src="https://itsallwidgets.com/images/apple.png"
+     alt="Get the app"
+     height="70">](https://apps.apple.com/app/id1574642934)
+
 ## D'où viennent les données ?
 
 Les informations proviennent de la base de données collaborative OpenFoodFacts. Celles-ci peuvent parfois être insuffisantes ou erronnées en fonction des produits, si c'est le cas n'hésitez pas à [contribuer](#contribuer).
