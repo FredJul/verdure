@@ -16,9 +16,9 @@ Parce que réduire notre impact devient un enjeu des plus importants, Verdure es
 
 ## D'où viennent les données ?
 
-Les informations proviennent de la base de données collaborative OpenFoodFacts. Celles-ci peuvent parfois être insuffisantes ou erronnées en fonction des produits, si c'est le cas n'hésitez pas à [contribuer](#contribuer).
+Les informations proviennent de la base de données collaborative Open Food Facts. Celles-ci peuvent parfois être insuffisantes ou erronnées en fonction des produits, si c'est le cas n'hésitez pas à [contribuer](#contribuer).
 
-L'Eco-score est une notation environnementale calculée par OpenFoodFacts, vous pouvez en savoir plus [ici](https://docs.score-environnemental.com).
+L'Eco-score est une notation environnementale calculée par Open Food Facts, vous pouvez en savoir plus [ici](https://docs.score-environnemental.com).
 
 ## Contact et assistance
 
@@ -28,11 +28,11 @@ Vous pouvez écrire à [verdure_app@icloud.com](mailto:verdure_app@icloud.com) o
 
 Toutes les données de l'application sont uniquement conservées en local sur votre appareil.
 
-Seul les codes barres et vos recherches sont envoyés sur les serveurs d'OpenFoodFact afin de pouvoir récupérer les informations des différents produits.
+Seul les codes barres et vos recherches sont envoyés sur les serveurs d'Open Food Facts afin de pouvoir récupérer les informations des différents produits.
 
 ## Contribuer
 
-Si vous souhaitez aider ce projet, je vous invite avant tout à faire un don à l'association [OpenFoodFacts](https://fr.openfoodfacts.org/faire-un-don-a-open-food-facts), sur lequel ce projet repose.
+Si vous souhaitez aider ce projet, je vous invite avant tout à faire un don à l'association [Open Food Facts](https://fr.openfoodfacts.org/faire-un-don-a-open-food-facts), sur lequel ce projet repose.
 
 Vous pouvez également utiliser leur site et applications mobiles pour ajouter ou améliorer des produits. Pour pouvoir afficher l'Eco-Score, il est nécessaire de renseigner à minima la catégorie, l'origine des ingrédients et les infos de packaging (photos et description).
 

@@ -30,6 +30,6 @@
     "unknownImpact": "Données manquantes",
     "retry": "Une erreur s'est produite, veuillez réessayer",
     "noAlternativeFound": "Aucune alternative trouvée",
-    "dataSource": "Les informations proviennent de la base de données collaborative OpenFoodFacts.",
+    "dataSource": "Les informations proviennent de la base de données collaborative Open Food Facts.",
     "dataModification": "Vous pouvez consulter les informations détaillées de ce produit sur sa page dédiée et contribuer en ajoutant les informations manquantes ou en les aidant financièrement."
 }
