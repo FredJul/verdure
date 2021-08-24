@@ -30,8 +30,7 @@ class _ScannerLineState extends State<ScannerLine> with TickerProviderStateMixin
       animation: controller,
       builder: (BuildContext context, Widget? child) => Opacity(
           opacity: opacityAnimation.value,
-          child: CustomPaint(
-              size: const Size(double.infinity, double.infinity), painter: _LinePainter(offsetAnimation.value, widget.color))));
+          child: CustomPaint(size: Size.infinite, painter: _LinePainter(offsetAnimation.value, widget.color))));
 
   @override
   void dispose() {

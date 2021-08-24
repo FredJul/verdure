@@ -228,6 +228,8 @@ class _ScanWidgetState extends State<ScanWidget> {
       ).then((List<Barcode> barcodes) async {
         final barcode = barcodes.firstOrNull;
         if (mounted && barcode != null && barcode.rawValue != null && result?.rawValue != barcode.rawValue) {
+          HapticFeedback.selectionClick();
+
           setState(() {
             result = barcode;
           });
