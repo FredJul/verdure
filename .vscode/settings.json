@@ -1,4 +1,5 @@
 {
+    "editor.bracketPairColorization.enabled": true,
     "dart.lineLength": 130,
     "dart.showIgnoreQuickFixes": true,
     "[dart]": {
