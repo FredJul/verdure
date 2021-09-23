@@ -19,11 +19,9 @@ dependencies:
   # misc
   riverpod: ^1.0.0-dev.7
   flutter_riverpod: ^1.0.0-dev.7
-  freezed_annotation: ^0.14.2
   copy_with_extension: ^2.0.0
   dartx: ^0.7.1
   diffutil_dart: ^2.0.0+1
-  url_launcher: ^6.0.3
 
   # DB
   hive: ^2.0.4
@@ -49,6 +47,9 @@ dependencies:
     git:
       url: https://github.com/FredJul/flutter_google_ml_vision.git # my own version which only include barcode to reduce binary size
       ref: "3448e90"
+
+  # system integration
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   build_runner: ^2.0.3
