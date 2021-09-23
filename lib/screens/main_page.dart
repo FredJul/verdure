@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -48,9 +49,9 @@ class MainPage extends ConsumerWidget {
           notchMargin: 0,
           child: Row(
             children: [
-              _BottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: context.i18n.homeTitle),
+              _BottomBarItem(idx: 0, icon: CupertinoIcons.house_fill, name: Translation.current.homeTitle),
               const Gap(76),
-              _BottomBarItem(idx: 1, icon: Icons.favorite, name: context.i18n.favoriteTitle),
+              _BottomBarItem(idx: 1, icon: Icons.favorite, name: Translation.current.favoriteTitle),
             ],
           ),
         ),
@@ -78,11 +79,11 @@ class MainPage extends ConsumerWidget {
 }
 
 class _BottomBarItem extends ConsumerWidget {
+  const _BottomBarItem({Key? key, required this.idx, required this.icon, required this.name}) : super(key: key);
+
   final int idx;
   final IconData icon;
   final String name;
-
-  const _BottomBarItem({Key? key, required this.idx, required this.icon, required this.name}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

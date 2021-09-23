@@ -4,10 +4,10 @@ import 'package:hive/hive.dart';
 import 'food.dart';
 
 class FoodRepository {
+  FoodRepository(this._scannedFoodsBox, this._favFoodsBox);
+
   final Box<Food> _scannedFoodsBox;
   final Box<Food> _favFoodsBox;
-
-  FoodRepository(this._scannedFoodsBox, this._favFoodsBox);
 
   Future<Food?> refreshFood(String barcode) async {
     final food = await OpenFoodFactsApi.getFood(barcode);

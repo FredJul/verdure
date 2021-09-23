@@ -39,11 +39,13 @@ class Tap extends StatelessWidget {
 }
 
 class DisapearingSliverAppBarTitle extends StatefulWidget {
-  final Widget child;
   const DisapearingSliverAppBarTitle({
     Key? key,
     required this.child,
   }) : super(key: key);
+
+  final Widget child;
+
   @override
   _DisapearingSliverAppBarTitleState createState() {
     return _DisapearingSliverAppBarTitleState();

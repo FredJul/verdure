@@ -10,6 +10,7 @@ import 'package:ecoscore/common/food_widgets.dart';
 import 'package:ecoscore/model/food_repository.dart';
 import 'package:ecoscore/model/providers.dart';
 import 'package:ecoscore/screens/food_detail_page.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,9 +37,9 @@ class ScanPage extends StatelessWidget {
 }
 
 class ScanWidget extends StatefulWidget {
-  final FoodRepository _foodRepository;
-
   const ScanWidget(this._foodRepository);
+
+  final FoodRepository _foodRepository;
 
   @override
   State<StatefulWidget> createState() => _ScanWidgetState();
@@ -76,38 +77,42 @@ class _ScanWidgetState extends State<ScanWidget> {
       body: Stack(
         children: [
           if (_cameraController?.value.isInitialized == true)
-            NativeDeviceOrientationReader(builder: (context) {
-              final nativeOrientation = NativeDeviceOrientationReader.orientation(context);
-              var deviceOrientation = DeviceOrientation.portraitUp;
-              switch (nativeOrientation) {
-                case NativeDeviceOrientation.portraitDown:
-                  deviceOrientation = DeviceOrientation.portraitDown;
-                  break;
-                case NativeDeviceOrientation.landscapeLeft:
-                  deviceOrientation = DeviceOrientation.landscapeRight; // Don't know why it is inversed...
-                  break;
-                case NativeDeviceOrientation.landscapeRight:
-                  deviceOrientation = DeviceOrientation.landscapeLeft; // Don't know why it is inversed...
-                  break;
-                default:
-                  break;
-              }
+            NativeDeviceOrientationReader(
+              builder: (context) {
+                final nativeOrientation = NativeDeviceOrientationReader.orientation(context);
+                var deviceOrientation = DeviceOrientation.portraitUp;
+                switch (nativeOrientation) {
+                  case NativeDeviceOrientation.portraitDown:
+                    deviceOrientation = DeviceOrientation.portraitDown;
+                    break;
+                  case NativeDeviceOrientation.landscapeLeft:
+                    deviceOrientation = DeviceOrientation.landscapeRight; // Don't know why it is inversed...
+                    break;
+                  case NativeDeviceOrientation.landscapeRight:
+                    deviceOrientation = DeviceOrientation.landscapeLeft; // Don't know why it is inversed...
+                    break;
+                  default:
+                    break;
+                }
 
-              // Block camera rotation on small screens (smartphones) since the whole UI may be blocked as well
-              _cameraController?.lockCaptureOrientation(deviceOrientation);
+                // Block camera rotation on small screens (smartphones) since the whole UI may be blocked as well
+                _cameraController?.lockCaptureOrientation(deviceOrientation);
 
-              return Center(
-                child: CameraPreview(
-                  _cameraController!,
-                  child: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
-                    return GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTapDown: (details) => _onViewFinderTap(details, constraints),
-                    );
-                  }),
-                ),
-              );
-            }),
+                return Center(
+                  child: CameraPreview(
+                    _cameraController!,
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        return GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTapDown: (details) => _onViewFinderTap(details, constraints),
+                        );
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
           const ScannerLine(),
           AppBar(
             iconTheme: const IconThemeData(
@@ -151,17 +156,19 @@ class _ScanWidgetState extends State<ScanWidget> {
                               scrollDirection: Axis.horizontal,
                               children: [
                                 const Gap(96),
-                                ...scannedFoods.value.reversed.map((food) => Padding(
-                                      key: ValueKey(food),
-                                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                                      child: SizedBox(
-                                        width: FoodCard.minWidth,
-                                        child: FoodCard(
-                                          food: food,
-                                          onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                                        ),
+                                ...scannedFoods.value.reversed.map(
+                                  (food) => Padding(
+                                    key: ValueKey(food),
+                                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                                    child: SizedBox(
+                                      width: FoodCard.minWidth,
+                                      child: FoodCard(
+                                        food: food,
+                                        onTap: () => context.pushScreen(FoodDetailPage(food: food)),
                                       ),
-                                    )),
+                                    ),
+                                  ),
+                                ),
                               ],
                             );
                     },
@@ -242,7 +249,7 @@ class _ScanWidgetState extends State<ScanWidget> {
             }
           } catch (_) {
             if (mounted) {
-              final snackBar = SnackBar(content: Text(context.i18n.searchError));
+              final snackBar = SnackBar(content: Text(Translation.current.searchError));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           }

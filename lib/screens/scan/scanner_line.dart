@@ -27,10 +27,12 @@ class _ScannerLineState extends State<ScannerLine> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) => AnimatedBuilder(
-      animation: controller,
-      builder: (BuildContext context, Widget? child) => Opacity(
+        animation: controller,
+        builder: (BuildContext context, Widget? child) => Opacity(
           opacity: opacityAnimation.value,
-          child: CustomPaint(size: Size.infinite, painter: _LinePainter(offsetAnimation.value, widget.color))));
+          child: CustomPaint(size: Size.infinite, painter: _LinePainter(offsetAnimation.value, widget.color)),
+        ),
+      );
 
   @override
   void dispose() {

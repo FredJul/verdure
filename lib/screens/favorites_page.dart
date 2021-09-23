@@ -4,6 +4,7 @@ import 'package:ecoscore/common/food_widgets.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class FavoritesPage extends ConsumerWidget {
     return SafeArea(
       child: AnimatedCrossFade(
         firstChild: Center(
-          child: EmptyView(icon: Assets.favorites, subtitle: context.i18n.noFavoriteFood),
+          child: EmptyView(icon: Assets.favorites, subtitle: Translation.current.noFavoriteFood),
         ),
         secondChild: ListView(
           shrinkWrap: true,
@@ -28,19 +29,21 @@ class FavoritesPage extends ConsumerWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                context.i18n.favoriteTitle,
+                Translation.current.favoriteTitle,
                 style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             const Gap(8),
             if (favFoods != null)
-              ...favFoods.value.reversed.map((food) => Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
-                    child: FoodCard(
-                      food: food,
-                      onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                    ),
-                  )),
+              ...favFoods.value.reversed.map(
+                (food) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+                  child: FoodCard(
+                    food: food,
+                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                  ),
+                ),
+              ),
             const Gap(48),
           ],
         ),

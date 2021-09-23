@@ -6,6 +6,7 @@ import 'package:ecoscore/common/search_bar.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,23 +53,26 @@ class _SearchPageState extends State<SearchPage> {
                       _hasEmptyQuery = false;
                       _isSearching = true;
 
-                      OpenFoodFactsApi.search(query).then((foods) {
-                        if (mounted) {
-                          setState(() {
-                            _searchResults = foods;
-                            _scrollController.jumpTo(0);
-                            _isSearching = false;
-                            _hasError = false;
-                          });
-                        }
-                      }, onError: (Object e) {
-                        if (mounted) {
-                          setState(() {
-                            _isSearching = false;
-                            _hasError = true;
-                          });
-                        }
-                      });
+                      OpenFoodFactsApi.search(query).then(
+                        (foods) {
+                          if (mounted) {
+                            setState(() {
+                              _searchResults = foods;
+                              _scrollController.jumpTo(0);
+                              _isSearching = false;
+                              _hasError = false;
+                            });
+                          }
+                        },
+                        onError: (Object e) {
+                          if (mounted) {
+                            setState(() {
+                              _isSearching = false;
+                              _hasError = true;
+                            });
+                          }
+                        },
+                      );
                     }
                   });
                 },
@@ -78,25 +82,28 @@ class _SearchPageState extends State<SearchPage> {
               child: AnimatedCrossFade(
                 firstChild: Center(
                   child: EmptyView(
-                      icon: Assets.search,
-                      subtitle: _hasError
-                          ? context.i18n.searchError
-                          : _searchResults == null || _hasEmptyQuery
-                              ? ''
-                              : context.i18n.noSearchResult),
+                    icon: Assets.search,
+                    subtitle: _hasError
+                        ? Translation.current.searchError
+                        : _searchResults == null || _hasEmptyQuery
+                            ? ''
+                            : Translation.current.noSearchResult,
+                  ),
                 ),
                 secondChild: ListView(
                   controller: _scrollController,
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(top: 4, left: 24, right: 24, bottom: 24),
                   children: _searchResults
-                          ?.map((food) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
-                                child: FoodCard(
-                                  food: food,
-                                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                                ),
-                              ))
+                          ?.map(
+                            (food) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: FoodCard(
+                                food: food,
+                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                              ),
+                            ),
+                          )
                           .toList() ??
                       [],
                 ),

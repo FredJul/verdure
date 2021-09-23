@@ -7,6 +7,7 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,7 +54,7 @@ class HomePage extends ConsumerWidget {
                 const _FoodImpactExplanation(),
                 const Gap(32),
                 Text(
-                  context.i18n.scannedProducts,
+                  Translation.current.scannedProducts,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 const Gap(12),
@@ -68,23 +69,25 @@ class HomePage extends ConsumerWidget {
                 ? SliverList(
                     delegate: SliverChildListDelegate(
                       scannedFoods.value.reversed
-                          .map((food) => Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4),
-                                child: FoodCard(
-                                  food: food,
-                                  onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                                  onLongPress: () {
-                                    showOkCancelAlertDialog(
-                                      context: context,
-                                      message: context.i18n.deleteScannedProductMessage,
-                                    ).then((result) {
-                                      if (result == OkCancelResult.ok) {
-                                        foodRepository?.value.deleteScannedFood(food);
-                                      }
-                                    });
-                                  },
-                                ),
-                              ))
+                          .map(
+                            (food) => Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: FoodCard(
+                                food: food,
+                                onTap: () => context.pushScreen(FoodDetailPage(food: food)),
+                                onLongPress: () {
+                                  showOkCancelAlertDialog(
+                                    context: context,
+                                    message: Translation.current.deleteScannedProductMessage,
+                                  ).then((result) {
+                                    if (result == OkCancelResult.ok) {
+                                      foodRepository?.value.deleteScannedFood(food);
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                   )
@@ -93,7 +96,7 @@ class HomePage extends ConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 64),
                       child: Center(
-                        child: EmptyView(icon: Assets.genericFood, subtitle: context.i18n.noScannedFood),
+                        child: EmptyView(icon: Assets.genericFood, subtitle: Translation.current.noScannedFood),
                       ),
                     ),
                   ),
@@ -122,7 +125,7 @@ class _FoodImpactExplanation extends StatelessWidget {
             //TODO change the link when the app will be translated
             await launch('https://www.wwf.fr/agir-au-quotidien/alimentation');
           } catch (_) {
-            final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+            final snackBar = SnackBar(content: Text(Translation.current.browserOpeningError));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         },
@@ -137,10 +140,10 @@ class _FoodImpactExplanation extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(context.i18n.whyReduceImpactExplanation),
+                    Text(Translation.current.whyReduceImpactExplanation),
                     const Gap(8),
                     Text(
-                      context.i18n.learnMore,
+                      Translation.current.learnMore,
                       style: context.textTheme.subtitle2?.copyWith(
                         color: ColorName.primary[900],
                         fontWeight: FontWeight.bold,

@@ -78,11 +78,15 @@ class OpenFoodFactsApi {
     }
 
     void removeWorseProducts(List<Product>? products) {
-      products?.removeWhere((p) =>
-          p.ecoscoreGradeEnum == null || (food.ecoscoreGrade != null && p.ecoscoreGradeEnum!.index > food.ecoscoreGrade!.index));
-      products?.removeWhere((p) =>
-          p.nutriscoreGradeEnum == null ||
-          (food.nutriscoreGrade != null && p.nutriscoreGradeEnum!.index > food.nutriscoreGrade!.index));
+      products?.removeWhere(
+        (p) =>
+            p.ecoscoreGradeEnum == null || (food.ecoscoreGrade != null && p.ecoscoreGradeEnum!.index > food.ecoscoreGrade!.index),
+      );
+      products?.removeWhere(
+        (p) =>
+            p.nutriscoreGradeEnum == null ||
+            (food.nutriscoreGrade != null && p.nutriscoreGradeEnum!.index > food.nutriscoreGrade!.index),
+      );
       products?.removeWhere((p) => p.ecoscoreGradeEnum == food.ecoscoreGrade && p.nutriscoreGradeEnum == food.nutriscoreGrade);
     }
 

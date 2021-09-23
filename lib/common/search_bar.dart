@@ -1,11 +1,10 @@
 import 'dart:io';
 
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'extensions.dart';
 
 typedef OnQueryChangedCallback = void Function(String query);
 
@@ -81,7 +80,7 @@ class _SearchBarState extends State<SearchBar> {
                   ),
                   filled: true,
                   hintStyle: TextStyle(color: Colors.grey[700]),
-                  hintText: context.i18n.searchHint,
+                  hintText: Translation.current.searchHint,
                   fillColor: Colors.grey[100],
                   prefixIcon: widget.showBackButton
                       ? IconButton(

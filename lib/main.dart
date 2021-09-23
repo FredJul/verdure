@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
@@ -13,6 +12,7 @@ import 'gen/colors.gen.dart';
 import 'gen/fonts.gen.dart';
 import 'model/food.dart';
 import 'screens/main_page.dart';
+import 'translations/gen/l10n.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
@@ -30,10 +30,12 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+      ),
+    );
 
     // Block rotation on small screens (smartphones) since current UI is not always adapted to small height
     final windowSize = MediaQueryData.fromWindow(window).size;
@@ -44,13 +46,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Verdure',
       localizationsDelegates: const [
-        AppLocalizations.delegate,
+        Translation.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('fr', ''),
-      ],
+      supportedLocales: Translation.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: ColorName.primary,

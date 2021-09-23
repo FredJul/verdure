@@ -43,10 +43,11 @@ class ScannerUtils {
       rawFormat: image.format.raw,
       // see https://github.com/brianmtully/flutter_google_ml_vision/issues/17
       size: Size(
-          Platform.isAndroid && image.format.group == ImageFormatGroup.yuv420
-              ? image.planes[0].bytesPerRow.toDouble()
-              : image.width.toDouble(),
-          image.height.toDouble()),
+        Platform.isAndroid && image.format.group == ImageFormatGroup.yuv420
+            ? image.planes[0].bytesPerRow.toDouble()
+            : image.width.toDouble(),
+        image.height.toDouble(),
+      ),
       rotation: rotation,
       planeData: image.planes.map(
         (Plane plane) {

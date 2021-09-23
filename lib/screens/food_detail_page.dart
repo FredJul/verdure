@@ -6,6 +6,7 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -73,7 +74,7 @@ class FoodDetailPage extends ConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
-                          context.i18n.alternatives,
+                          Translation.current.alternatives,
                           style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -272,7 +273,7 @@ class _Environment extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  context.i18n.environmentalImpact,
+                  Translation.current.environmentalImpact,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
@@ -293,28 +294,28 @@ class _Environment extends StatelessWidget {
                 children: [
                   Icon(Icons.warning, color: Colors.orange[300]),
                   const Gap(8),
-                  Expanded(child: Text(context.i18n.missingEcoscoreDataWarning, style: context.textTheme.caption)),
+                  Expanded(child: Text(Translation.current.missingEcoscoreDataWarning, style: context.textTheme.caption)),
                 ],
               ),
             ),
           if (food.ecoscoreGrade == Grade.notApplicable)
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(context.i18n.notApplicableWarning, style: context.textTheme.caption),
+              child: Text(Translation.current.notApplicableWarning, style: context.textTheme.caption),
             )
           else ...[
             _ImpactLevelIndicator(
-              name: context.i18n.ingredients,
+              name: Translation.current.ingredients,
               value: scoreToString(food.ingredientsScore),
               level: food.ingredientsImpact,
             ),
             _ImpactLevelIndicator(
-              name: context.i18n.transportation,
+              name: Translation.current.transportation,
               value: null, // I don't want to display the score to let the user focus on the ingredients score
               level: food.transportationImpact,
             ),
             _ImpactLevelIndicator(
-              name: context.i18n.packaging,
+              name: Translation.current.packaging,
               value: null, // I don't want to display the score to let the user focus on the ingredients score
               level: food.packagingImpact,
             ),
@@ -346,7 +347,7 @@ class _Nutrients extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  context.i18n.nutritionalValues,
+                  Translation.current.nutritionalValues,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: context.textTheme.subtitle1?.copyWith(fontWeight: FontWeight.bold),
@@ -363,26 +364,26 @@ class _Nutrients extends StatelessWidget {
           if (food.nutriscoreGrade == Grade.notApplicable)
             Padding(
               padding: const EdgeInsets.all(8),
-              child: Text(context.i18n.notApplicableWarning, style: context.textTheme.caption),
+              child: Text(Translation.current.notApplicableWarning, style: context.textTheme.caption),
             )
           else ...[
             _ImpactLevelIndicator(
-              name: context.i18n.sugars,
+              name: Translation.current.sugars,
               value: quantityToString(food.sugarsQuantity),
               level: food.sugarsLevel,
             ),
             _ImpactLevelIndicator(
-              name: context.i18n.fat,
+              name: Translation.current.fat,
               value: quantityToString(food.fatQuantity),
               level: food.fatLevel,
             ),
             _ImpactLevelIndicator(
-              name: context.i18n.saturatedFat,
+              name: Translation.current.saturatedFat,
               value: quantityToString(food.saturatedFatQuantity),
               level: food.saturatedFatLevel,
             ),
             _ImpactLevelIndicator(
-              name: context.i18n.salt,
+              name: Translation.current.salt,
               value: quantityToString(food.saltQuantity),
               level: food.saltLevel,
             ),
@@ -394,8 +395,10 @@ class _Nutrients extends StatelessWidget {
                 onPressed: () => context.pushScreen(FoodImagePage(imageUrl: food.imageIngredientsUrl!)),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
-                  child: Text(context.i18n.seeIngredients,
-                      style: context.textTheme.bodyText1?.copyWith(color: ColorName.primary[900], fontWeight: FontWeight.bold)),
+                  child: Text(
+                    Translation.current.seeIngredients,
+                    style: context.textTheme.bodyText1?.copyWith(color: ColorName.primary[900], fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
@@ -486,7 +489,7 @@ class _AlternativesListState extends State<_AlternativesList> {
                         onPressed: () {
                           _fetchAlternatives();
                         },
-                        child: Text(context.i18n.retry),
+                        child: Text(Translation.current.retry),
                       ),
                     ],
                   ),
@@ -494,7 +497,7 @@ class _AlternativesListState extends State<_AlternativesList> {
               : _alternatives.isEmpty
                   ? Center(
                       child: Text(
-                        context.i18n.noAlternativeFound,
+                        Translation.current.noAlternativeFound,
                         style: context.textTheme.bodyText1?.copyWith(color: Colors.grey),
                       ),
                     )
@@ -503,16 +506,18 @@ class _AlternativesListState extends State<_AlternativesList> {
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         children: _alternatives
-                            .map((food) => Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                                  child: SizedBox(
-                                    width: FoodCard.minWidth,
-                                    child: FoodCard(
-                                      food: food,
-                                      onTap: () => context.pushScreen(FoodDetailPage(food: food)),
-                                    ),
+                            .map(
+                              (food) => Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8),
+                                child: SizedBox(
+                                  width: FoodCard.minWidth,
+                                  child: FoodCard(
+                                    food: food,
+                                    onTap: () => context.pushScreen(FoodDetailPage(food: food)),
                                   ),
-                                ))
+                                ),
+                              ),
+                            )
                             .toList(),
                       ),
                     ),
@@ -521,16 +526,16 @@ class _AlternativesListState extends State<_AlternativesList> {
 }
 
 class _ImpactLevelIndicator extends StatelessWidget {
-  final String name;
-  final String? value;
-  final ImpactLevel? level;
-
   const _ImpactLevelIndicator({
     Key? key,
     required this.name,
     required this.value,
     required this.level,
   }) : super(key: key);
+
+  final String name;
+  final String? value;
+  final ImpactLevel? level;
 
   @override
   Widget build(BuildContext context) {
@@ -545,12 +550,12 @@ class _ImpactLevelIndicator extends StatelessWidget {
                 Text(name),
                 Text(
                   level == ImpactLevel.low
-                      ? context.i18n.lowImpact
+                      ? Translation.current.lowImpact
                       : level == ImpactLevel.moderate
-                          ? context.i18n.moderateImpact
+                          ? Translation.current.moderateImpact
                           : level == ImpactLevel.high
-                              ? context.i18n.highImpact
-                              : context.i18n.unknownImpact,
+                              ? Translation.current.highImpact
+                              : Translation.current.unknownImpact,
                   style: context.textTheme.caption,
                 ),
               ],
@@ -600,7 +605,7 @@ class _AboutData extends StatelessWidget {
           try {
             await launch(OpenFoodFactsApi.getViewUrl(food));
           } catch (_) {
-            final snackBar = SnackBar(content: Text(context.i18n.browserOpeningError));
+            final snackBar = SnackBar(content: Text(Translation.current.browserOpeningError));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         },
@@ -613,7 +618,7 @@ class _AboutData extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      context.i18n.dataSource,
+                      Translation.current.dataSource,
                       style: context.textTheme.subtitle2?.copyWith(
                         color: ColorName.primary[900],
                         fontWeight: FontWeight.bold,
@@ -621,7 +626,7 @@ class _AboutData extends StatelessWidget {
                     ),
                     const Gap(8),
                     Text(
-                      context.i18n.dataModification,
+                      Translation.current.dataModification,
                       style: context.textTheme.subtitle2?.copyWith(
                         color: ColorName.primary[900],
                       ),

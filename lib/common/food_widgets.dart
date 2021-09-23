@@ -10,15 +10,15 @@ import 'package:shimmer/shimmer.dart';
 import 'extensions.dart';
 
 class FoodCard extends StatelessWidget {
-  static const minHeight = 104.0;
-  static const minWidth = 296.0;
-
   const FoodCard({
     Key? key,
     required this.food,
     this.onTap,
     this.onLongPress,
   }) : super(key: key);
+
+  static const minHeight = 104.0;
+  static const minWidth = 296.0;
 
   final Food food;
   final GestureTapCallback? onTap;

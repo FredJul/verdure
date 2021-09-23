@@ -8,14 +8,15 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.2+3
 
 environment:
-  sdk: ">=2.13.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  flutter_riverpod: ^1.0.0-dev.6
+  riverpod: ^1.0.0-dev.7
+  flutter_riverpod: ^1.0.0-dev.7
   adaptive_dialog: ^1.0.0
   cached_network_image: ^3.0.0
   copy_with_extension: ^2.0.0
@@ -43,7 +44,8 @@ dev_dependencies:
   copy_with_extension_gen: ^2.0.1
   flutter_gen_runner: ^3.1.1
   hive_generator: ^1.1.0
-  lint: ^1.5.3
+  lint: ^1.7.2
+  intl_utils: ^2.4.0
 
 flutter_gen:
   integrations:
@@ -52,8 +54,14 @@ flutter_gen:
     inputs:
       - colors/colors.xml
 
+flutter_intl:
+  enabled: true
+  class_name: Translation
+  main_locale: fr
+  arb_dir: lib/translations
+  output_dir: lib/translations/gen
+
 flutter:
-  generate: true # for l10n
   uses-material-design: true
   assets:
     - assets/
