@@ -1,10 +1,10 @@
-![Banner](/raw_graphics/banner.png)
+![Banner](/raw_graphics/banner_en.png)
 
-## Que permet l'application ?
+## What the application does?
 
-Verdure est une application mobile permettant de scanner vos produits alimentaires pour en connaitre leurs qualités nutritionnelles mais aussi – et surtout – leurs impacts environnementaux.
+Verdure is a mobile application allowing you to scan your food products to find out their nutritional qualities but also - and especially - their environmental impacts.
 
-Parce que réduire notre impact devient un enjeu des plus importants, Verdure essaye de vous aider en vous proposant des produits similaires avec un impact plus faible.
+Because reducing our impact becomes one of the most important issues, Verdure tries to help you by offering you similar products with a lower impact.
 
 ## Installation
 [<img src="https://itsallwidgets.com/images/google.png"
@@ -14,30 +14,30 @@ Parce que réduire notre impact devient un enjeu des plus importants, Verdure es
      alt="Get the app"
      height="70">](https://apps.apple.com/app/id1574642934)
 
-## D'où viennent les données ?
+## Where does the data come from?
 
-Les informations proviennent de la base de données collaborative Open Food Facts. Celles-ci peuvent parfois être insuffisantes ou erronnées en fonction des produits, si c'est le cas n'hésitez pas à [contribuer](#contribuer).
+The information comes from the collaborative Open Food Facts database. These can sometimes be insufficient or incorrect depending on the product, if this is the case do not hesitate to [contribute](#contribute).
 
-L'Eco-score est une notation environnementale calculée par Open Food Facts, vous pouvez en savoir plus [ici](https://docs.score-environnemental.com).
+The Eco-score is an environmental rating calculated by Open Food Facts, you can find out more [here](https://docs.score-environnemental.com).
 
-## Contact et assistance
+## Contact and assistance
 
-Vous pouvez écrire à [verdure_app@icloud.com](mailto:verdure_app@icloud.com) ou créer un ticket [ici](https://github.com/FredJul/verdure/issues/new) pour toute remontée de bug ou suggestion.
+You can write to [verdure_app@icloud.com](mailto:verdure_app@icloud.com) or create a ticket [here](https://github.com/FredJul/verdure/issues/new) for any bug report or suggestion.
 
-## Politique de confidentialité
+## Privacy policy
 
-Toutes les données de l'application sont uniquement conservées en local sur votre appareil.
+Application data is stored locally on your device.
 
-Seul les codes barres et vos recherches sont envoyés sur les serveurs d'Open Food Facts afin de pouvoir récupérer les informations des différents produits.
+Only the bar codes and your researches are sent to the Open Food Facts servers in order to be able to retrieve information on the different products.
 
-## Contribuer
+## Contribute
 
-Si vous souhaitez aider ce projet, je vous invite avant tout à faire un don à l'association [Open Food Facts](https://fr.openfoodfacts.org/faire-un-don-a-open-food-facts), sur lequel ce projet repose.
+If you want to help this project, I invite you to make a donation to the association [Open Food Facts](https://openfoodfacts.org/donate-to-open-food-facts), on which this project is based on.
 
-Vous pouvez également utiliser leur site et applications mobiles pour ajouter ou améliorer des produits. Pour pouvoir afficher l'Eco-Score, il est nécessaire de renseigner à minima la catégorie, l'origine des ingrédients et les infos de packaging (photos et description).
+You can also use their site and mobile apps to add or improve products. To be able to display the Eco-Score, it is necessary to provide at least the category, the origin of the ingredients and the packaging information (photos and description).
 
-## Comment compiler ?
+## How to compile?
 
-Verdure est un projet Flutter, vous devez donc [installer Flutter](https://flutter.dev/docs/get-started/install) pour pouvoir le compiler.
+Verdure is a Flutter project, so you need to [install Flutter](https://flutter.dev/docs/get-started/install) to be able to compile it.
 
-Verdure utilise toujours la dernière version stable de Flutter et je recommande d'utiliser [VSCode](https://code.visualstudio.com/) (avec l'extension Flutter officielle) puisque ce projet contient déjà des fichiers de configuration VSCode.
+Verdure always uses the latest stable version of Flutter and I recommend using [VSCode](https://code.visualstudio.com/) (with the official Flutter extension) since this project already contains VSCode config files.

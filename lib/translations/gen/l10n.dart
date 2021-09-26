@@ -50,120 +50,120 @@ class Translation {
     return Localizations.of<Translation>(context, Translation);
   }
 
-  /// `Rechercher un produit…`
+  /// `Search a product…`
   String get searchHint {
     return Intl.message(
-      'Rechercher un produit…',
+      'Search a product…',
       name: 'searchHint',
       desc: '',
       args: [],
     );
   }
 
-  /// `Notre alimentation a un impact considérable sur notre environnement et le réchauffement climatique, il est nécessaire d'agir.`
+  /// `Our food has a considerable impact on our environment and global warming, it is necessary to act.`
   String get whyReduceImpactExplanation {
     return Intl.message(
-      'Notre alimentation a un impact considérable sur notre environnement et le réchauffement climatique, il est nécessaire d\'agir.',
+      'Our food has a considerable impact on our environment and global warming, it is necessary to act.',
       name: 'whyReduceImpactExplanation',
       desc: '',
       args: [],
     );
   }
 
-  /// `En savoir plus >`
+  /// `Find out why >`
   String get learnMore {
     return Intl.message(
-      'En savoir plus >',
+      'Find out why >',
       name: 'learnMore',
       desc: '',
       args: [],
     );
   }
 
-  /// `Accueil`
+  /// `Home`
   String get homeTitle {
     return Intl.message(
-      'Accueil',
+      'Home',
       name: 'homeTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vous n'avez pas encore scanné de produit`
+  /// `You have not yet scanned a product`
   String get noScannedFood {
     return Intl.message(
-      'Vous n\'avez pas encore scanné de produit',
+      'You have not yet scanned a product',
       name: 'noScannedFood',
       desc: '',
       args: [],
     );
   }
 
-  /// `Favoris`
+  /// `Favorites`
   String get favoriteTitle {
     return Intl.message(
-      'Favoris',
+      'Favorites',
       name: 'favoriteTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `Aucun produit mis en favori`
+  /// `No favorite product`
   String get noFavoriteFood {
     return Intl.message(
-      'Aucun produit mis en favori',
+      'No favorite product',
       name: 'noFavoriteFood',
       desc: '',
       args: [],
     );
   }
 
-  /// `Produits scannés`
+  /// `Scanned products`
   String get scannedProducts {
     return Intl.message(
-      'Produits scannés',
+      'Scanned products',
       name: 'scannedProducts',
       desc: '',
       args: [],
     );
   }
 
-  /// `Supprimer ce produit de la liste ?`
+  /// `Remove this product from the list?`
   String get deleteScannedProductMessage {
     return Intl.message(
-      'Supprimer ce produit de la liste ?',
+      'Remove this product from the list?',
       name: 'deleteScannedProductMessage',
       desc: '',
       args: [],
     );
   }
 
-  /// `Une erreur s'est produite, merci de vérifier votre connexion.`
+  /// `An error has occurred, please check your connection.`
   String get searchError {
     return Intl.message(
-      'Une erreur s\'est produite, merci de vérifier votre connexion.',
+      'An error has occurred, please check your connection.',
       name: 'searchError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Aucun produit trouvé`
+  /// `No product found`
   String get noSearchResult {
     return Intl.message(
-      'Aucun produit trouvé',
+      'No product found',
       name: 'noSearchResult',
       desc: '',
       args: [],
     );
   }
 
-  /// `Impact environnemental`
+  /// `Environmental impact`
   String get environmentalImpact {
     return Intl.message(
-      'Impact environnemental',
+      'Environmental impact',
       name: 'environmentalImpact',
       desc: '',
       args: [],
@@ -190,40 +190,40 @@ class Translation {
     );
   }
 
-  /// `Certaines informations nécessaires pour un calcul précis ne sont pas renseignées.`
+  /// `Some information necessary for a precise calculation is not provided.`
   String get missingEcoscoreDataWarning {
     return Intl.message(
-      'Certaines informations nécessaires pour un calcul précis ne sont pas renseignées.',
+      'Some information necessary for a precise calculation is not provided.',
       name: 'missingEcoscoreDataWarning',
       desc: '',
       args: [],
     );
   }
 
-  /// `Valeurs nutritionnelles pour 100g`
+  /// `Nutritional values per 100g`
   String get nutritionalValues {
     return Intl.message(
-      'Valeurs nutritionnelles pour 100g',
+      'Nutritional values per 100g',
       name: 'nutritionalValues',
       desc: '',
       args: [],
     );
   }
 
-  /// `Une erreur s'est produite lors du lancement du navigateur.`
+  /// `An error occurred while launching the browser.`
   String get browserOpeningError {
     return Intl.message(
-      'Une erreur s\'est produite lors du lancement du navigateur.',
+      'An error occurred while launching the browser.',
       name: 'browserOpeningError',
       desc: '',
       args: [],
     );
   }
 
-  /// `Ingrédients`
+  /// `Ingredients`
   String get ingredients {
     return Intl.message(
-      'Ingrédients',
+      'Ingredients',
       name: 'ingredients',
       desc: '',
       args: [],
@@ -240,140 +240,140 @@ class Translation {
     );
   }
 
-  /// `Emballage`
+  /// `Packaging`
   String get packaging {
     return Intl.message(
-      'Emballage',
+      'Packaging',
       name: 'packaging',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sucres`
+  /// `Sugars`
   String get sugars {
     return Intl.message(
-      'Sucres',
+      'Sugars',
       name: 'sugars',
       desc: '',
       args: [],
     );
   }
 
-  /// `Matières grasses / Lipides`
+  /// `Fat`
   String get fat {
     return Intl.message(
-      'Matières grasses / Lipides',
+      'Fat',
       name: 'fat',
       desc: '',
       args: [],
     );
   }
 
-  /// `Acides gras saturés`
+  /// `Saturated fat`
   String get saturatedFat {
     return Intl.message(
-      'Acides gras saturés',
+      'Saturated fat',
       name: 'saturatedFat',
       desc: '',
       args: [],
     );
   }
 
-  /// `Sel`
+  /// `Salt`
   String get salt {
     return Intl.message(
-      'Sel',
+      'Salt',
       name: 'salt',
       desc: '',
       args: [],
     );
   }
 
-  /// `Voir les ingrédients >`
+  /// `See the ingredients >`
   String get seeIngredients {
     return Intl.message(
-      'Voir les ingrédients >',
+      'See the ingredients >',
       name: 'seeIngredients',
       desc: '',
       args: [],
     );
   }
 
-  /// `Faible impact`
+  /// `Low impact`
   String get lowImpact {
     return Intl.message(
-      'Faible impact',
+      'Low impact',
       name: 'lowImpact',
       desc: '',
       args: [],
     );
   }
 
-  /// `Impact modéré`
+  /// `Moderate impact`
   String get moderateImpact {
     return Intl.message(
-      'Impact modéré',
+      'Moderate impact',
       name: 'moderateImpact',
       desc: '',
       args: [],
     );
   }
 
-  /// `Fort impact`
+  /// `High impact`
   String get highImpact {
     return Intl.message(
-      'Fort impact',
+      'High impact',
       name: 'highImpact',
       desc: '',
       args: [],
     );
   }
 
-  /// `Données manquantes`
+  /// `Missing data`
   String get unknownImpact {
     return Intl.message(
-      'Données manquantes',
+      'Missing data',
       name: 'unknownImpact',
       desc: '',
       args: [],
     );
   }
 
-  /// `Une erreur s'est produite, veuillez réessayer`
+  /// `An error has occurred. Please try again.`
   String get retry {
     return Intl.message(
-      'Une erreur s\'est produite, veuillez réessayer',
+      'An error has occurred. Please try again.',
       name: 'retry',
       desc: '',
       args: [],
     );
   }
 
-  /// `Aucune alternative trouvée`
+  /// `No alternative found`
   String get noAlternativeFound {
     return Intl.message(
-      'Aucune alternative trouvée',
+      'No alternative found',
       name: 'noAlternativeFound',
       desc: '',
       args: [],
     );
   }
 
-  /// `Les informations proviennent de la base de données collaborative Open Food Facts.`
+  /// `The information comes from the collaborative Open Food Facts database.`
   String get dataSource {
     return Intl.message(
-      'Les informations proviennent de la base de données collaborative Open Food Facts.',
+      'The information comes from the collaborative Open Food Facts database.',
       name: 'dataSource',
       desc: '',
       args: [],
     );
   }
 
-  /// `Vous pouvez consulter les informations détaillées de ce produit sur sa page dédiée et contribuer en ajoutant les informations manquantes ou en les aidant financièrement.`
+  /// `You can view the detailed information of this product on its dedicated page and contribute by adding the missing information or helping them financially.`
   String get dataModification {
     return Intl.message(
-      'Vous pouvez consulter les informations détaillées de ce produit sur sa page dédiée et contribuer en ajoutant les informations manquantes ou en les aidant financièrement.',
+      'You can view the detailed information of this product on its dedicated page and contribute by adding the missing information or helping them financially.',
       name: 'dataModification',
       desc: '',
       args: [],
@@ -386,6 +386,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<Translation> {
 
   List<Locale> get supportedLocales {
     return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
       Locale.fromSubtags(languageCode: 'fr'),
     ];
   }

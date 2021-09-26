@@ -27,7 +27,7 @@ class OpenFoodFactsApi {
   ];
 
   static String get _lc => window.locale.languageCode;
-  static String get _cc => 'fr'; //TODO use window.locale.countryCode when the app will be open to all countries
+  static String get _cc => window.locale.countryCode == 'GB' ? 'uk' : 'fr'; // we only support this 2 countries for now
 
   static final _alternativesCache = HashMap<String, List<Food>>();
 
@@ -37,6 +37,7 @@ class OpenFoodFactsApi {
       fields: _productFields,
       lc: _lc,
       cc: _cc,
+      language: LanguageHelper.fromJson(_lc),
     );
 
     final ProductResult result = await OpenFoodAPIClient.getProduct(configuration);

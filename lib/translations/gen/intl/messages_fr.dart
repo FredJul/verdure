@@ -52,7 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noSearchResult":
             MessageLookupByLibrary.simpleMessage("Aucun produit trouvé"),
         "notApplicableWarning": MessageLookupByLibrary.simpleMessage(
-            "Not applicable for this product."),
+            "Non applicable pour ce produit."),
         "nutritionalValues": MessageLookupByLibrary.simpleMessage(
             "Valeurs nutritionnelles pour 100g"),
         "packaging": MessageLookupByLibrary.simpleMessage("Emballage"),

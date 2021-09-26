@@ -69,7 +69,7 @@ flutter_gen:
 flutter_intl:
   enabled: true
   class_name: Translation
-  main_locale: fr
+  main_locale: en
   arb_dir: lib/translations
   output_dir: lib/translations/gen
 
