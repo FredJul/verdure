@@ -28,7 +28,7 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, child) {
-        final foodRepository = ref.watch(foodRepositoryProvider).data;
+        final foodRepository = ref.watch(foodRepositoryProvider).asData;
 
         return foodRepository == null ? Container() : ScanWidget(foodRepository.value);
       },
@@ -147,7 +147,7 @@ class _ScanWidgetState extends State<ScanWidget> {
                   height: FoodCard.minHeight,
                   child: Consumer(
                     builder: (context, ref, child) {
-                      final scannedFoods = ref.watch(scannedFoodsProvider).data;
+                      final scannedFoods = ref.watch(scannedFoodsProvider).asData;
 
                       return scannedFoods == null
                           ? Container()

@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -35,11 +36,25 @@ class MessageLookup extends MessageLookupByLibrary {
         "fat":
             MessageLookupByLibrary.simpleMessage("Matières grasses / Lipides"),
         "favoriteTitle": MessageLookupByLibrary.simpleMessage("Favoris"),
+        "foodImpactTitle": MessageLookupByLibrary.simpleMessage(
+            "La production de nourriture a un impact majeur sur notre environnement."),
+        "freshwaterImpact": MessageLookupByLibrary.simpleMessage(
+            "70% des prélèvements mondiaux d\'eau douce sont utilisés pour l\'agriculture."),
+        "greenhouseGasImpact": MessageLookupByLibrary.simpleMessage(
+            "L\'alimentation représente un tiers des émissions mondiales de gaz à effet de serre."),
         "highImpact": MessageLookupByLibrary.simpleMessage("Fort impact"),
         "homeTitle": MessageLookupByLibrary.simpleMessage("Accueil"),
+        "improvementExplanation": MessageLookupByLibrary.simpleMessage(
+            "By simply eating less meat, paying attention to your food environnemental score and avoiding waste, you can greatly reduce your impact."),
+        "improvementTitle": MessageLookupByLibrary.simpleMessage(
+            "Fortunately there is room for improvement."),
         "ingredients": MessageLookupByLibrary.simpleMessage("Ingrédients"),
+        "landImpact": MessageLookupByLibrary.simpleMessage(
+            "La moitié des terres habitables du monde est utilisée pour l\'agriculture, ce qui a nécessité une déforestation massive."),
         "learnMore": MessageLookupByLibrary.simpleMessage("En savoir plus >"),
         "lowImpact": MessageLookupByLibrary.simpleMessage("Faible impact"),
+        "meatGreenhouseGasImpact": MessageLookupByLibrary.simpleMessage(
+            "La viande (en particulier le bœuf) représente près de 60% de tous les gaz à effet de serre provenant de la production de nourriture."),
         "missingEcoscoreDataWarning": MessageLookupByLibrary.simpleMessage(
             "Certaines informations nécessaires pour un calcul précis ne sont pas renseignées."),
         "moderateImpact": MessageLookupByLibrary.simpleMessage("Impact modéré"),
@@ -69,10 +84,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Rechercher un produit…"),
         "seeIngredients":
             MessageLookupByLibrary.simpleMessage("Voir les ingrédients >"),
+        "sources": MessageLookupByLibrary.simpleMessage("Sources"),
+        "speciesImpact": MessageLookupByLibrary.simpleMessage(
+            "L\'agriculture à elle seule est le principal danger pour 24 000 des 28 000 (86%) espèces menacées d\'extinction."),
         "sugars": MessageLookupByLibrary.simpleMessage("Sucres"),
         "transportation": MessageLookupByLibrary.simpleMessage("Transport"),
         "unknownImpact":
             MessageLookupByLibrary.simpleMessage("Données manquantes"),
+        "whyEatingBetter":
+            MessageLookupByLibrary.simpleMessage("Pourquoi mieux manger ?"),
         "whyReduceImpactExplanation": MessageLookupByLibrary.simpleMessage(
             "Notre alimentation a un impact considérable sur notre environnement et le réchauffement climatique, il est nécessaire d\'agir.")
       };

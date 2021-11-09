@@ -80,6 +80,106 @@ class Translation {
     );
   }
 
+  /// `Why eating better?`
+  String get whyEatingBetter {
+    return Intl.message(
+      'Why eating better?',
+      name: 'whyEatingBetter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Food production has a major impact on our environment.`
+  String get foodImpactTitle {
+    return Intl.message(
+      'Food production has a major impact on our environment.',
+      name: 'foodImpactTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Food accounts for a third of global greenhouse gas emissions.`
+  String get greenhouseGasImpact {
+    return Intl.message(
+      'Food accounts for a third of global greenhouse gas emissions.',
+      name: 'greenhouseGasImpact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Meat (especially beef) accounts for nearly 60% of all greenhouse gases from food production.`
+  String get meatGreenhouseGasImpact {
+    return Intl.message(
+      'Meat (especially beef) accounts for nearly 60% of all greenhouse gases from food production.',
+      name: 'meatGreenhouseGasImpact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Half of the world’s habitable land is used for agriculture, which required a massive deforestation.`
+  String get landImpact {
+    return Intl.message(
+      'Half of the world’s habitable land is used for agriculture, which required a massive deforestation.',
+      name: 'landImpact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Agriculture alone is the main threat to 24,000 of the 28,000 (86%) species at risk of extinction.`
+  String get speciesImpact {
+    return Intl.message(
+      'Agriculture alone is the main threat to 24,000 of the 28,000 (86%) species at risk of extinction.',
+      name: 'speciesImpact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `70% of global freshwater withdrawals are used for agriculture.`
+  String get freshwaterImpact {
+    return Intl.message(
+      '70% of global freshwater withdrawals are used for agriculture.',
+      name: 'freshwaterImpact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heureusement, il y a des axes d'amélioration possible.`
+  String get improvementTitle {
+    return Intl.message(
+      'Heureusement, il y a des axes d\'amélioration possible.',
+      name: 'improvementTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `En mangeant moins de viande, en faisant attention à votre score environnemental alimentaire et en évitant le gaspillage, vous pouvez considérablement réduire votre impact.`
+  String get improvementExplanation {
+    return Intl.message(
+      'En mangeant moins de viande, en faisant attention à votre score environnemental alimentaire et en évitant le gaspillage, vous pouvez considérablement réduire votre impact.',
+      name: 'improvementExplanation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sources`
+  String get sources {
+    return Intl.message(
+      'Sources',
+      name: 'sources',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Home`
   String get homeTitle {
     return Intl.message(

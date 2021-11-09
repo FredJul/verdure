@@ -3,8 +3,11 @@
 ///  FlutterGen
 /// *****************************************************
 
+// ignore_for_file: directives_ordering
+
 class FontFamily {
   FontFamily._();
 
+  /// Font family: Nunito
   static const String nunito = 'Nunito';
 }

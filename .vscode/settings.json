@@ -1,7 +1,9 @@
 {
     "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": true,
     "dart.lineLength": 130,
     "dart.showIgnoreQuickFixes": true,
+    "dart.renameFilesWithClasses": "always",
     "[dart]": {
         // Automatically format code on save and during typing of certain characters
         // (like `;` and `}`).

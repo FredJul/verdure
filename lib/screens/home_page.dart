@@ -7,12 +7,12 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/screens/impact_explanation_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'food_detail_page.dart';
 import 'search_page.dart';
@@ -20,8 +20,8 @@ import 'search_page.dart';
 class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scannedFoods = ref.watch(scannedFoodsProvider).data;
-    final foodRepository = ref.watch(foodRepositoryProvider).data;
+    final scannedFoods = ref.watch(scannedFoodsProvider).asData;
+    final foodRepository = ref.watch(foodRepositoryProvider).asData;
 
     return CustomScrollView(
       slivers: [
@@ -120,15 +120,7 @@ class _FoodImpactExplanation extends StatelessWidget {
       ),
       child: Tap(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        onTap: () async {
-          try {
-            //TODO change the link when the app will be translated
-            await launch('https://www.wwf.fr/agir-au-quotidien/alimentation');
-          } catch (_) {
-            final snackBar = SnackBar(content: Text(Translation.current.browserOpeningError));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        },
+        onTap: () => context.pushScreen(ImpactExplanationPage()),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Row(

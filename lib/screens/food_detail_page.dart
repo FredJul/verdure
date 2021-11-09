@@ -30,7 +30,7 @@ class FoodDetailPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final updatedFood = ref.watch(_updatedFoodProvider(food.barcode)).data?.value ?? food;
+    final updatedFood = ref.watch(_updatedFoodProvider(food.barcode)).asData?.value ?? food;
 
     return Scaffold(
       body: Stack(
@@ -220,8 +220,8 @@ class _LargeFoodIconState extends State<_LargeFoodIcon> with SingleTickerProvide
               ),
               child: Consumer(
                 builder: (context, ref, child) {
-                  final favFoods = ref.watch(favFoodsProvider).data;
-                  final foodRepository = ref.watch(foodRepositoryProvider).data;
+                  final favFoods = ref.watch(favFoodsProvider).asData;
+                  final foodRepository = ref.watch(foodRepositoryProvider).asData;
 
                   final isInFavorites = favFoods?.value.toList().indexWhere((e) => e.barcode == widget.food.barcode) != -1;
 

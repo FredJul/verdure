@@ -16,7 +16,7 @@ final _currentPageProvider = StateProvider((ref) => 0);
 final _pageControllerProvider = Provider<PageController>((ref) {
   final pageController = PageController();
   pageController.addListener(() {
-    ref.read(_currentPageProvider).state = pageController.page?.toInt() ?? 0;
+    ref.read(_currentPageProvider.notifier).state = pageController.page?.toInt() ?? 0;
   });
 
   return pageController;
@@ -88,7 +88,7 @@ class _BottomBarItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final pageController = ref.read(_pageControllerProvider);
-    final currentPage = ref.watch(_currentPageProvider).state;
+    final currentPage = ref.watch(_currentPageProvider);
 
     return Expanded(
       child: InkWell(

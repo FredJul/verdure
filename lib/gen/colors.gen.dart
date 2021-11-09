@@ -3,12 +3,25 @@
 ///  FlutterGen
 /// *****************************************************
 
+// ignore_for_file: directives_ordering
+
 import 'package:flutter/painting.dart';
 import 'package:flutter/material.dart';
 
 class ColorName {
   ColorName._();
 
+  /// MaterialColor:
+  ///   50: #FFEDF6EA
+  ///   100: #FFD1E8CC
+  ///   200: #FFB3D9AA
+  ///   300: #FF94C987
+  ///   400: #FF7DBE6E
+  ///   500: #FF66B254
+  ///   600: #FF5EAB4D
+  ///   700: #FF53A243
+  ///   800: #FF49993A
+  ///   900: #FF388A29
   static const MaterialColor primary = MaterialColor(
     0xFF66B254,
     <int, Color>{

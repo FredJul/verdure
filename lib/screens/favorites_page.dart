@@ -15,7 +15,7 @@ import 'food_detail_page.dart';
 class FavoritesPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final favFoods = ref.watch(favFoodsProvider).data;
+    final favFoods = ref.watch(favFoodsProvider).asData;
 
     return SafeArea(
       child: AnimatedCrossFade(
