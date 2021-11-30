@@ -150,20 +150,20 @@ class Translation {
     );
   }
 
-  /// `Heureusement, il y a des axes d'amélioration possible.`
+  /// `Fortunately there is room for improvement.`
   String get improvementTitle {
     return Intl.message(
-      'Heureusement, il y a des axes d\'amélioration possible.',
+      'Fortunately there is room for improvement.',
       name: 'improvementTitle',
       desc: '',
       args: [],
     );
   }
 
-  /// `En mangeant moins de viande, en faisant attention à votre score environnemental alimentaire et en évitant le gaspillage, vous pouvez considérablement réduire votre impact.`
+  /// `By simply eating less meat, paying attention to your food environnemental score and avoiding waste, you can greatly reduce your impact.`
   String get improvementExplanation {
     return Intl.message(
-      'En mangeant moins de viande, en faisant attention à votre score environnemental alimentaire et en évitant le gaspillage, vous pouvez considérablement réduire votre impact.',
+      'By simply eating less meat, paying attention to your food environnemental score and avoiding waste, you can greatly reduce your impact.',
       name: 'improvementExplanation',
       desc: '',
       args: [],

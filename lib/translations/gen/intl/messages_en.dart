@@ -44,9 +44,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "highImpact": MessageLookupByLibrary.simpleMessage("High impact"),
         "homeTitle": MessageLookupByLibrary.simpleMessage("Home"),
         "improvementExplanation": MessageLookupByLibrary.simpleMessage(
-            "En mangeant moins de viande, en faisant attention à votre score environnemental alimentaire et en évitant le gaspillage, vous pouvez considérablement réduire votre impact."),
+            "By simply eating less meat, paying attention to your food environnemental score and avoiding waste, you can greatly reduce your impact."),
         "improvementTitle": MessageLookupByLibrary.simpleMessage(
-            "Heureusement, il y a des axes d\'amélioration possible."),
+            "Fortunately there is room for improvement."),
         "ingredients": MessageLookupByLibrary.simpleMessage("Ingredients"),
         "landImpact": MessageLookupByLibrary.simpleMessage(
             "Half of the world’s habitable land is used for agriculture, which required a massive deforestation."),
