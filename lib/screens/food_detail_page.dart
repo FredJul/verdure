@@ -7,7 +7,6 @@ import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:ecoscore/model/providers.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';

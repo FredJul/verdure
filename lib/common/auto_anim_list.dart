@@ -1,7 +1,6 @@
 import 'package:diffutil_dart/diffutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class AutoAnimList extends StatefulWidget {
   const AutoAnimList({

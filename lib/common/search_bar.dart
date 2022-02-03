@@ -4,7 +4,6 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 typedef OnQueryChangedCallback = void Function(String query);
 

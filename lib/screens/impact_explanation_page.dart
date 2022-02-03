@@ -2,7 +2,6 @@ import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';

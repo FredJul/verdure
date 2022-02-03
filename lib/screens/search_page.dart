@@ -7,7 +7,6 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'food_detail_page.dart';

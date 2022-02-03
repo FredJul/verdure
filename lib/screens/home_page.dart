@@ -9,7 +9,6 @@ import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/providers.dart';
 import 'package:ecoscore/screens/impact_explanation_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
