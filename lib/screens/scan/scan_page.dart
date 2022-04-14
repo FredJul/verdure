@@ -9,6 +9,8 @@ import 'package:ecoscore/common/food_widgets.dart';
 import 'package:ecoscore/model/food_repository.dart';
 import 'package:ecoscore/model/providers.dart';
 import 'package:ecoscore/screens/food_detail_page.dart';
+import 'package:ecoscore/screens/scan/scanner_line.dart';
+import 'package:ecoscore/screens/scan/scanner_utils.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,9 +18,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:native_device_orientation/native_device_orientation.dart';
-
-import 'scanner_line.dart';
-import 'scanner_utils.dart';
 
 class ScanPage extends StatelessWidget {
   const ScanPage({Key? key}) : super(key: key);

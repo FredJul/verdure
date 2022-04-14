@@ -7,6 +7,7 @@ import 'package:openfoodfacts/model/NutrientLevels.dart';
 import 'package:openfoodfacts/model/parameter/SearchTerms.dart';
 import 'package:openfoodfacts/model/parameter/TagFilter.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:openfoodfacts/utils/CountryHelper.dart';
 
 class OpenFoodFactsApi {
   OpenFoodFactsApi._();
@@ -26,8 +27,9 @@ class OpenFoodFactsApi {
     ProductField.CATEGORIES_TAGS,
   ];
 
-  static String get _lc => window.locale.languageCode;
-  static String get _cc => window.locale.countryCode == 'GB' ? 'uk' : 'fr'; // we only support this 2 countries for now
+  static OpenFoodFactsLanguage get _lc => LanguageHelper.fromJson(window.locale.languageCode);
+  static OpenFoodFactsCountry? get _cc =>
+      CountryHelper.fromJson(window.locale.countryCode == 'GB' ? 'uk' : 'fr'); // we only support this 2 countries for now
 
   static final _alternativesCache = HashMap<String, List<Food>>();
 
@@ -35,9 +37,8 @@ class OpenFoodFactsApi {
     final ProductQueryConfiguration configuration = ProductQueryConfiguration(
       barcode,
       fields: _productFields,
-      lc: _lc,
-      cc: _cc,
-      language: LanguageHelper.fromJson(_lc),
+      language: _lc,
+      country: _cc,
     );
 
     final ProductResult result = await OpenFoodAPIClient.getProduct(configuration);
@@ -72,8 +73,8 @@ class OpenFoodFactsApi {
             param,
             const SortBy(option: SortOption.POPULARITY),
           ],
-          lc: _lc,
-          cc: _cc,
+          language: _lc,
+          country: _cc,
         ),
       );
     }
@@ -96,9 +97,8 @@ class OpenFoodFactsApi {
     // We first search for products in the same category
     if (food.categoryTags.isNotEmpty) {
       final searchResult = await search(
-        TagFilter(
-          tagType: 'categories',
-          contains: true,
+        TagFilter.fromType(
+          tagFilterType: TagFilterType.CATEGORIES,
           tagName: food.categoryTags.last, // The last category seems to be the most relevant
         ),
       );
@@ -110,10 +110,9 @@ class OpenFoodFactsApi {
     // If we do not find better alternatives, we try to search with another category
     if ((products?.length ?? 0) == 0 && food.categoryTags.length >= 2) {
       final searchResult = await search(
-        TagFilter(
-          tagType: 'categories',
-          contains: true,
-          tagName: food.categoryTags[food.categoryTags.lastIndex - 1], // Seems to be the second most relevant category
+        TagFilter.fromType(
+          tagFilterType: TagFilterType.CATEGORIES,
+          tagName: food.categoryTags[food.categoryTags.lastIndex - 1],
         ),
       );
 
@@ -146,8 +145,8 @@ class OpenFoodFactsApi {
           const PageSize(size: 50),
           SearchTerms(terms: [terms]),
         ],
-        lc: _lc,
-        cc: _cc,
+        language: _lc,
+        country: _cc,
       ),
     );
 

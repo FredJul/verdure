@@ -7,14 +7,13 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/screens/food_detail_page.dart';
 import 'package:ecoscore/screens/impact_explanation_page.dart';
+import 'package:ecoscore/screens/search_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-
-import 'food_detail_page.dart';
-import 'search_page.dart';
 
 class HomePage extends ConsumerWidget {
   @override

@@ -1,15 +1,14 @@
 import 'package:dartx/dartx.dart';
 import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
+import 'package:ecoscore/screens/favorites_page.dart';
+import 'package:ecoscore/screens/home_page.dart';
+import 'package:ecoscore/screens/scan/scan_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
-
-import 'favorites_page.dart';
-import 'home_page.dart';
-import 'scan/scan_page.dart';
 
 final _currentPageProvider = StateProvider((ref) => 0);
 

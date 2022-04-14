@@ -1,8 +1,7 @@
+import 'package:ecoscore/model/food.dart';
+import 'package:ecoscore/model/food_repository.dart';
 import 'package:hive/hive.dart';
 import 'package:riverpod/riverpod.dart';
-
-import 'food.dart';
-import 'food_repository.dart';
 
 final scannedFoodsBoxProvider = FutureProvider.autoDispose<Box<Food>>((ref) async {
   final box = await _safeOpenBox<Food>('scanned_foods');

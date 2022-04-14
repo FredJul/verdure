@@ -6,14 +6,13 @@ import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/colors.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:ecoscore/model/providers.dart';
+import 'package:ecoscore/screens/food_image_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'food_image_page.dart';
 
 final _updatedFoodProvider = FutureProvider.family.autoDispose<Food?, String>((ref, barcode) async {
   final foodRepository = await ref.watch(foodRepositoryProvider.future);

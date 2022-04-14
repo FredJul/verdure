@@ -1,7 +1,6 @@
 import 'package:ecoscore/api/open_food_facts_api.dart';
+import 'package:ecoscore/model/food.dart';
 import 'package:hive/hive.dart';
-
-import 'food.dart';
 
 class FoodRepository {
   FoodRepository(this._scannedFoodsBox, this._favFoodsBox);

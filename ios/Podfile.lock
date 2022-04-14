@@ -72,7 +72,7 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - url_launcher (0.0.1):
+  - url_launcher_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -82,7 +82,7 @@ DEPENDENCIES:
   - native_device_orientation (from `.symlinks/plugins/native_device_orientation/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -114,11 +114,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  url_launcher:
-    :path: ".symlinks/plugins/url_launcher/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  camera: fe33292aff715a981eb34d7ce7b35b54337ff34c
+  camera: 9993f92f2c793e87b65e35f3a23c70582afb05b1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_ml_vision: b21c962e498502dc4cd8689067dbe4a88b44e947
@@ -134,11 +134,11 @@ SPEC CHECKSUMS:
   MLKitVision: 26da299aef93291f24f5200e8372919f73abf3b5
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   native_device_orientation: 3b4cfc9565a7b879cc4fde282b3e27745e852d0d
-  path_provider_ios: 7d7ce634493af4477d156294792024ec3485acd5
+  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 

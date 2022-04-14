@@ -6,10 +6,9 @@ import 'package:ecoscore/common/search_bar.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
+import 'package:ecoscore/screens/food_detail_page.dart';
 import 'package:ecoscore/translations/gen/l10n.dart';
 import 'package:flutter/material.dart';
-
-import 'food_detail_page.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);

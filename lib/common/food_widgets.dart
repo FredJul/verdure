@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/common/widgets.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:ecoscore/model/food.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
-
-import 'extensions.dart';
 
 class FoodCard extends StatelessWidget {
   const FoodCard({

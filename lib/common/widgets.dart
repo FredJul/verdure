@@ -1,8 +1,7 @@
+import 'package:ecoscore/common/extensions.dart';
 import 'package:ecoscore/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
-import 'extensions.dart';
 
 class Tap extends StatelessWidget {
   const Tap({
