@@ -115,7 +115,7 @@ class _FadeInAppearState extends State<FadeInAppear> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         _init = true;
       });

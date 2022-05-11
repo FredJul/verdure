@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 final _updatedFoodProvider = FutureProvider.family.autoDispose<Food?, String>((ref, barcode) async {
   final foodRepository = await ref.watch(foodRepositoryProvider.future);
@@ -427,7 +427,7 @@ class _AlternativesListState extends State<_AlternativesList> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchAlternatives();
     });
   }
@@ -601,7 +601,7 @@ class _AboutData extends StatelessWidget {
         borderRadius: const BorderRadius.only(topLeft: Radius.circular(36), topRight: Radius.circular(36)),
         onTap: () async {
           try {
-            await launch(OpenFoodFactsApi.getViewUrl(food));
+            await launchUrlString(OpenFoodFactsApi.getViewUrl(food));
           } catch (_) {
             final snackBar = SnackBar(content: Text(Translation.current.browserOpeningError));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
